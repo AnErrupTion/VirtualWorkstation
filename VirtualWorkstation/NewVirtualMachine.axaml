@@ -1,0 +1,101 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:GroupBox.Avalonia.Controls;assembly=GroupBox.Avalonia"
+        xmlns:virtualWorkstation="clr-namespace:VirtualWorkstation"
+        x:Class="VirtualWorkstation.NewVirtualMachine"
+        Title="New Virtual Machine"
+        Width="800" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="*, *, Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="*, *">
+            <controls:GroupBox Grid.Column="0" Header="Basic information">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Name:</Label>
+                        <TextBox Grid.Column="1" Name="Name"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *, Auto">
+                        <Label Grid.Column="0">Folder:</Label>
+                        <TextBox Grid.Column="1" Name="Folder"/>
+                        <Button Grid.Column="2" Name="FolderBrowse" Click="FolderBrowse_OnClick">...</Button>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *, Auto">
+                        <Label Grid.Column="0">Boot image:</Label>
+                        <TextBox Grid.Column="1" Name="BootImage"/>
+                        <Button Grid.Column="2" Name="BootImageBrowse" Click="BootImageBrowse_OnClick">...</Button>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Profile:</Label>
+                        <ComboBox Grid.Column="1" Name="Profile" SelectionChanged="Profile_OnSelectionChanged">
+                            <ComboBoxItem>Windows 10</ComboBoxItem>
+                            <ComboBoxItem>Linux (VirtIO)</ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </controls:GroupBox>
+            <controls:GroupBox Grid.Column="1" Header="Hardware">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Sockets:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Sockets" Minimum="1" FormatString="0" Value="1"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Cores:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Cores" Minimum="1" FormatString="0" Value="1"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Threads:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Threads" Minimum="1" FormatString="0" Value="1"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">RAM (in MiB):</Label>
+                        <NumericUpDown Grid.Column="1" Name="Ram" Minimum="1" FormatString="0" Value="1"/>
+                    </Grid>
+                </StackPanel>
+            </controls:GroupBox>
+        </Grid>
+        <controls:GroupBox Grid.Row="1" Header="Storage">
+            <StackPanel>
+                <RadioButton Name="CreateNewDisk" IsChecked="True" IsCheckedChanged="CreateNewDisk_OnIsCheckedChanged">Create a new virtual disk</RadioButton>
+                <StackPanel Name="NewDiskPanel">
+                    <Grid ColumnDefinitions="*, *, Auto">
+                        <Label Grid.Column="0">Custom path:</Label>
+                        <TextBox Grid.Column="1" Name="NewDiskCustomPath"/>
+                        <Button Grid.Column="2" Name="NewDiskCustomPathBrowse" Click="NewDiskCustomPathBrowse_OnClick">...</Button>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Type:</Label>
+                        <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="NewDiskType" SelectedIndex="0"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Size (in GiB):</Label>
+                        <NumericUpDown Grid.Column="1" Name="NewDiskSize" Minimum="1" Maximum="4096" FormatString="0" Value="1"/>
+                    </Grid>
+                    <CheckBox Name="PreAllocateNewDisk">Pre-allocate disk</CheckBox>
+                </StackPanel>
+                <RadioButton Name="UseExistingDisk" IsCheckedChanged="UseExistingDisk_OnIsCheckedChanged">Use an existing virtual disk</RadioButton>
+                <StackPanel Name="ExistingDiskPanel" IsEnabled="False">
+                    <Grid ColumnDefinitions="*, *, Auto">
+                        <Label Grid.Column="0">Path:</Label>
+                        <TextBox Grid.Column="1" Name="ExistingDiskPath" TextChanged="ExistingDiskPath_OnTextChanged"/>
+                        <Button Grid.Column="2" Name="ExistingDiskPathBrowse" Click="ExistingDiskPathBrowse_OnClick">...</Button>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Type:</Label>
+                        <Label Grid.Column="1" Name="ExistingDiskType">N/A</Label>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *">
+                        <Label Grid.Column="0">Size:</Label>
+                        <Label Grid.Column="1" Name="ExistingDiskSize">N/A</Label>
+                    </Grid>
+                </StackPanel>
+                <RadioButton Name="NoDisk" IsCheckedChanged="NoDisk_OnIsCheckedChanged">Don't add a virtual disk</RadioButton>
+            </StackPanel>
+        </controls:GroupBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label>Status:</Label>
+            <Label Name="Status">N/A</Label>
+        </StackPanel>
+        <Button Grid.Row="2" Name="Create" HorizontalAlignment="Right" Click="Create_OnClick">Create</Button>
+    </Grid>
+</Window>

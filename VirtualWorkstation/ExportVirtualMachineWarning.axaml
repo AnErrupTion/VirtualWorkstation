@@ -1,0 +1,11 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualWorkstation.ExportVirtualMachineWarning"
+        Title="Potentially Host-Dependent Settings - "
+        Width="650" Height="450"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="*, Auto">
+        <TreeView Grid.Row="0" Name="ComponentTree"/>
+        <Button Grid.Row="1" Name="Continue" Click="Continue_OnClick">Continue with selected components</Button>
+    </Grid>
+</Window>

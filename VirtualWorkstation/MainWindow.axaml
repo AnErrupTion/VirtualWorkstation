@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualWorkstation.MainWindow"
+        Title="Virtual Workstation"
+        Width="1024" Height="768"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Name="NewVm" Header="New Virtual Machine..." Click="NewVm_OnClick"/>
+                <MenuItem Name="DeleteVm" Header="Delete Selected Virtual Machine..." Click="DeleteVm_OnClick"/>
+                <Separator/>
+                <MenuItem Name="ImportFrom" Header="Import From..." Click="ImportFrom_OnClick"/>
+                <MenuItem Name="ExportTo" Header="Export Selected Virtual Machine To..." Click="ExportTo_OnClick"/>
+                <Separator/>
+                <MenuItem Name="Exit" Header="Exit" Click="Exit_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Name="Settings" Header="Settings..." Click="Settings_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Name="About" Header="About Virtual Workstation..." Click="About_OnClick"/>
+            </MenuItem>
+        </Menu>
+        <Grid ColumnDefinitions="Auto, 8, *">
+            <ListBox Grid.Column="0" Name="VmList" SelectionChanged="VmList_OnSelectionChanged"/>
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns"/>
+            <TabControl Grid.Column="2" Name="VmTabs"/>
+        </Grid>
+    </DockPanel>
+</Window>

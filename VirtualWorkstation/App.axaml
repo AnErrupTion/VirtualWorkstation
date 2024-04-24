@@ -1,0 +1,18 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:theme="clr-namespace:VirtualWorkstation.Theme"
+             x:Class="VirtualWorkstation.App"
+             RequestedThemeVariant="Default">
+    <Application.Styles>
+        <SimpleTheme>
+            <Styles.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <theme:SystemAccentColors />
+                        <MergeResourceInclude Source="/Theme/Base.axaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </Styles.Resources>
+        </SimpleTheme>
+    </Application.Styles>
+</Application>

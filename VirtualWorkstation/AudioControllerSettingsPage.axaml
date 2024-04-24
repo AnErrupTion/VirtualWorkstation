@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.AudioControllerSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Card:</Label>
+            <ComboBox Grid.Column="1" Name="Card" SelectionChanged="Card_OnSelectionChanged">
+                <ComboBoxItem>Creative Sound Blaster 16</ComboBoxItem>
+                <ComboBoxItem>Intel AC97</ComboBoxItem>
+                <ComboBoxItem>Intel HDA 6</ComboBoxItem>
+                <ComboBoxItem>Intel HDA 9</ComboBoxItem>
+                <ComboBoxItem>USB</ComboBoxItem>
+                <ComboBoxItem>VirtIO</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">USB controller:</Label>
+            <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
+        </Grid>
+        <CheckBox Name="HasInput" IsCheckedChanged="HasInput_OnIsCheckedChanged">Input channel</CheckBox>
+        <CheckBox Name="HasOutput" IsCheckedChanged="HasOutput_OnIsCheckedChanged">Output channel</CheckBox>
+    </StackPanel>
+</UserControl>

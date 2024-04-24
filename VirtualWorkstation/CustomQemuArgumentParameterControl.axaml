@@ -1,0 +1,9 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.CustomQemuArgumentParameterControl">
+    <Grid ColumnDefinitions="*, *, *">
+        <TextBox Grid.Column="0" Name="Key" Watermark="Key" TextChanged="Key_OnTextChanged"/>
+        <TextBox Grid.Column="1" Name="Value" Watermark="Value" TextChanged="Value_OnTextChanged"/>
+        <Button Grid.Column="2" Name="Remove" Click="Remove_OnClick">Remove</Button>
+    </Grid>
+</UserControl>

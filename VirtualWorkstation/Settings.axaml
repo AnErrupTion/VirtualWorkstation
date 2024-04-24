@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualWorkstation.Settings"
+        Title="Settings"
+        Width="400" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Grid Grid.Row="0" ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">VM folder:</Label>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Name="VmFolder"/>
+                <Button Grid.Column="1" Name="BrowseVmFolder" Click="BrowseVmFolder_OnClick">...</Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom QEMU path:</Label>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Name="CustomQemuPath"/>
+                <Button Grid.Column="1" Name="BrowseQemu" Click="BrowseQemu_OnClick">...</Button>
+            </Grid>
+        </Grid>
+        <Button Grid.Row="2" Name="Save" Click="Save_OnClick">Save</Button>
+    </Grid>
+</Window>

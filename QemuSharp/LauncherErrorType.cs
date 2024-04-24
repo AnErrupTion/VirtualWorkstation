@@ -1,0 +1,58 @@
+namespace QemuSharp;
+
+public enum LauncherErrorType
+{
+    EmptyName,
+    EmptyFirmwarePath,
+    EmptyCustomFirmwarePath,
+    EmptyDiskPath,
+    EmptyQemuPath,
+    EmptyCustomQemuArgumentValue,
+    EmptyCustomQemuArgumentParameterKey,
+    EmptyCustomQemuArgumentParameterValue,
+
+    InvalidName,
+    InvalidCustomQemuArgumentValue,
+    InvalidCustomQemuArgumentParameterKey,
+    InvalidCustomQemuArgumentParameterValue,
+    CustomFirmwareDoesNotExist,
+    DiskDoesNotExist,
+    QemuSystemDoesNotExist,
+
+    HardwareAccelerationUnavailable,
+    AudioUnavailable,
+
+    InvalidFirmwareTypeForArchitecture,
+    InvalidChipsetModelForArchitecture,
+    InvalidProcessorModelForArchitecture,
+    InvalidAddedFeatureForArchitecture,
+    InvalidRemovedFeatureForArchitecture,
+
+    UnsupportedDisplay,
+    UnsupportedAudioHostDevice,
+
+    NoUsbControllersForNetworkCard,
+    NoUsbControllersForSoundCard,
+    NoUsbControllersForDiskBus,
+    NoUsbControllersForKeyboard,
+    NoUsbControllersForMouse,
+
+    InvalidUsbControllerForNetworkCard,
+    InvalidUsbControllerForSoundCard,
+    InvalidUsbControllerForDiskBus,
+    InvalidUsbControllerForKeyboard,
+    InvalidUsbControllerForMouse,
+
+    InvalidVgaEmulationOptionForGraphicsCard,
+    InvalidGraphicsAccelerationOptionForGraphicsCard,
+
+    InvalidInputOptionForSoundCard,
+    InvalidOutputOptionForSoundCard,
+    InvalidInputOutputOptionsForSoundCard,
+
+    UnusedDiskController,
+    InvalidDiskControllerForDisk,
+
+    InvalidCdromOptionForDiskBus,
+    InvalidRemovableOptionForDiskBus
+}

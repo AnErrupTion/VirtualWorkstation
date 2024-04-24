@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.CustomQemuArgumentSettingsPage">
+    <ScrollViewer>
+        <StackPanel>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Type:</Label>
+                <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
+                    <ComboBoxItem>Device</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Value:</Label>
+                <TextBox Grid.Column="1" Name="Value" TextChanged="Value_OnTextChanged"/>
+            </Grid>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Parameters:</Label>
+                <StackPanel Grid.Column="1" Name="Parameters">
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="AddParameter" Click="AddParameter_OnClick">Add</Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Desktop" Version="11.1.0-beta1" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.0-beta1" />
+        <PackageReference Include="Avalonia.Themes.Simple" Version="11.1.0-beta1" />
+        <PackageReference Include="BinToss.GroupBox.Avalonia" Version="1.0.0" />
+        <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
+        <PackageReference Include="Tomlyn" Version="0.17.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="ChipsetSettingsPage.axaml.cs">
+        <DependentUpon>ChipsetSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="DisplaySettingsPage.axaml.cs">
+        <DependentUpon>DisplaySettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="AudioHostSettingsPage.axaml.cs">
+        <DependentUpon>AudioHostSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="ProcessorSettingsPage.axaml.cs">
+        <DependentUpon>ProcessorSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="UsbControllerSettingsPage.axaml.cs">
+        <DependentUpon>UsbControllerSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="NetworkInterfaceSettingsPage.axaml.cs">
+        <DependentUpon>NetworkInterfaceSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="GraphicsControllerSettingsPage.axaml.cs">
+        <DependentUpon>GraphicsControllerSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="AudioControllerSettingsPage.axaml.cs">
+        <DependentUpon>AudioControllerSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="DiskControllerSettingsPage.axaml.cs">
+        <DependentUpon>DiskControllerSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="DiskSettingsPage.axaml.cs">
+        <DependentUpon>DiskSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="KeyboardSettingsPage.axaml.cs">
+        <DependentUpon>KeyboardSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="MouseSettingsPage.axaml.cs">
+        <DependentUpon>MouseSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="CustomQemuArgumentSettingsPage.axaml.cs">
+        <DependentUpon>CustomQemuArgumentSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="CustomQemuArgumentParameterControl.axaml.cs">
+        <DependentUpon>CustomQemuArgumentParameterControl.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QemuSharp\QemuSharp.csproj" />
+    </ItemGroup>
+</Project>

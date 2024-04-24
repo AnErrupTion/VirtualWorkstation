@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.MouseSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Model:</Label>
+            <ComboBox Grid.Column="1" Name="Model" SelectionChanged="Model_OnSelectionChanged">
+                <ComboBoxItem>USB</ComboBoxItem>
+                <ComboBoxItem>VirtIO</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">USB controller:</Label>
+            <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
+        </Grid>
+        <CheckBox Name="UseAbsolutePointing" IsCheckedChanged="UseAbsolutePointing_OnIsCheckedChanged">Absolute pointing</CheckBox>
+    </StackPanel>
+</UserControl>

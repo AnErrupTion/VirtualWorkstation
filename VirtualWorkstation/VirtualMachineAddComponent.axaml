@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualWorkstation.VirtualMachineAddComponent"
+        Title="Add A Component - "
+        Width="350" Height="440"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="*, Auto">
+        <ListBox Grid.Row="0" Name="ComponentList">
+            <ListBoxItem>USB Controller</ListBoxItem>
+            <ListBoxItem>Network Interface</ListBoxItem>
+            <ListBoxItem>Graphics Controller</ListBoxItem>
+            <ListBoxItem>Audio Controller</ListBoxItem>
+            <ListBoxItem>Disk Controller</ListBoxItem>
+            <ListBoxItem>Disk</ListBoxItem>
+            <ListBoxItem>Keyboard</ListBoxItem>
+            <ListBoxItem>Mouse</ListBoxItem>
+            <ListBoxItem>Custom QEMU Argument</ListBoxItem>
+        </ListBox>
+        <Button Grid.Row="1" Name="Add" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="Add_OnClick">Add</Button>
+    </Grid>
+</Window>

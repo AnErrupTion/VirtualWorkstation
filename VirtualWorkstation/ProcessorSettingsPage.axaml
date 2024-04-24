@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.ProcessorSettingsPage">
+    <ScrollViewer>
+        <StackPanel>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Model:</Label>
+                <ComboBox Grid.Column="1" Name="Model" SelectionChanged="Model_OnSelectionChanged">
+                    <ComboBoxItem>Host (x86)</ComboBoxItem>
+                    <ComboBoxItem>Max (x86)</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <CheckBox Name="EnableUnsupportedOptions" IsCheckedChanged="EnableUnsupportedOptions_OnIsCheckedChanged">
+                Enable unsupported options
+            </CheckBox>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Added features:</Label>
+                <StackPanel Grid.Column="1" Name="AddedFeatures">
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="AddFeature" Click="AddFeature_OnClick">Add</Button>
+                </StackPanel>
+            </Grid>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Removed features:</Label>
+                <StackPanel Grid.Column="1" Name="RemovedFeatures">
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="RemoveFeature" Click="RemoveFeature_OnClick">Add</Button>
+                </StackPanel>
+            </Grid>
+            <CheckBox Name="EnableUnsupportedFeatureOptions" IsCheckedChanged="EnableUnsupportedFeatureOptions_OnIsCheckedChanged">
+                Enable unsupported feature options
+            </CheckBox>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Sockets:</Label>
+                <NumericUpDown Grid.Column="1" Name="Sockets" Minimum="1" FormatString="0" ValueChanged="Sockets_OnValueChanged"/>
+            </Grid>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Cores:</Label>
+                <NumericUpDown Grid.Column="1" Name="Cores" Minimum="1" FormatString="0" ValueChanged="Cores_OnValueChanged"/>
+            </Grid>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Threads:</Label>
+                <NumericUpDown Grid.Column="1" Name="Threads" Minimum="1" FormatString="0" ValueChanged="Threads_OnValueChanged"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

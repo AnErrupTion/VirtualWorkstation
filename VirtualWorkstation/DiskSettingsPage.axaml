@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:virtualWorkstation="clr-namespace:VirtualWorkstation"
+             x:Class="VirtualWorkstation.DiskSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Controller:</Label>
+            <ComboBox Grid.Column="1" Name="Controller" SelectionChanged="Controller_OnSelectionChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Format:</Label>
+            <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="Format" SelectionChanged="Format_OnSelectionChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Cache method:</Label>
+            <ComboBox Grid.Column="1" Name="CacheMethod" SelectionChanged="CacheMethod_OnSelectionChanged">
+                <ComboBoxItem>None</ComboBoxItem>
+                <ComboBoxItem>Write back</ComboBoxItem>
+                <ComboBoxItem>Write through</ComboBoxItem>
+                <ComboBoxItem>Direct synchronization</ComboBoxItem>
+                <ComboBoxItem>Unsafe</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Path:</Label>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Name="Path" TextChanged="Path_OnTextChanged"/>
+                <Button Grid.Column="1" Name="Browse" Click="Browse_OnClick">...</Button>
+            </Grid>
+        </Grid>
+        <CheckBox Name="IsSsd" IsCheckedChanged="IsSsd_OnIsCheckedChanged">Solid State Drive</CheckBox>
+        <CheckBox Name="IsCdrom" IsCheckedChanged="IsCdrom_OnIsCheckedChanged">CD-ROM</CheckBox>
+        <CheckBox Name="IsRemovable" IsCheckedChanged="IsRemovable_OnIsCheckedChanged">Removable</CheckBox>
+    </StackPanel>
+</UserControl>

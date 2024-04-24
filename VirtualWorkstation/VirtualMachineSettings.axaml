@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualWorkstation.VirtualMachineSettings"
+        Title="Virtual Machine Settings - "
+        Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="*, Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, 8, *">
+            <ListBox Grid.Column="0" Name="ComponentList" SelectionChanged="ComponentList_OnSelectionChanged"/>
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns"/>
+            <TabControl Grid.Column="2" Name="ComponentTabs"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Name="Add" Click="Add_OnClick">Add</Button>
+            <Button Name="Remove" Click="Remove_OnClick">Remove</Button>
+        </StackPanel>
+        <Button Grid.Row="1" Name="Save" HorizontalAlignment="Right" Click="Save_OnClick">Save</Button>
+    </Grid>
+</Window>

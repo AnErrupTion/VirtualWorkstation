@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.AudioHostSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Type:</Label>
+            <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
+                <ComboBoxItem>None</ComboBoxItem>
+                <ComboBoxItem>Auto</ComboBoxItem>
+                <ComboBoxItem>SDL</ComboBoxItem>
+                <ComboBoxItem>ALSA</ComboBoxItem>
+                <ComboBoxItem>OSS</ComboBoxItem>
+                <ComboBoxItem>PulseAudio</ComboBoxItem>
+                <ComboBoxItem>PipeWire</ComboBoxItem>
+                <ComboBoxItem>sndio</ComboBoxItem>
+                <ComboBoxItem>CoreAudio</ComboBoxItem>
+                <ComboBoxItem>DirectSound</ComboBoxItem>
+                <ComboBoxItem>WAV</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <CheckBox Name="EnableUnsupportedOptions" IsCheckedChanged="EnableUnsupportedOptions_OnIsCheckedChanged">
+            Enable unsupported options
+        </CheckBox>
+    </StackPanel>
+</UserControl>

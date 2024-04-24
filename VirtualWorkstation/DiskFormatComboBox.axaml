@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VirtualWorkstation.DiskFormatComboBox">
+    <ComboBox Name="ComboBox">
+        <ComboBoxItem>QEMU Copy On Write 2 (QCOW2)</ComboBoxItem>
+        <ComboBoxItem>VirtualBox Disk Image (VDI)</ComboBoxItem>
+        <ComboBoxItem>Virtual Machine Disk (VMDK)</ComboBoxItem>
+        <ComboBoxItem>Virtual Hard Disk (VHDX)</ComboBoxItem>
+        <ComboBoxItem>Raw disk image (RAW)</ComboBoxItem>
+    </ComboBox>
+</UserControl>

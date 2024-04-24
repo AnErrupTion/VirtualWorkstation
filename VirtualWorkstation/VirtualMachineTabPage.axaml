@@ -1,0 +1,10 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.VirtualMachineTabPage">
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+        <Button Grid.Row="0" Name="Run" Click="Run_OnClick">Run</Button>
+        <Button Grid.Row="1" Name="Settings" Click="Settings_OnClick">Settings</Button>
+        <TextBox Grid.Row="2" Name="Arguments" TextWrapping="Wrap" IsReadOnly="True"/>
+        <Button Grid.Row="3" Name="RefreshArguments" Click="RefreshArguments_OnClick">Refresh arguments</Button>
+    </Grid>
+</UserControl>
