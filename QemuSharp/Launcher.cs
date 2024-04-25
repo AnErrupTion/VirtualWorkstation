@@ -101,6 +101,9 @@ public static class Launcher
                 if (vm.Architecture is not Architecture.Amd64 and not Architecture.I386)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidChipsetModelForArchitecture));
 
+                if (vm.Chipset.ForceUseNormalPci)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
+
                 pciBusType = "pcie";
                 arguments.Add("q35");
                 break;
@@ -110,8 +113,21 @@ public static class Launcher
                 if (vm.Architecture is not Architecture.Amd64 and not Architecture.I386)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidChipsetModelForArchitecture));
 
+                if (!vm.Chipset.ForceUseNormalPci)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
+
                 pciBusType = "pci";
                 arguments.Add("pc");
+                break;
+            }
+            case ChipsetModel.Custom:
+            {
+                var model = vm.Chipset.CustomModel;
+                if (string.IsNullOrEmpty(model))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomChipsetModel));
+
+                pciBusType = vm.Chipset.ForceUseNormalPci ? "pci" : "pcie";
+                arguments.Add(model);
                 break;
             }
             default: throw new UnreachableException();

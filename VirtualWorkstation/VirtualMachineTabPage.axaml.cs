@@ -120,6 +120,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom firmware path.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomChipsetModel:
+                {
+                    text.AppendLine(" * Empty custom chipset model.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk path for disk {index}.");
@@ -213,6 +218,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidRemovedFeatureForArchitecture:
                 {
                     text.AppendLine($" * Invalid removed processor feature \"{Vm.Processor.RemoveFeatures[index]}\" for architecture \"{Vm.Architecture}\".");
+                    break;
+                }
+                case LauncherErrorType.InvalidForcePciOptionForChipsetModel:
+                {
+                    text.AppendLine($" * Invalid force use normal PCI option for chipset model \"{Vm.Chipset.Model}\".");
                     break;
                 }
                 case LauncherErrorType.UnsupportedDisplay:

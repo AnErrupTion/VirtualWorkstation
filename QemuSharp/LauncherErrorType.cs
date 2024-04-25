@@ -5,6 +5,7 @@ public enum LauncherErrorType
     EmptyName,
     EmptyFirmwarePath,
     EmptyCustomFirmwarePath,
+    EmptyCustomChipsetModel,
     EmptyDiskPath,
     EmptyQemuPath,
     EmptyCustomQemuArgumentValue,
@@ -27,6 +28,8 @@ public enum LauncherErrorType
     InvalidProcessorModelForArchitecture,
     InvalidAddedFeatureForArchitecture,
     InvalidRemovedFeatureForArchitecture,
+
+    InvalidForcePciOptionForChipsetModel,
 
     UnsupportedDisplay,
     UnsupportedAudioHostDevice,

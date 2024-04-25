@@ -25,16 +25,29 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         CheckForUnsupportedOptions();
 
         Model.SelectedIndex = (int)vm.Chipset.Model;
+        CustomModel.Text = vm.Chipset.CustomModel;
+        ForceUseNormalPci.IsChecked = vm.Chipset.ForceUseNormalPci;
     }
 
     private void Model_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         _vm.Chipset.Model = (ChipsetModel)Model.SelectedIndex;
         CheckForUnsupportedOptions();
+
+        var isCustomModel = _vm.Chipset.Model == ChipsetModel.Custom;
+        CustomModel.IsEnabled = isCustomModel;
+        ForceUseNormalPci.IsEnabled = isCustomModel;
+        if (!isCustomModel) ForceUseNormalPci.IsChecked = _vm.Chipset.Model == ChipsetModel.X86I440Fx;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => CheckForUnsupportedOptions();
+
+    private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Chipset.CustomModel = CustomModel.Text!;
+
+    private void ForceUseNormalPci_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+        => _vm.Chipset.ForceUseNormalPci = ForceUseNormalPci.IsChecked!.Value;
 
     private void CheckForUnsupportedOptions()
     {
