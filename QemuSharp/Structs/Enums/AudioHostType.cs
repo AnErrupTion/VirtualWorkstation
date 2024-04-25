@@ -12,5 +12,6 @@ public enum AudioHostType
     SndIo,
     CoreAudio,
     DirectSound,
-    Wav
+    Wav,
+    Custom
 }

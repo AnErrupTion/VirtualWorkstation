@@ -26,16 +26,22 @@ public partial class AudioHostSettingsPage : UserControl, ITabPage
         CheckForUnsupportedOptions();
 
         Type.SelectedIndex = (int)vm.AudioHostDevice.Type;
+        CustomType.Text = vm.AudioHostDevice.CustomType;
     }
 
     private void Type_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         _vm.AudioHostDevice.Type = (AudioHostType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
+
+        CustomType.IsEnabled = _vm.AudioHostDevice.Type == AudioHostType.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => CheckForUnsupportedOptions();
+
+    private void CustomType_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.AudioHostDevice.CustomType = CustomType.Text!;
 
     private void CheckForUnsupportedOptions()
     {

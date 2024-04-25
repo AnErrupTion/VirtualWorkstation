@@ -130,6 +130,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom display type.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomAudioHostDeviceType:
+                {
+                    text.AppendLine(" * Empty custom audio host device type.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk path for disk {index}.");
@@ -168,6 +173,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomDisplayType:
                 {
                     text.AppendLine(" * Custom display type contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomAudioHostDeviceType:
+                {
+                    text.AppendLine(" * Custom audio host device type contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

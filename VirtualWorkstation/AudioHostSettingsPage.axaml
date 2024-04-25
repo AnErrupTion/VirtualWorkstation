@@ -16,10 +16,15 @@
                 <ComboBoxItem>CoreAudio</ComboBoxItem>
                 <ComboBoxItem>DirectSound</ComboBoxItem>
                 <ComboBoxItem>WAV</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
         <CheckBox Name="EnableUnsupportedOptions" IsCheckedChanged="EnableUnsupportedOptions_OnIsCheckedChanged">
             Enable unsupported options
         </CheckBox>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom type:</Label>
+            <TextBox Grid.Column="1" Name="CustomType" TextChanged="CustomType_OnTextChanged"/>
+        </Grid>
     </StackPanel>
 </UserControl>

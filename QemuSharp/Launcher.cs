@@ -122,7 +122,7 @@ public static class Launcher
             }
             case ChipsetModel.Custom:
             {
-                var model = SanitizeQemuArgumentString(vm.Chipset.CustomModel);
+                var model = SanitizeQemuArgumentStringWithOptions(vm.Chipset.CustomModel);
 
                 if (string.IsNullOrEmpty(model))
                     errors.Add(new LauncherError(LauncherErrorType.EmptyCustomChipsetModel));
@@ -281,6 +281,19 @@ public static class Launcher
             case AudioHostType.Wav:
             {
                 arguments.Add("wav,id=audiodev");
+                break;
+            }
+            case AudioHostType.Custom:
+            {
+                var type = SanitizeQemuArgumentStringWithOptions(vm.AudioHostDevice.CustomType);
+
+                if (string.IsNullOrEmpty(type))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomAudioHostDeviceType));
+
+                if (type.Length != vm.AudioHostDevice.CustomType.Length)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidCustomAudioHostDeviceType));
+
+                arguments.Add($"{type},id=audiodev");
                 break;
             }
             default: throw new UnreachableException();
