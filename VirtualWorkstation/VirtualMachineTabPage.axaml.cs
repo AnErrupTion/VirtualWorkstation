@@ -38,7 +38,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private async void Run_OnClick(object? _, RoutedEventArgs e)
     {
-        var (errors, qemuPath, arguments) = Launcher.GetArguments(Vm,
+        var (errors, qemuPath, nvRamPath, arguments) = Launcher.GetArguments(Vm,
             GlobalSettings.CustomQemuPath, false);
 
         if (errors.Count != 0)
@@ -50,10 +50,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
             return;
         }
 
-        Process.Start(new ProcessStartInfo(qemuPath!, arguments)
+        var vmDirectory = Path.GetDirectoryName(VmPath);
+        if (string.IsNullOrEmpty(vmDirectory)) throw new UnreachableException();
+
+        if (!string.IsNullOrEmpty(nvRamPath))
         {
-            WorkingDirectory = Path.GetDirectoryName(VmPath)!
-        });
+            var vmNvRamPath = Path.Combine(vmDirectory, Path.GetFileName(nvRamPath));
+            if (!File.Exists(vmNvRamPath)) File.Copy(nvRamPath, vmNvRamPath);
+        }
+
+        Process.Start(new ProcessStartInfo(qemuPath!, arguments) { WorkingDirectory = vmDirectory });
     }
 
     private async void Settings_OnClick(object? _, RoutedEventArgs e)
@@ -79,7 +85,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private void RefreshArguments_OnClick(object? _, RoutedEventArgs e)
     {
-        var (_, qemuPath, arguments) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath, true);
+        var (_, qemuPath, _, arguments) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath, true);
         if (!string.IsNullOrEmpty(qemuPath)) arguments.Insert(0, qemuPath);
 
         var sb = new StringBuilder();
@@ -115,9 +121,19 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty auto-detected firmware path.");
                     break;
                 }
+                case LauncherErrorType.EmptyEfiNvRamPath:
+                {
+                    text.AppendLine(" * Empty auto-detected EFI NVRAM path.");
+                    break;
+                }
                 case LauncherErrorType.EmptyCustomFirmwarePath:
                 {
                     text.AppendLine(" * Empty custom firmware path.");
+                    break;
+                }
+                case LauncherErrorType.EmptyCustomEfiNvRamPath:
+                {
+                    text.AppendLine(" * Empty custom EFI NVRAM path.");
                     break;
                 }
                 case LauncherErrorType.EmptyCustomChipsetModel:
@@ -308,6 +324,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.CustomFirmwareDoesNotExist:
                 {
                     text.AppendLine(" * Custom firmware file does not exist.");
+                    break;
+                }
+                case LauncherErrorType.CustomEfiNvRamDoesNotExist:
+                {
+                    text.AppendLine(" * Custom EFI NVRAM file does not exist.");
                     break;
                 }
                 case LauncherErrorType.DiskDoesNotExist:

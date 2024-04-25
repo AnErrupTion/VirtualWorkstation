@@ -6,6 +6,7 @@ public class Firmware
 {
     public FirmwareType Type { get; set; }
     public string CustomPath { get; set; } = string.Empty;
+    public string CustomNvRamPath { get; set; } = string.Empty;
 
     public Firmware() {}
 
@@ -13,5 +14,6 @@ public class Firmware
     {
         Type = other.Type;
         CustomPath = other.CustomPath;
+        CustomNvRamPath = other.CustomNvRamPath;
     }
 }

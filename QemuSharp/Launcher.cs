@@ -7,7 +7,7 @@ namespace QemuSharp;
 
 public static class Launcher
 {
-    public static (List<LauncherError>, string?, List<string>) GetArguments(VirtualMachine vm, string customQemuPath,
+    public static (List<LauncherError>, string?, string?, List<string>) GetArguments(VirtualMachine vm, string customQemuPath,
         bool addQuotes)
     {
         var name = SanitizeName(vm.Name);
@@ -30,6 +30,7 @@ public static class Launcher
             else errors.Add(new LauncherError(LauncherErrorType.HardwareAccelerationUnavailable));
         } else arguments.Add("tcg");
 
+        string? nvRamPath = null;
         switch (vm.Firmware.Type)
         {
             case FirmwareType.Efi:
@@ -39,8 +40,14 @@ public static class Launcher
 
                 if (string.IsNullOrEmpty(path)) errors.Add(new LauncherError(LauncherErrorType.EmptyFirmwarePath));
 
+                nvRamPath = PathLookup.LookupFiles(PathLookup.EfiPaths, PathLookup.EfiNvramFiles);
+                if (string.IsNullOrEmpty(nvRamPath)) errors.Add(new LauncherError(LauncherErrorType.EmptyFirmwarePath));
+
                 arguments.Add("-drive");
                 arguments.Add($"if=pflash,readonly=on,file={quotedPath}");
+
+                arguments.Add("-drive");
+                arguments.Add($"if=pflash,format=raw,file={Path.GetFileName(nvRamPath)}");
                 break;
             }
             case FirmwareType.CustomPFlash:
@@ -53,8 +60,20 @@ public static class Launcher
                 else if (!File.Exists(path))
                     errors.Add(new LauncherError(LauncherErrorType.CustomFirmwareDoesNotExist));
 
+                nvRamPath = vm.Firmware.CustomNvRamPath;
+
+                if (string.IsNullOrEmpty(nvRamPath))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomEfiNvRamPath));
+                else if (!File.Exists(nvRamPath))
+                    errors.Add(new LauncherError(LauncherErrorType.CustomEfiNvRamDoesNotExist));
+
                 arguments.Add("-drive");
                 arguments.Add($"if=pflash,readonly=on,file={quotedPath}");
+                
+                var quotedNvRamPath = addQuotes && nvRamPath.Contains(' ') ? $"\"{nvRamPath}\"" : nvRamPath;
+
+                arguments.Add("-drive");
+                arguments.Add($"if=pflash,format=raw,file={quotedNvRamPath}");
                 break;
             }
             case FirmwareType.X86LegacyBios:
@@ -974,7 +993,7 @@ public static class Launcher
             quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;
         } else errors.Add(new LauncherError(LauncherErrorType.EmptyQemuPath));
 
-        return (errors, quotedQemuSystemPath, arguments);
+        return (errors, quotedQemuSystemPath, nvRamPath, arguments);
     }
 
     private static bool IsFeatureUnsupported(Architecture architecture, ProcessorFeature feature)

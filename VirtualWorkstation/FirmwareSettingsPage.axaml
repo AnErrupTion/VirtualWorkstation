@@ -22,5 +22,12 @@
                 <Button Grid.Column="1" Name="Browse" Click="Browse_OnClick">...</Button>
             </Grid>
         </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom EFI NVRAM path:</Label>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Name="CustomNvRamPath" TextChanged="CustomNvRamPath_OnTextChanged"/>
+                <Button Grid.Column="1" Name="BrowseNvRam" Click="BrowseNvRam_OnClick">...</Button>
+            </Grid>
+        </Grid>
     </StackPanel>
 </UserControl>

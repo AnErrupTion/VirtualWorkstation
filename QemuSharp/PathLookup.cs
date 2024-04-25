@@ -26,7 +26,13 @@ public static class PathLookup
     [
         "edk2-x86_64-code.fd",
         "OVMF_CODE.fd",
-        "OVMF.fd",
+        "OVMF.fd"
+    ];
+
+    public static readonly string[] EfiNvramFiles =
+    [
+        "edk2-i386-vars.fd",
+        "OVMF_VARS.fd"
     ];
 
     public static readonly string[] QemuPaths =

@@ -26,6 +26,7 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
 
         Type.SelectedIndex = (int)vm.Firmware.Type;
         CustomPath.Text = vm.Firmware.CustomPath;
+        CustomNvRamPath.Text = vm.Firmware.CustomNvRamPath;
     }
 
     private void Type_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -36,6 +37,8 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
         var isCustomType = _vm.Firmware.Type is FirmwareType.CustomPFlash or FirmwareType.X86CustomPc;
         CustomPath.IsEnabled = isCustomType;
         Browse.IsEnabled = isCustomType;
+        CustomNvRamPath.IsEnabled = isCustomType;
+        BrowseNvRam.IsEnabled = isCustomType;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
@@ -52,6 +55,19 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
         if (storageFiles.Count != 1) return;
 
         CustomPath.Text = storageFiles[0].Path.LocalPath;
+    }
+
+    private void CustomNvRamPath_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Firmware.CustomNvRamPath = CustomNvRamPath.Text!;
+
+    private async void BrowseNvRam_OnClick(object? _, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this) ?? throw new UnreachableException();
+        var storageFiles = await topLevel.StorageProvider.OpenFilePickerAsync(UiHelpers.DefaultFilePickerOpenOptions);
+
+        if (storageFiles.Count != 1) return;
+
+        CustomNvRamPath.Text = storageFiles[0].Path.LocalPath;
     }
 
     private void CheckForUnsupportedOptions()

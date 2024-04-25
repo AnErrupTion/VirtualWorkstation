@@ -4,7 +4,9 @@ public enum LauncherErrorType
 {
     EmptyName,
     EmptyFirmwarePath,
+    EmptyEfiNvRamPath,
     EmptyCustomFirmwarePath,
+    EmptyCustomEfiNvRamPath,
     EmptyCustomChipsetModel,
     EmptyCustomDisplayType,
     EmptyCustomAudioHostDeviceType,
@@ -44,6 +46,7 @@ public enum LauncherErrorType
     InvalidCustomQemuArgumentParameterKey,
     InvalidCustomQemuArgumentParameterValue,
     CustomFirmwareDoesNotExist,
+    CustomEfiNvRamDoesNotExist,
     DiskDoesNotExist,
     QemuSystemDoesNotExist,
 
