@@ -581,7 +581,7 @@ public static class Launcher
                     if (audioController.HasInput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidInputOptionForSoundCard, i));
 
-                    if (audioController.HasOutput)
+                    if (!audioController.HasOutput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
 
                     arguments.Add("sb16,audiodev=audiodev");
@@ -592,7 +592,7 @@ public static class Launcher
                     if (audioController.HasInput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidInputOptionForSoundCard, i));
 
-                    if (audioController.HasOutput)
+                    if (!audioController.HasOutput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
 
                     arguments.Add($"AC97,bus={pciBusType}.0,audiodev=audiodev");
@@ -617,7 +617,7 @@ public static class Launcher
                     if (audioController.HasInput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidInputOptionForSoundCard, i));
 
-                    if (audioController.HasOutput)
+                    if (!audioController.HasOutput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
 
                     if (vm.UsbControllers.Count == 0)
