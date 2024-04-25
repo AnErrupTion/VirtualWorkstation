@@ -805,15 +805,15 @@ public static class Launcher
                 }
                 case DiskBus.Custom:
                 {
-                    var card = SanitizeQemuArgumentStringWithOptions(diskController.CustomModel);
+                    var model = SanitizeQemuArgumentStringWithOptions(diskController.CustomModel);
 
-                    if (string.IsNullOrEmpty(card))
+                    if (string.IsNullOrEmpty(model))
                         errors.Add(new LauncherError(LauncherErrorType.EmptyCustomDiskControllerModel, i));
 
-                    if (card.Length != diskController.CustomModel.Length)
+                    if (model.Length != diskController.CustomModel.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskControllerModel, i));
 
-                    arguments.Add($"{card},bus={pciBusType}.0,drive=drive{i}");
+                    arguments.Add($"{model},bus={pciBusType}.0,drive=drive{i}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -841,6 +841,19 @@ public static class Launcher
                 case KeyboardModel.VirtIo:
                 {
                     arguments.Add($"virtio-keyboard-pci,bus={pciBusType}.0");
+                    break;
+                }
+                case KeyboardModel.Custom:
+                {
+                    var model = SanitizeQemuArgumentStringWithOptions(keyboard.CustomModel);
+
+                    if (string.IsNullOrEmpty(model))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomKeyboardModel, i));
+
+                    if (model.Length != keyboard.CustomModel.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomKeyboardModel, i));
+
+                    arguments.Add($"{model},bus={pciBusType}.0");
                     break;
                 }
                 default: throw new UnreachableException();

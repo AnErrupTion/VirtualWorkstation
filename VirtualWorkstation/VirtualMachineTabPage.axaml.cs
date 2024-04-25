@@ -180,6 +180,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom disk {index} cache method.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomKeyboardModel:
+                {
+                    text.AppendLine($" * Empty custom keyboard {index} model.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -268,6 +273,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomDiskCacheMethod:
                 {
                     text.AppendLine($" * Custom disk {index} cache method contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomKeyboardModel:
+                {
+                    text.AppendLine($" * Custom keyboard {index} model contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

@@ -34,16 +34,21 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
 
         var keyboard = vm.Keyboards[index];
         Model.SelectedIndex = (int)keyboard.Model;
+        CustomModel.Text = keyboard.CustomModel;
         UsbController.SelectedIndex = (int)keyboard.UsbController;
     }
 
     private void Model_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         var model = (KeyboardModel)Model.SelectedIndex;
-
-        UsbController.IsEnabled = model == KeyboardModel.Usb;
         _vm.Keyboards[Index].Model = model;
+
+        CustomModel.IsEnabled = model == KeyboardModel.Custom;
+        UsbController.IsEnabled = model == KeyboardModel.Usb;
     }
+
+    private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Keyboards[Index].CustomModel = CustomModel.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.Keyboards[Index].UsbController = (ulong)UsbController.SelectedIndex;
