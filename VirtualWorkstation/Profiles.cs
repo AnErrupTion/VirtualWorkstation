@@ -21,6 +21,7 @@ public static class Profiles
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 2, Threads = 1 },
+        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         UsbControllers =
         [
             new UsbController { Version = UsbVersion.Xhci }
@@ -67,6 +68,7 @@ public static class Profiles
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 2, Threads = 1 },
+        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [
             new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.VirtIo }
