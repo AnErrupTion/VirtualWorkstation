@@ -33,9 +33,9 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
         _vm.Firmware.Type = (FirmwareType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
 
-        var isCustomFirmware = _vm.Firmware.Type is FirmwareType.CustomPFlash or FirmwareType.X86CustomPc;
-        CustomPath.IsEnabled = isCustomFirmware;
-        Browse.IsEnabled = isCustomFirmware;
+        var isCustomType = _vm.Firmware.Type is FirmwareType.CustomPFlash or FirmwareType.X86CustomPc;
+        CustomPath.IsEnabled = isCustomType;
+        Browse.IsEnabled = isCustomType;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)

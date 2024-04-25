@@ -185,6 +185,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom keyboard {index} model.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomMouseModel:
+                {
+                    text.AppendLine($" * Empty custom mouse {index} model.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -280,6 +285,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Custom keyboard {index} model contains invalid characters.");
                     break;
                 }
+                case LauncherErrorType.InvalidCustomMouseModel:
+                {
+                    text.AppendLine($" * Custom mouse {index} model contains invalid characters.");
+                    break;
+                }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:
                 {
                     text.AppendLine($" * Custom QEMU argument {index} value contains invalid characters.");
@@ -347,7 +357,12 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 }
                 case LauncherErrorType.InvalidForcePciOptionForChipsetModel:
                 {
-                    text.AppendLine($" * Invalid force use normal PCI option for chipset model \"{Vm.Chipset.Model}\".");
+                    text.AppendLine($" * Invalid force normal PCI option for chipset model \"{Vm.Chipset.Model}\".");
+                    break;
+                }
+                case LauncherErrorType.InvalidAbsolutePointingOptionForMouse:
+                {
+                    text.AppendLine($" * Invalid absolute pointing option for mouse {index}.");
                     break;
                 }
                 case LauncherErrorType.UnsupportedDisplay:

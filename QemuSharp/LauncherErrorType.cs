@@ -18,6 +18,7 @@ public enum LauncherErrorType
     EmptyCustomDiskFormat,
     EmptyCustomDiskCacheMethod,
     EmptyCustomKeyboardModel,
+    EmptyCustomMouseModel,
     EmptyDiskPath,
     EmptyQemuPath,
     EmptyCustomQemuArgumentValue,
@@ -38,6 +39,7 @@ public enum LauncherErrorType
     InvalidCustomDiskFormat,
     InvalidCustomDiskCacheMethod,
     InvalidCustomKeyboardModel,
+    InvalidCustomMouseModel,
     InvalidCustomQemuArgumentValue,
     InvalidCustomQemuArgumentParameterKey,
     InvalidCustomQemuArgumentParameterValue,
@@ -55,6 +57,8 @@ public enum LauncherErrorType
     InvalidRemovedFeatureForArchitecture,
 
     InvalidForcePciOptionForChipsetModel,
+
+    InvalidAbsolutePointingOptionForMouse,
 
     UnsupportedDisplay,
     UnsupportedAudioHostDevice,

@@ -3,7 +3,6 @@ using System;
 
 namespace VirtualWorkstation;
 
-// TODO: Custom parameters and values for already existing components
 // Future: D-Bus display
 // Future: PCI & USB pass through
 // Future: Bundled OVMF

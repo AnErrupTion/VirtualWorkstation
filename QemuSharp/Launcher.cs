@@ -885,6 +885,22 @@ public static class Launcher
                     arguments.Add($"{virtIoMouseDevice},bus={pciBusType}.0");
                     break;
                 }
+                case MouseModel.Custom:
+                {
+                    var model = SanitizeQemuArgumentStringWithOptions(mouse.CustomModel);
+
+                    if (string.IsNullOrEmpty(model))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomMouseModel, i));
+
+                    if (model.Length != mouse.CustomModel.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomMouseModel, i));
+
+                    if (mouse.UseAbsolutePointing)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidAbsolutePointingOptionForMouse, i));
+
+                    arguments.Add($"{model},bus={pciBusType}.0");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
         }
