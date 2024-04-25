@@ -327,7 +327,7 @@ public static class Launcher
                 if (string.IsNullOrEmpty(model))
                     errors.Add(new LauncherError(LauncherErrorType.EmptyCustomProcessorModel));
 
-                if (model.Length != vm.AudioHostDevice.CustomType.Length)
+                if (model.Length != vm.Processor.CustomModel.Length)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidCustomProcessorModel));
 
                 cpuModel.Append(model);
@@ -386,6 +386,19 @@ public static class Launcher
                 case UsbVersion.Xhci:
                 {
                     arguments.Add($"qemu-xhci,bus={pciBusType}.0,id=usb{i}");
+                    break;
+                }
+                case UsbVersion.Custom:
+                {
+                    var model = SanitizeQemuArgumentStringWithOptions(usbController.CustomVersion);
+
+                    if (string.IsNullOrEmpty(model))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomUsbControllerVersion, i));
+
+                    if (model.Length != usbController.CustomVersion.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomUsbControllerVersion, i));
+
+                    arguments.Add($"{model},bus={pciBusType}.0,id=usb{i}");
                     break;
                 }
                 default: throw new UnreachableException();

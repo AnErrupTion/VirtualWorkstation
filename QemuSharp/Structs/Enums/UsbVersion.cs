@@ -6,4 +6,5 @@ public enum UsbVersion
     Uhci,
     Ehci,
     Xhci,
+    Custom
 }

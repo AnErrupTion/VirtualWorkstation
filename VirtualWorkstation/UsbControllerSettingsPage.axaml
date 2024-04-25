@@ -9,7 +9,12 @@
                 <ComboBoxItem>UHCI (Proprietary USB 1.0)</ComboBoxItem>
                 <ComboBoxItem>EHCI (USB 2.0)</ComboBoxItem>
                 <ComboBoxItem>XHCI (USB 3.0+)</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom version:</Label>
+            <TextBox Grid.Column="1" Name="CustomVersion" TextChanged="CustomVersion_OnTextChanged"/>
         </Grid>
     </StackPanel>
 </UserControl>

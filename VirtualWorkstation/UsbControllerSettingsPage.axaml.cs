@@ -22,9 +22,19 @@ public partial class UsbControllerSettingsPage : UserControl, ITabPage
 
         Index = index;
 
-        Version.SelectedIndex = (int)vm.UsbControllers[index].Version;
+        var usbController = vm.UsbControllers[index];
+        Version.SelectedIndex = (int)usbController.Version;
+        CustomVersion.Text = usbController.CustomVersion;
     }
 
     private void Version_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.UsbControllers[Index].Version = (UsbVersion)Version.SelectedIndex;
+    {
+        var newVersion = (UsbVersion)Version.SelectedIndex;
+        _vm.UsbControllers[Index].Version = newVersion;
+
+        CustomVersion.IsEnabled = newVersion == UsbVersion.Custom;
+    }
+
+    private void CustomVersion_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.UsbControllers[Index].CustomVersion = CustomVersion.Text!;
 }

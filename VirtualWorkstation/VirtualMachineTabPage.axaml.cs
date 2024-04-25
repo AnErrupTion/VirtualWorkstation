@@ -140,9 +140,14 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom processor model.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomUsbControllerVersion:
+                {
+                    text.AppendLine($" * Empty custom USB controller {index} version.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
-                    text.AppendLine($" * Empty disk path for disk {index}.");
+                    text.AppendLine($" * Empty disk {index} path.");
                     break;
                 }
                 case LauncherErrorType.EmptyQemuPath:
@@ -188,6 +193,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomProcessorModel:
                 {
                     text.AppendLine(" * Custom processor model contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomUsbControllerVersion:
+                {
+                    text.AppendLine($" * Custom USB controller {index} version contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:
