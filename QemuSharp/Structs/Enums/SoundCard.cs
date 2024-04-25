@@ -7,5 +7,6 @@ public enum SoundCard
     IntelHda6,
     IntelHda9,
     Usb,
-    VirtIo
+    VirtIo,
+    Custom
 }

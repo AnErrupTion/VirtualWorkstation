@@ -35,6 +35,7 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
 
         var audioController = vm.AudioControllers[index];
         Card.SelectedIndex = (int)audioController.Card;
+        CustomCard.Text = audioController.CustomCard;
         HasInput.IsChecked = audioController.HasInput;
         HasOutput.IsChecked = audioController.HasOutput;
         UsbController.SelectedIndex = (int)audioController.UsbController;
@@ -43,9 +44,10 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
     private void Card_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         var card = (SoundCard)Card.SelectedIndex;
-
-        UsbController.IsEnabled = card == SoundCard.Usb;
         _vm.AudioControllers[Index].Card = card;
+
+        CustomCard.IsEnabled = card == SoundCard.Custom;
+        UsbController.IsEnabled = card == SoundCard.Usb;
 
         switch (card)
         {
@@ -73,9 +75,20 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
                 HasOutput.IsChecked = true;
                 break;
             }
+            case SoundCard.Custom:
+            {
+                HasInput.IsEnabled = false;
+                HasInput.IsChecked = false;
+                HasOutput.IsEnabled = false;
+                HasOutput.IsChecked = false;
+                break;
+            }
             default: throw new UnreachableException();
         }
     }
+
+    private void CustomCard_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.AudioControllers[Index].CustomCard = CustomCard.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.AudioControllers[Index].UsbController = (ulong)UsbController.SelectedIndex;

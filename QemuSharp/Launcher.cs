@@ -647,6 +647,25 @@ public static class Launcher
                     arguments.Add($"virtio-sound-pci,bus={pciBusType}.0,audiodev=audiodev,streams={streams}");
                     break;
                 }
+                case SoundCard.Custom:
+                {
+                    var card = SanitizeQemuArgumentStringWithOptions(audioController.CustomCard);
+
+                    if (string.IsNullOrEmpty(card))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomAudioControllerCard, i));
+
+                    if (card.Length != audioController.CustomCard.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomAudioControllerCard, i));
+
+                    if (audioController.HasInput)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidInputOptionForSoundCard, i));
+
+                    if (audioController.HasOutput)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
+
+                    arguments.Add($"{card},bus={pciBusType}.0,audiodev=audiodev");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
         }

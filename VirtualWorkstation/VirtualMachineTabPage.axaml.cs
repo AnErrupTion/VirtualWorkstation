@@ -160,6 +160,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom graphics controller {index} card.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomAudioControllerCard:
+                {
+                    text.AppendLine($" * Empty custom audio controller {index} card.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -228,6 +233,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomGraphicsControllerCard:
                 {
                     text.AppendLine($" * Custom graphics controller {index} card contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomAudioControllerCard:
+                {
+                    text.AppendLine($" * Custom audio controller {index} card contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:
