@@ -29,10 +29,10 @@ public partial class UsbControllerSettingsPage : UserControl, ITabPage
 
     private void Version_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
-        var newVersion = (UsbVersion)Version.SelectedIndex;
-        _vm.UsbControllers[Index].Version = newVersion;
+        var version = (UsbVersion)Version.SelectedIndex;
+        _vm.UsbControllers[Index].Version = version;
 
-        CustomVersion.IsEnabled = newVersion == UsbVersion.Custom;
+        CustomVersion.IsEnabled = version == UsbVersion.Custom;
     }
 
     private void CustomVersion_OnTextChanged(object? _, TextChangedEventArgs e)

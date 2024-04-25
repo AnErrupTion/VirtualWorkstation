@@ -417,6 +417,19 @@ public static class Launcher
                     arguments.Add($"user,id=network{i}");
                     break;
                 }
+                case NetworkType.Custom:
+                {
+                    var type = SanitizeQemuArgumentStringWithOptions(networkInterface.CustomType);
+
+                    if (string.IsNullOrEmpty(type))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomNetworkInterfaceType, i));
+
+                    if (type.Length != networkInterface.CustomType.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomNetworkInterfaceType, i));
+
+                    arguments.Add($"{type},id=network{i}");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
 
@@ -457,6 +470,19 @@ public static class Launcher
                 case NetworkCard.VirtIo:
                 {
                     arguments.Add($"virtio-net-pci,bus={pciBusType}.0,netdev=network{i}");
+                    break;
+                }
+                case NetworkCard.Custom:
+                {
+                    var card = SanitizeQemuArgumentStringWithOptions(networkInterface.CustomCard);
+
+                    if (string.IsNullOrEmpty(card))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomNetworkInterfaceCard, i));
+
+                    if (card.Length != networkInterface.CustomCard.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomNetworkInterfaceCard, i));
+
+                    arguments.Add($"{card},bus={pciBusType}.0,netdev=network{i}");
                     break;
                 }
                 default: throw new UnreachableException();

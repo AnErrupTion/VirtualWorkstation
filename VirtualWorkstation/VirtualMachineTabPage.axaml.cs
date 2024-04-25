@@ -145,6 +145,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom USB controller {index} version.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomNetworkInterfaceType:
+                {
+                    text.AppendLine($" * Empty custom network interface {index} type.");
+                    break;
+                }
+                case LauncherErrorType.EmptyCustomNetworkInterfaceCard:
+                {
+                    text.AppendLine($" * Empty custom network interface {index} card.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -198,6 +208,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomUsbControllerVersion:
                 {
                     text.AppendLine($" * Custom USB controller {index} version contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomNetworkInterfaceType:
+                {
+                    text.AppendLine($" * Custom network interface {index} type contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomNetworkInterfaceCard:
+                {
+                    text.AppendLine($" * Custom network interface {index} card contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

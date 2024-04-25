@@ -34,20 +34,35 @@ public partial class NetworkInterfaceSettingsPage : UserControl, ITabPage, ICont
 
         var networkInterface = vm.NetworkInterfaces[index];
         Type.SelectedIndex = (int)networkInterface.Type;
+        CustomType.Text = networkInterface.CustomType;
         Card.SelectedIndex = (int)networkInterface.Card;
+        CustomCard.Text = networkInterface.CustomCard;
         UsbController.SelectedIndex = (int)networkInterface.UsbController;
     }
 
     private void Type_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.NetworkInterfaces[Index].Type = (NetworkType)Type.SelectedIndex;
+    {
+        var type = (NetworkType)Type.SelectedIndex;
+        _vm.NetworkInterfaces[Index].Type = type;
+
+        CustomType.IsEnabled = type == NetworkType.Custom;
+    }
+
+    private void CustomType_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.NetworkInterfaces[Index].CustomType = CustomType.Text!;
 
     private void Card_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         var card = (NetworkCard)Card.SelectedIndex;
 
-        UsbController.IsEnabled = card == NetworkCard.Usb;
         _vm.NetworkInterfaces[Index].Card = card;
+
+        CustomCard.IsEnabled = card == NetworkCard.Custom;
+        UsbController.IsEnabled = card == NetworkCard.Usb;
     }
+
+    private void CustomCard_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.NetworkInterfaces[Index].CustomCard = CustomCard.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.NetworkInterfaces[Index].UsbController = (ulong)UsbController.SelectedIndex;

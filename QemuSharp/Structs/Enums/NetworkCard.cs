@@ -7,5 +7,6 @@ public enum NetworkCard
     E1000E,
     VMware,
     Usb,
-    VirtIo
+    VirtIo,
+    Custom
 }
