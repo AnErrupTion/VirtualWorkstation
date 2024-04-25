@@ -135,6 +135,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom audio host device type.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomProcessorModel:
+                {
+                    text.AppendLine(" * Empty custom processor model.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk path for disk {index}.");
@@ -178,6 +183,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomAudioHostDeviceType:
                 {
                     text.AppendLine(" * Custom audio host device type contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomProcessorModel:
+                {
+                    text.AppendLine(" * Custom processor model contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

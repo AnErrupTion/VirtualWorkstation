@@ -320,6 +320,19 @@ public static class Launcher
                 cpuModel.Append("max");
                 break;
             }
+            case ProcessorModel.Custom:
+            {
+                var model = SanitizeQemuArgumentString(vm.Processor.CustomModel);
+
+                if (string.IsNullOrEmpty(model))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomProcessorModel));
+
+                if (model.Length != vm.AudioHostDevice.CustomType.Length)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidCustomProcessorModel));
+
+                cpuModel.Append(model);
+                break;
+            }
             default: throw new UnreachableException();
         }
 

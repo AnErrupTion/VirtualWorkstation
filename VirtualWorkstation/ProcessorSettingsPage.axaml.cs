@@ -32,6 +32,7 @@ public partial class ProcessorSettingsPage : UserControl, ITabPage
         CheckForUnsupportedOptions();
 
         Model.SelectedIndex = (int)vm.Processor.Model;
+        CustomModel.Text = vm.Processor.CustomModel;
 
         for (var i = 0; i < vm.Processor.AddFeatures.Count; i++) AddedFeatures.Children.Add(new ProcessorFeatureControl(
             _vm.Architecture, ref EnableUnsupportedFeatureOptions, vm.Processor.AddFeatures, AddedFeatures.Children, i));
@@ -48,10 +49,15 @@ public partial class ProcessorSettingsPage : UserControl, ITabPage
     {
         _vm.Processor.Model = (ProcessorModel)Model.SelectedIndex;
         CheckForUnsupportedOptions();
+
+        CustomModel.IsEnabled = _vm.Processor.Model == ProcessorModel.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => CheckForUnsupportedOptions();
+
+    private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Processor.CustomModel = CustomModel.Text!;
 
     private void AddFeature_OnClick(object? _, RoutedEventArgs e)
     {

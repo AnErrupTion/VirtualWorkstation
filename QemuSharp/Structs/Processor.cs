@@ -5,6 +5,7 @@ namespace QemuSharp.Structs;
 public class Processor
 {
     public ProcessorModel Model { get; set; }
+    public string CustomModel { get; set; } = string.Empty;
     public List<ProcessorFeature> AddFeatures { get; set; } = [];
     public List<ProcessorFeature> RemoveFeatures { get; set; } = [];
     public ulong Sockets { get; set; }
@@ -16,6 +17,7 @@ public class Processor
     public Processor(Processor other)
     {
         Model = other.Model;
+        CustomModel = other.CustomModel;
         AddFeatures = [..other.AddFeatures];
         RemoveFeatures = [..other.RemoveFeatures];
         Sockets = other.Sockets;

@@ -38,7 +38,7 @@ public partial class ExportVirtualMachineWarning : Window
             ComponentTree.Items.Add(new TreeViewItem
             {
                 Header = new CheckBox { Content = "Display > Type", IsChecked = true },
-                Items = { new TreeViewItem { Header = "The display type is dependent on the host OS (it isn't Auto). If unchecked, it will be reverted to Auto." } },
+                Items = { new TreeViewItem { Header = "The display type may be dependent on the host OS (it isn't Auto). If unchecked, it will be reverted to Auto." } },
                 Tag = new ExportWarningComponent(ExportWarningComponentType.DisplayType, -1)
             });
 
@@ -50,7 +50,7 @@ public partial class ExportVirtualMachineWarning : Window
             ComponentTree.Items.Add(new TreeViewItem
             {
                 Header = new CheckBox { Content = "Audio Host > Type", IsChecked = true },
-                Items = { new TreeViewItem { Header = "The audio host type is dependent on the host OS (it isn't Auto). If unchecked, it will be reverted to Auto." } },
+                Items = { new TreeViewItem { Header = "The audio host type may be dependent on the host OS (it isn't Auto). If unchecked, it will be reverted to Auto." } },
                 Tag = new ExportWarningComponent(ExportWarningComponentType.AudioHostType, -1)
             });
 
