@@ -13,6 +13,7 @@ public enum LauncherErrorType
     EmptyCustomQemuArgumentParameterValue,
 
     InvalidName,
+    InvalidCustomChipsetModel,
     InvalidCustomQemuArgumentValue,
     InvalidCustomQemuArgumentParameterKey,
     InvalidCustomQemuArgumentParameterValue,

@@ -122,9 +122,13 @@ public static class Launcher
             }
             case ChipsetModel.Custom:
             {
-                var model = vm.Chipset.CustomModel;
+                var model = SanitizeQemuArgumentString(vm.Chipset.CustomModel);
+
                 if (string.IsNullOrEmpty(model))
                     errors.Add(new LauncherError(LauncherErrorType.EmptyCustomChipsetModel));
+
+                if (model.Length != vm.Chipset.CustomModel.Length)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidCustomChipsetModel));
 
                 pciBusType = vm.Chipset.ForceUseNormalPci ? "pci" : "pcie";
                 arguments.Add(model);
@@ -836,7 +840,7 @@ public static class Launcher
         var newName = new StringBuilder();
 
         foreach (var c in name)
-            if (char.IsAsciiLetterOrDigit(c) || c == ' ')
+            if (char.IsAsciiLetterOrDigit(c) || c is ' ' or '.')
                 newName.Append(c);
 
         return newName.ToString();

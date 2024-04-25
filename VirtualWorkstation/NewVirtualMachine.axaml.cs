@@ -172,7 +172,7 @@ public partial class NewVirtualMachine : Window
             return;
         }
 
-        if (Name.Text.Any(c => !char.IsAsciiLetterOrDigit(c) && c != ' '))
+        if (Name.Text.Any(c => !char.IsAsciiLetterOrDigit(c) && c is not ' ' and not '.'))
         {
             Status.Content = "Name contains invalid characters.";
             return;

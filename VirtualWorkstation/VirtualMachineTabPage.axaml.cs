@@ -155,6 +155,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Name contains invalid characters.");
                     break;
                 }
+                case LauncherErrorType.InvalidCustomChipsetModel:
+                {
+                    text.AppendLine(" * Custom chipset model contains invalid characters.");
+                    break;
+                }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:
                 {
                     text.AppendLine($" * Custom QEMU argument {index} value contains invalid characters.");
