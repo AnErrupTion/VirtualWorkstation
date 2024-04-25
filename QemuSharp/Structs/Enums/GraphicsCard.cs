@@ -6,5 +6,6 @@ public enum GraphicsCard
     Cirrus,
     Qxl,
     VMware,
-    VirtIo
+    VirtIo,
+    Custom
 }

@@ -5,6 +5,7 @@ namespace QemuSharp.Structs;
 public class GraphicsController
 {
     public GraphicsCard Card { get; set; }
+    public string CustomCard { get; set; } = string.Empty;
     public bool HasVgaEmulation { get; set; }
     public bool HasGraphicsAcceleration { get; set; }
 
@@ -13,6 +14,7 @@ public class GraphicsController
     public GraphicsController(GraphicsController other)
     {
         Card = other.Card;
+        CustomCard = other.CustomCard;
         HasVgaEmulation = other.HasVgaEmulation;
         HasGraphicsAcceleration = other.HasGraphicsAcceleration;
     }

@@ -155,6 +155,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom network interface {index} card.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomGraphicsControllerCard:
+                {
+                    text.AppendLine($" * Empty custom graphics controller {index} card.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -218,6 +223,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomNetworkInterfaceCard:
                 {
                     text.AppendLine($" * Custom network interface {index} card contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomGraphicsControllerCard:
+                {
+                    text.AppendLine($" * Custom graphics controller {index} card contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

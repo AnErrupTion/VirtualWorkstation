@@ -26,6 +26,7 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
 
         var graphicsController = vm.GraphicControllers[index];
         Card.SelectedIndex = (int)graphicsController.Card;
+        CustomCard.Text = graphicsController.CustomCard;
         HasVgaEmulation.IsChecked = graphicsController.HasVgaEmulation;
         HasGraphicsAcceleration.IsChecked = graphicsController.HasGraphicsAcceleration;
     }
@@ -34,6 +35,8 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
     {
         var card = (GraphicsCard)Card.SelectedIndex;
         _vm.GraphicControllers[Index].Card = card;
+
+        CustomCard.IsEnabled = card == GraphicsCard.Custom;
 
         switch (card)
         {
@@ -55,6 +58,7 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
                 break;
             }
             case GraphicsCard.VirtIo:
+            case GraphicsCard.Custom:
             {
                 HasVgaEmulation.IsEnabled = true;
                 HasGraphicsAcceleration.IsEnabled = true;
@@ -63,6 +67,9 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
             default: throw new UnreachableException();
         }
     }
+
+    private void CustomCard_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.GraphicControllers[Index].CustomCard = CustomCard.Text!;
 
     private void HasVgaEmulation_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => _vm.GraphicControllers[Index].HasVgaEmulation = HasVgaEmulation.IsChecked!.Value;

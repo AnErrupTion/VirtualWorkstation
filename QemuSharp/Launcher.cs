@@ -546,6 +546,22 @@ public static class Launcher
                     arguments.Add($"{virtIoGpuDevice},bus={pciBusType}.0");
                     break;
                 }
+                case GraphicsCard.Custom:
+                {
+                    var card = SanitizeQemuArgumentStringWithOptions(graphicsController.CustomCard);
+
+                    if (string.IsNullOrEmpty(card))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomGraphicsControllerCard, i));
+
+                    if (card.Length != graphicsController.CustomCard.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomGraphicsControllerCard, i));
+
+                    if (graphicsController.HasVgaEmulation) card += "-vga";
+                    if (graphicsController.HasGraphicsAcceleration) card += "-gl";
+
+                    arguments.Add($"{card},bus={pciBusType}.0");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
         }
