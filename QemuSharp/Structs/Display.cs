@@ -5,7 +5,6 @@ namespace QemuSharp.Structs;
 public class Display
 {
     public DisplayType Type { get; set; }
-
     public string CustomType { get; set; } = string.Empty;
 
     public Display() {}

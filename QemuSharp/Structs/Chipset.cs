@@ -5,9 +5,7 @@ namespace QemuSharp.Structs;
 public class Chipset
 {
     public ChipsetModel Model { get; set; }
-
     public string CustomModel { get; set; } = string.Empty;
-
     public bool ForceUseNormalPci { get; set; }
 
     public Chipset() {}
