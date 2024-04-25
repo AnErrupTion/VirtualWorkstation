@@ -10,5 +10,6 @@
         <ComboBoxItem>Virtual Machine Disk (VMDK)</ComboBoxItem>
         <ComboBoxItem>Virtual Hard Disk (VHDX)</ComboBoxItem>
         <ComboBoxItem>Raw disk image (RAW)</ComboBoxItem>
+        <ComboBoxItem>Custom</ComboBoxItem>
     </ComboBox>
 </UserControl>

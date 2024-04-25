@@ -29,7 +29,9 @@ public partial class DiskSettingsPage : UserControl, ITabPage
         var disk = vm.Disks[index];
         Controller.SelectedIndex = (int)disk.Controller;
         Format.SelectedIndex = (int)disk.Format;
+        CustomFormat.Text = disk.CustomFormat;
         CacheMethod.SelectedIndex = (int)disk.CacheMethod;
+        CustomCacheMethod.Text = disk.CustomCacheMethod;
         Path.Text = disk.Path;
         IsSsd.IsChecked = disk.IsSsd;
         IsCdrom.IsChecked = disk.IsCdrom;
@@ -72,10 +74,26 @@ public partial class DiskSettingsPage : UserControl, ITabPage
     }
 
     private void Format_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.Disks[Index].Format = (DiskFormat)Format.SelectedIndex;
+    {
+        var format = (DiskFormat)Format.SelectedIndex;
+        _vm.Disks[Index].Format = format;
+
+        CustomFormat.IsEnabled = format == DiskFormat.Custom;
+    }
+
+    private void CustomFormat_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Disks[Index].CustomFormat = CustomFormat.Text!;
 
     private void CacheMethod_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.Disks[Index].CacheMethod = (DiskCacheMethod)CacheMethod.SelectedIndex;
+    {
+        var cacheMethod = (DiskCacheMethod)CacheMethod.SelectedIndex;
+        _vm.Disks[Index].CacheMethod = cacheMethod;
+
+        CustomCacheMethod.IsEnabled = cacheMethod == DiskCacheMethod.Custom;
+    }
+
+    private void CustomCacheMethod_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Disks[Index].CustomCacheMethod = CustomCacheMethod.Text!;
 
     private void Path_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.Disks[Index].Path = Path.Text!;

@@ -6,6 +6,9 @@ public enum DiskManagerError
 
     QemuImgDoesNotExist,
 
+    EmptyCustomDiskFormat,
+    InvalidCustomDiskFormat,
+
     ProcessNotStarted,
     ProcessHadErrors,
 

@@ -11,6 +11,10 @@
             <Label Grid.Column="0">Format:</Label>
             <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="Format" SelectionChanged="Format_OnSelectionChanged"/>
         </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom format:</Label>
+            <TextBox Grid.Column="1" Name="CustomFormat" TextChanged="CustomFormat_OnTextChanged"/>
+        </Grid>
         <Grid ColumnDefinitions="*, *">
             <Label Grid.Column="0">Cache method:</Label>
             <ComboBox Grid.Column="1" Name="CacheMethod" SelectionChanged="CacheMethod_OnSelectionChanged">
@@ -19,7 +23,12 @@
                 <ComboBoxItem>Write through</ComboBoxItem>
                 <ComboBoxItem>Direct synchronization</ComboBoxItem>
                 <ComboBoxItem>Unsafe</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom cache method:</Label>
+            <TextBox Grid.Column="1" Name="CustomCacheMethod" TextChanged="CustomCacheMethod_OnTextChanged"/>
         </Grid>
         <Grid ColumnDefinitions="*, *, Auto">
             <Label Grid.Column="0">Path:</Label>

@@ -64,8 +64,12 @@
                         <Button Grid.Column="2" Name="NewDiskCustomPathBrowse" Click="NewDiskCustomPathBrowse_OnClick">...</Button>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">Type:</Label>
-                        <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="NewDiskType" SelectedIndex="0"/>
+                        <Label Grid.Column="0">Format:</Label>
+                        <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="NewDiskFormat" SelectedIndex="0" SelectionChanged="NewDiskFormat_OnSelectionChanged"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*, *, Auto">
+                        <Label Grid.Column="0">Custom format:</Label>
+                        <TextBox Grid.Column="1" Name="NewDiskCustomFormat" IsEnabled="False"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Size (in GiB):</Label>

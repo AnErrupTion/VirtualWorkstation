@@ -6,5 +6,6 @@ public enum DiskFormat
     Vdi,
     Vmdk,
     VhdX,
-    Raw
+    Raw,
+    Custom
 }

@@ -6,7 +6,7 @@ namespace QemuSharp;
 public static class DiskManager
 {
     public static DiskManagerError? CreateDisk(string customQemuPath, string workingDirectory, DiskFormat diskFormat,
-        string path, ByteSize size, bool preAllocate)
+        string customDiskFormat, string path, ByteSize size, bool preAllocate)
     {
         var qemuImgPath = !string.IsNullOrEmpty(customQemuPath)
             ? Path.Combine(customQemuPath, PathLookup.QemuImgFile)
@@ -22,8 +22,12 @@ public static class DiskManager
             DiskFormat.Vmdk => "vmdk",
             DiskFormat.VhdX => "vhdx",
             DiskFormat.Raw => "raw",
+            DiskFormat.Custom => customDiskFormat,
             _ => throw new UnreachableException()
         };
+
+        if (string.IsNullOrEmpty(format)) return DiskManagerError.EmptyCustomDiskFormat;
+        if (format.Any(c => !char.IsAsciiLetterOrDigit(c) && c is not '-' and not '_')) return DiskManagerError.InvalidCustomDiskFormat;
 
         var process = Process.Start(new ProcessStartInfo(qemuImgPath,
         [
@@ -61,6 +65,7 @@ public static class DiskManager
         if (process.StandardError.ReadToEnd().Length != 0) return (DiskManagerError.ProcessHadErrors, null);
 
         DiskFormat? diskFormat = null;
+        string? customDiskFormat = null;
         ByteSize? byteSize = null;
 
         var output = process.StandardOutput.ReadToEnd().Split('\n');
@@ -76,8 +81,9 @@ public static class DiskManager
                     "vmdk" => DiskFormat.Vmdk,
                     "vhdx" => DiskFormat.VhdX,
                     "raw" => DiskFormat.Raw,
-                    _ => throw new NotImplementedException()
+                    _ => DiskFormat.Custom
                 };
+                if (diskFormat == DiskFormat.Custom) customDiskFormat = format;
             }
             else if (line.StartsWith("virtual size: "))
             {
@@ -89,6 +95,6 @@ public static class DiskManager
         // Pattern matching allows us to do a strict equality check with null, without any operator overloading stuff
         if (diskFormat is null || byteSize is null) return (DiskManagerError.UnexpectedProcessOutput, null);
 
-        return (null, new DiskInfo(diskFormat.Value, byteSize));
+        return (null, new DiskInfo(diskFormat.Value, customDiskFormat, byteSize));
     }
 }

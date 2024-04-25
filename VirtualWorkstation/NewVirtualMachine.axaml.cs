@@ -80,6 +80,12 @@ public partial class NewVirtualMachine : Window
         NewDiskCustomPath.Text = storageFiles[0].Path.LocalPath;
     }
 
+    private void NewDiskFormat_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
+    {
+        var format = (DiskFormat)NewDiskFormat.SelectedIndex;
+        NewDiskCustomFormat.IsEnabled = format == DiskFormat.Custom;
+    }
+
     private void UseExistingDisk_OnIsCheckedChanged(object? _, RoutedEventArgs e)
     {
         if (!UseExistingDisk.IsChecked!.Value) return;
@@ -140,9 +146,9 @@ public partial class NewVirtualMachine : Window
             }
         }
 
-        if (NewDiskType.ComboBox.Items[(int)diskInfo!.Format] is not ComboBoxItem item) throw new UnreachableException();
+        if (NewDiskFormat.ComboBox.Items[(int)diskInfo!.Format] is not ComboBoxItem item) throw new UnreachableException();
 
-        ExistingDiskType.Tag = diskInfo.Format; // This allows us to retrieve it later
+        ExistingDiskType.Tag = diskInfo; // This allows us to retrieve it later
         ExistingDiskType.Content = item.Content;
         ExistingDiskSize.Content = diskInfo.Size.ToString();
 
@@ -202,9 +208,23 @@ public partial class NewVirtualMachine : Window
 
         if (CreateNewDisk.IsChecked!.Value)
         {
-            var vmDiskFormat = (DiskFormat)NewDiskType.SelectedIndex;
+            var vmDiskFormat = (DiskFormat)NewDiskFormat.SelectedIndex;
+            var vmDiskFormatString = vmDiskFormat.ToExtensionString(NewDiskCustomFormat.Text!);
+
+            if (string.IsNullOrEmpty(vmDiskFormatString))
+            {
+                Status.Content = "Custom disk format is empty.";
+                return;
+            }
+
+            if (vmDiskFormatString.Any(c => !char.IsAsciiLetterOrDigit(c) && c is not '-' and not '_'))
+            {
+                Status.Content = "Custom disk format contains invalid characters.";
+                return;
+            }
+
             var vmDiskPath = string.IsNullOrEmpty(NewDiskCustomPath.Text)
-                ? Path.Combine(Folder.Text!, Name.Text!, Path.ChangeExtension(Name.Text!, vmDiskFormat.ToExtensionString()))
+                ? Path.Combine(Folder.Text!, Name.Text!, Path.ChangeExtension(Name.Text!, vmDiskFormatString))
                 : NewDiskCustomPath.Text!;
 
             var vmDiskFolder = Path.GetDirectoryName(vmDiskPath);
@@ -217,11 +237,12 @@ public partial class NewVirtualMachine : Window
             Directory.CreateDirectory(vmDiskFolder);
 
             _currentProfile.Disks[0].Format = vmDiskFormat;
+            _currentProfile.Disks[0].CustomFormat = NewDiskCustomFormat.Text!;
             _currentProfile.Disks[0].Path = vmDiskPath;
 
             var error = DiskManager.CreateDisk(GlobalSettings.CustomQemuPath, vmDiskFolder,
-                vmDiskFormat, vmDiskPath, new ByteSize((ulong)NewDiskSize.Value!.Value, ByteSuffix.GiB),
-                PreAllocateNewDisk.IsChecked!.Value);
+                vmDiskFormat, NewDiskCustomFormat.Text!, vmDiskPath,
+                new ByteSize((ulong)NewDiskSize.Value!.Value, ByteSuffix.GiB), PreAllocateNewDisk.IsChecked!.Value);
 
             if (error != null)
             {
@@ -237,6 +258,9 @@ public partial class NewVirtualMachine : Window
                         Status.Content = "Error creating disk: QEMU image executable file does not exist.";
                         return;
                     }
+                    // String sanitization should've already been handled above
+                    case DiskManagerError.EmptyCustomDiskFormat:
+                    case DiskManagerError.InvalidCustomDiskFormat: throw new UnreachableException();
                     case DiskManagerError.ProcessNotStarted:
                     {
                         Status.Content = "Error creating disk: process failed to start.";
@@ -247,11 +271,8 @@ public partial class NewVirtualMachine : Window
                         Status.Content = "Error creating disk: process had errors.";
                         return;
                     }
-                    case DiskManagerError.UnexpectedProcessOutput:
-                    {
-                        // We don't get the output in CreateDisk()
-                        throw new UnreachableException();
-                    }
+                    // We don't get the output in CreateDisk()
+                    case DiskManagerError.UnexpectedProcessOutput: throw new UnreachableException();
                     default: throw new UnreachableException();
                 }
             }
@@ -271,8 +292,10 @@ public partial class NewVirtualMachine : Window
             // We should've already checked that in the TextChanged event of ExistingDiskPath
             if (string.IsNullOrEmpty(vmDiskFolder)) throw new UnreachableException();
 
-            if (ExistingDiskType.Tag is not DiskFormat diskFormat) throw new UnreachableException();
-            _currentProfile.Disks[0].Format = diskFormat;
+            if (ExistingDiskType.Tag is not DiskInfo diskInfo) throw new UnreachableException();
+
+            _currentProfile.Disks[0].Format = diskInfo.Format;
+            if (!string.IsNullOrEmpty(diskInfo.CustomFormat)) _currentProfile.Disks[0].CustomFormat = diskInfo.CustomFormat;
         }
 
         var vmConfigFile = Path.ChangeExtension(Name.Text!, "toml");

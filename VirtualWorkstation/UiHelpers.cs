@@ -52,13 +52,14 @@ public static class UiHelpers
         _ => throw new UnreachableException()
     };
 
-    public static string ToExtensionString(this DiskFormat format) => format switch
+    public static string ToExtensionString(this DiskFormat format, string customFormat) => format switch
     {
         DiskFormat.QCow2 => "qcow2",
         DiskFormat.Vdi => "vdi",
         DiskFormat.Vmdk => "vmdk",
         DiskFormat.VhdX => "vhdx",
         DiskFormat.Raw => "img",
+        DiskFormat.Custom => customFormat,
         _ => throw new UnreachableException()
     };
 

@@ -170,6 +170,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom disk controller {index} model.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomDiskFormat:
+                {
+                    text.AppendLine($" * Empty custom disk {index} format.");
+                    break;
+                }
+                case LauncherErrorType.EmptyCustomDiskCacheMethod:
+                {
+                    text.AppendLine($" * Empty custom disk {index} cache method.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -248,6 +258,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomDiskControllerModel:
                 {
                     text.AppendLine($" * Custom disk controller {index} model contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomDiskFormat:
+                {
+                    text.AppendLine($" * Custom disk {index} format contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomDiskCacheMethod:
+                {
+                    text.AppendLine($" * Custom disk {index} cache method contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

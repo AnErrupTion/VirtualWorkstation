@@ -682,6 +682,7 @@ public static class Launcher
                 DiskFormat.Vmdk => "vmdk",
                 DiskFormat.VhdX => "vhdx",
                 DiskFormat.Raw => "raw",
+                DiskFormat.Custom => SanitizeQemuArgumentString(disk.CustomFormat),
                 _ => throw new UnreachableException()
             };
             var cacheMethod = disk.CacheMethod switch
@@ -691,10 +692,24 @@ public static class Launcher
                 DiskCacheMethod.WriteThrough => "writethrough",
                 DiskCacheMethod.DirectSync => "directsync",
                 DiskCacheMethod.Unsafe => "unsafe",
+                DiskCacheMethod.Custom => SanitizeQemuArgumentString(disk.CustomCacheMethod),
                 _ => throw new UnreachableException()
             };
             var discard = disk.IsSsd ? "unmap" : "ignore";
             var path = disk.Path;
+            
+            if (string.IsNullOrEmpty(format))
+                errors.Add(new LauncherError(LauncherErrorType.EmptyCustomDiskFormat, i));
+
+            if (disk.Format == DiskFormat.Custom && format.Length != disk.CustomFormat.Length)
+                errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskFormat, i));
+
+            if (string.IsNullOrEmpty(cacheMethod))
+                errors.Add(new LauncherError(LauncherErrorType.EmptyCustomDiskCacheMethod, i));
+
+            if (disk.CacheMethod == DiskCacheMethod.Custom && cacheMethod.Length != disk.CustomCacheMethod.Length)
+                errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskCacheMethod, i));
+
             var quotedPath = addQuotes && path.Contains(' ') ? $"\"{path}\"" : path;
 
             if (string.IsNullOrEmpty(path))

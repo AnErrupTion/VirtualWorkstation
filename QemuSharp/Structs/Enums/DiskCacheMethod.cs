@@ -6,5 +6,6 @@ public enum DiskCacheMethod
     WriteBack,
     WriteThrough,
     DirectSync,
-    Unsafe
+    Unsafe,
+    Custom
 }
