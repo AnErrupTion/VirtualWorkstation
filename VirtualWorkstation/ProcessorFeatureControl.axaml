@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="VirtualWorkstation.ProcessorFeatureControl">
-    <Grid ColumnDefinitions="*, *">
+    <Grid ColumnDefinitions="*, Auto">
         <ComboBox Grid.Column="0" Name="Features" HorizontalAlignment="Stretch" SelectionChanged="Features_OnSelectionChanged">
             <ComboBoxItem>KVM flag (x86)</ComboBoxItem>
             <ComboBoxItem>Hyper-V pass-through (x86)</ComboBoxItem>
