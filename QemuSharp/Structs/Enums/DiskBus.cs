@@ -6,5 +6,6 @@ public enum DiskBus
     Sata,
     Nvme,
     Usb,
-    VirtIo
+    VirtIo,
+    Custom
 }

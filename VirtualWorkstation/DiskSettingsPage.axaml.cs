@@ -53,6 +53,7 @@ public partial class DiskSettingsPage : UserControl, ITabPage
             }
             case DiskBus.Nvme:
             case DiskBus.VirtIo:
+            case DiskBus.Custom:
             {
                 IsCdrom.IsEnabled = false;
                 IsCdrom.IsChecked = false;

@@ -788,6 +788,19 @@ public static class Launcher
                     arguments.Add($"virtio-blk-pci,bus={pciBusType}.0,drive=drive{i}");
                     break;
                 }
+                case DiskBus.Custom:
+                {
+                    var card = SanitizeQemuArgumentStringWithOptions(diskController.CustomModel);
+
+                    if (string.IsNullOrEmpty(card))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomDiskControllerModel, i));
+
+                    if (card.Length != diskController.CustomModel.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskControllerModel, i));
+
+                    arguments.Add($"{card},bus={pciBusType}.0,drive=drive{i}");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
         }

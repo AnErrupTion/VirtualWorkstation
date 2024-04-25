@@ -165,6 +165,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom audio controller {index} card.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomDiskControllerModel:
+                {
+                    text.AppendLine($" * Empty custom disk controller {index} model.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk {index} path.");
@@ -238,6 +243,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomAudioControllerCard:
                 {
                     text.AppendLine($" * Custom audio controller {index} card contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomDiskControllerModel:
+                {
+                    text.AppendLine($" * Custom disk controller {index} model contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:

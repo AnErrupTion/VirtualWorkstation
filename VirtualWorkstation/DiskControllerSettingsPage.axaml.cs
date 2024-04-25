@@ -34,16 +34,21 @@ public partial class DiskControllerSettingsPage : UserControl, ITabPage, IContro
 
         var diskController = vm.DiskControllers[index];
         Model.SelectedIndex = (int)diskController.Model;
+        CustomModel.Text = diskController.CustomModel;
         UsbController.SelectedIndex = (int)diskController.UsbController;
     }
 
     private void Model_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         var model = (DiskBus)Model.SelectedIndex;
-
-        UsbController.IsEnabled = model == DiskBus.Usb;
         _vm.DiskControllers[Index].Model = model;
+
+        CustomModel.IsEnabled = model == DiskBus.Custom;
+        UsbController.IsEnabled = model == DiskBus.Usb;
     }
+
+    private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.DiskControllers[Index].CustomModel = CustomModel.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.DiskControllers[Index].UsbController = (ulong)UsbController.SelectedIndex;
