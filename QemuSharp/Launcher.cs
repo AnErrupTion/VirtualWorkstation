@@ -987,18 +987,24 @@ public static class Launcher
                 CustomQemuArgumentType.TpmDevice => "-tpmdev",
                 CustomQemuArgumentType.CharacterDevice => "-chardev",
                 CustomQemuArgumentType.Drive => "-drive",
+                CustomQemuArgumentType.Boot => "-boot",
+                CustomQemuArgumentType.SmBios => "-smbios",
                 _ => throw new UnreachableException()
             });
 
             var argumentValue = SanitizeQemuArgumentString(customQemuArgument.Value);
+            var argument = new StringBuilder();
 
-            if (string.IsNullOrEmpty(argumentValue))
-                errors.Add(new LauncherError(LauncherErrorType.EmptyCustomQemuArgumentValue, i));
+            if (customQemuArgument.Type < CustomQemuArgumentType.Drive)
+            {
+                if (string.IsNullOrEmpty(argumentValue))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomQemuArgumentValue, i));
 
-            if (argumentValue.Length != customQemuArgument.Value.Length)
-                errors.Add(new LauncherError(LauncherErrorType.InvalidCustomQemuArgumentValue, i));
+                if (argumentValue.Length != customQemuArgument.Value.Length)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidCustomQemuArgumentValue, i));
 
-            var argument = new StringBuilder(argumentValue);
+                argument.Append(argumentValue);
+            }
 
             for (var j = 0; j < customQemuArgument.Parameters.Count; j++)
             {
@@ -1019,7 +1025,7 @@ public static class Launcher
                 if (value.Length != parameter.Value.Length)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidCustomQemuArgumentParameterValue, i, j));
 
-                argument.Append(',');
+                if (argument.Length != 0) argument.Append(',');
                 argument.Append(key);
                 argument.Append('=');
                 argument.Append(value);
@@ -1099,7 +1105,7 @@ public static class Launcher
         var newStr = new StringBuilder();
 
         foreach (var c in str)
-            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_')
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.')
                 newStr.Append(c);
 
         return newStr.ToString();
@@ -1110,7 +1116,7 @@ public static class Launcher
         var newStr = new StringBuilder();
 
         foreach (var c in str)
-            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '/' or '\\' or ':' or '.' or ' ')
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '/' or '\\' or ':' or '.' or ' ' or '(' or ')')
                 newStr.Append(c);
 
         return newStr.ToString();
@@ -1121,7 +1127,7 @@ public static class Launcher
         var newStr = new StringBuilder();
 
         foreach (var c in str)
-            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or ',')
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or ',')
                 newStr.Append(c);
 
         return newStr.ToString();

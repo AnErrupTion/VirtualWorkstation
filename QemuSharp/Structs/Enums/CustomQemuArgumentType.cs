@@ -5,5 +5,7 @@ public enum CustomQemuArgumentType
     Device,
     TpmDevice,
     CharacterDevice,
-    Drive
+    Drive,
+    Boot,
+    SmBios
 }

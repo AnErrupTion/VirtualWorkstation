@@ -37,7 +37,12 @@ public partial class CustomQemuArgumentSettingsPage : UserControl, ITabPage
     }
 
     private void Type_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.CustomQemuArguments[Index].Type = (CustomQemuArgumentType)Type.SelectedIndex;
+    {
+        var type = (CustomQemuArgumentType)Type.SelectedIndex;
+        _vm.CustomQemuArguments[Index].Type = type;
+
+        Value.IsEnabled = type < CustomQemuArgumentType.Drive;
+    }
 
     private void Value_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.CustomQemuArguments[Index].Value = Value.Text!;

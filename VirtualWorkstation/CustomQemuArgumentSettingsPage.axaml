@@ -10,6 +10,8 @@
                     <ComboBoxItem>TPM device</ComboBoxItem>
                     <ComboBoxItem>Character device</ComboBoxItem>
                     <ComboBoxItem>Drive</ComboBoxItem>
+                    <ComboBoxItem>Boot</ComboBoxItem>
+                    <ComboBoxItem>SMBIOS</ComboBoxItem>
                 </ComboBox>
             </Grid>
             <Grid ColumnDefinitions="*, *">
