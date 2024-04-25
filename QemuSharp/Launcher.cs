@@ -912,6 +912,9 @@ public static class Launcher
             arguments.Add(customQemuArgument.Type switch
             {
                 CustomQemuArgumentType.Device => "-device",
+                CustomQemuArgumentType.TpmDevice => "-tpmdev",
+                CustomQemuArgumentType.CharacterDevice => "-chardev",
+                CustomQemuArgumentType.Drive => "-drive",
                 _ => throw new UnreachableException()
             });
 
@@ -936,7 +939,7 @@ public static class Launcher
                 if (key.Length != parameter.Key.Length)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidCustomQemuArgumentParameterKey, i, j));
 
-                var value = SanitizeQemuArgumentString(parameter.Value);
+                var value = SanitizeQemuParameterValueString(parameter.Value);
 
                 if (string.IsNullOrEmpty(value))
                     errors.Add(new LauncherError(LauncherErrorType.EmptyCustomQemuArgumentParameterValue, i, j));
@@ -1025,6 +1028,17 @@ public static class Launcher
 
         foreach (var c in str)
             if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_')
+                newStr.Append(c);
+
+        return newStr.ToString();
+    }
+
+    private static string SanitizeQemuParameterValueString(string str)
+    {
+        var newStr = new StringBuilder();
+
+        foreach (var c in str)
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '/' or '.' or ' ')
                 newStr.Append(c);
 
         return newStr.ToString();

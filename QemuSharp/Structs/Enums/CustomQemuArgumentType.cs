@@ -2,5 +2,8 @@ namespace QemuSharp.Structs.Enums;
 
 public enum CustomQemuArgumentType
 {
-    Device
+    Device,
+    TpmDevice,
+    CharacterDevice,
+    Drive
 }
