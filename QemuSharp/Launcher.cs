@@ -41,7 +41,24 @@ public static class Launcher
                 if (string.IsNullOrEmpty(path)) errors.Add(new LauncherError(LauncherErrorType.EmptyFirmwarePath));
 
                 nvRamPath = PathLookup.LookupFiles(PathLookup.EfiPaths, PathLookup.EfiNvramFiles);
-                if (string.IsNullOrEmpty(nvRamPath)) errors.Add(new LauncherError(LauncherErrorType.EmptyFirmwarePath));
+                if (string.IsNullOrEmpty(nvRamPath)) errors.Add(new LauncherError(LauncherErrorType.EmptyEfiNvRamPath));
+
+                arguments.Add("-drive");
+                arguments.Add($"if=pflash,readonly=on,file={quotedPath}");
+
+                arguments.Add("-drive");
+                arguments.Add($"if=pflash,format=raw,file={Path.GetFileName(nvRamPath)}");
+                break;
+            }
+            case FirmwareType.EfiSecureBoot:
+            {
+                var path = PathLookup.LookupFiles(PathLookup.EfiPaths, PathLookup.EfiSecureBootFiles);
+                var quotedPath = addQuotes && path.Contains(' ') ? $"\"{path}\"" : path;
+
+                if (string.IsNullOrEmpty(path)) errors.Add(new LauncherError(LauncherErrorType.EmptyCustomEfiSecureBootFirmwarePath));
+
+                nvRamPath = PathLookup.LookupFiles(PathLookup.EfiPaths, PathLookup.EfiSecureBootNvramFiles);
+                if (string.IsNullOrEmpty(nvRamPath)) errors.Add(new LauncherError(LauncherErrorType.EmptyCustomEfiSecureBootNvRamPath));
 
                 arguments.Add("-drive");
                 arguments.Add($"if=pflash,readonly=on,file={quotedPath}");

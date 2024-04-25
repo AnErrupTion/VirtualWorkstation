@@ -28,11 +28,24 @@ public static class PathLookup
         "OVMF_CODE.fd",
         "OVMF.fd"
     ];
+    
+    public static readonly string[] EfiSecureBootFiles =
+    [
+        "edk2-x86_64-code.secboot.fd",
+        "OVMF_CODE.secboot.fd",
+        "OVMF.secboot.fd"
+    ];
 
     public static readonly string[] EfiNvramFiles =
     [
         "edk2-i386-vars.fd",
         "OVMF_VARS.fd"
+    ];
+
+    public static readonly string[] EfiSecureBootNvramFiles =
+    [
+        "edk2-i386-vars.secboot.fd",
+        "OVMF_VARS.secboot.fd"
     ];
 
     public static readonly string[] QemuPaths =

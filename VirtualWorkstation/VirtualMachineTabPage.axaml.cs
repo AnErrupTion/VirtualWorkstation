@@ -131,9 +131,19 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom firmware path.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomEfiSecureBootFirmwarePath:
+                {
+                    text.AppendLine(" * Empty custom EFI Secure Boot firmware path.");
+                    break;
+                }
                 case LauncherErrorType.EmptyCustomEfiNvRamPath:
                 {
                     text.AppendLine(" * Empty custom EFI NVRAM path.");
+                    break;
+                }
+                case LauncherErrorType.EmptyCustomEfiSecureBootNvRamPath:
+                {
+                    text.AppendLine(" * Empty custom EFI Secure Boot NVRAM path.");
                     break;
                 }
                 case LauncherErrorType.EmptyCustomChipsetModel:

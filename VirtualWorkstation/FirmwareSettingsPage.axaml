@@ -6,6 +6,7 @@
             <Label Grid.Column="0">Type:</Label>
             <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
                 <ComboBoxItem>EFI</ComboBoxItem>
+                <ComboBoxItem>EFI (Secure Boot)</ComboBoxItem>
                 <ComboBoxItem>Custom PFlash</ComboBoxItem>
 
                 <ComboBoxItem>Legacy BIOS (x86)</ComboBoxItem>
