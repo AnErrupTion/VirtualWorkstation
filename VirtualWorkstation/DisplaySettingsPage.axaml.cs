@@ -26,16 +26,22 @@ public partial class DisplaySettingsPage : UserControl, ITabPage
         CheckForUnsupportedOptions();
 
         Type.SelectedIndex = (int)vm.Display.Type;
+        CustomType.Text = _vm.Display.CustomType;
     }
 
     private void Type_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
     {
         _vm.Display.Type = (DisplayType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
+
+        CustomType.IsEnabled = _vm.Display.Type == DisplayType.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => CheckForUnsupportedOptions();
+
+    private void CustomType_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Display.CustomType = CustomType.Text!;
 
     private void CheckForUnsupportedOptions()
     {

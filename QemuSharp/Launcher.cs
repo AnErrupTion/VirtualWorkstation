@@ -190,6 +190,19 @@ public static class Launcher
                 arguments.Add("dbus,gl=on");
                 break;
             }
+            case DisplayType.Custom:
+            {
+                var type = SanitizeQemuArgumentStringWithOptions(vm.Display.CustomType);
+
+                if (string.IsNullOrEmpty(type))
+                    errors.Add(new LauncherError(LauncherErrorType.EmptyCustomDisplayType));
+
+                if (type.Length != vm.Display.CustomType.Length)
+                    errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDisplayType));
+
+                arguments.Add(type);
+                break;
+            }
             default: throw new UnreachableException();
         }
 
@@ -852,6 +865,17 @@ public static class Launcher
 
         foreach (var c in str)
             if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_')
+                newStr.Append(c);
+
+        return newStr.ToString();
+    }
+
+    private static string SanitizeQemuArgumentStringWithOptions(string str)
+    {
+        var newStr = new StringBuilder();
+
+        foreach (var c in str)
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or ',')
                 newStr.Append(c);
 
         return newStr.ToString();

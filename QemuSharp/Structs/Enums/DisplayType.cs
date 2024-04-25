@@ -8,5 +8,6 @@ public enum DisplayType
     Gtk,
     Spice,
     Cocoa,
-    DBus
+    DBus,
+    Custom
 }

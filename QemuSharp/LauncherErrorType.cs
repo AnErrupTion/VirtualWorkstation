@@ -6,6 +6,7 @@ public enum LauncherErrorType
     EmptyFirmwarePath,
     EmptyCustomFirmwarePath,
     EmptyCustomChipsetModel,
+    EmptyCustomDisplayType,
     EmptyDiskPath,
     EmptyQemuPath,
     EmptyCustomQemuArgumentValue,
@@ -14,6 +15,7 @@ public enum LauncherErrorType
 
     InvalidName,
     InvalidCustomChipsetModel,
+    InvalidCustomDisplayType,
     InvalidCustomQemuArgumentValue,
     InvalidCustomQemuArgumentParameterKey,
     InvalidCustomQemuArgumentParameterValue,

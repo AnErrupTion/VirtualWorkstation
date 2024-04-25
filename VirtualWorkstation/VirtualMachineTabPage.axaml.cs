@@ -125,6 +125,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom chipset model.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomDisplayType:
+                {
+                    text.AppendLine(" * Empty custom display type.");
+                    break;
+                }
                 case LauncherErrorType.EmptyDiskPath:
                 {
                     text.AppendLine($" * Empty disk path for disk {index}.");
@@ -158,6 +163,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomChipsetModel:
                 {
                     text.AppendLine(" * Custom chipset model contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomDisplayType:
+                {
+                    text.AppendLine(" * Custom display type contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomQemuArgumentValue:
