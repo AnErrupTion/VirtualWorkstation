@@ -58,10 +58,17 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
                 break;
             }
             case GraphicsCard.VirtIo:
-            case GraphicsCard.Custom:
             {
                 HasVgaEmulation.IsEnabled = true;
                 HasGraphicsAcceleration.IsEnabled = true;
+                break;
+            }
+            case GraphicsCard.Custom:
+            {
+                HasVgaEmulation.IsEnabled = false;
+                HasVgaEmulation.IsChecked = false;
+                HasGraphicsAcceleration.IsEnabled = false;
+                HasGraphicsAcceleration.IsChecked = false;
                 break;
             }
             default: throw new UnreachableException();

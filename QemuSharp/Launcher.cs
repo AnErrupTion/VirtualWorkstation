@@ -556,8 +556,11 @@ public static class Launcher
                     if (card.Length != graphicsController.CustomCard.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomGraphicsControllerCard, i));
 
-                    if (graphicsController.HasVgaEmulation) card += "-vga";
-                    if (graphicsController.HasGraphicsAcceleration) card += "-gl";
+                    if (graphicsController.HasVgaEmulation)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidVgaEmulationOptionForGraphicsCard, i));
+
+                    if (graphicsController.HasGraphicsAcceleration)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidGraphicsAccelerationOptionForGraphicsCard, i));
 
                     arguments.Add($"{card},bus={pciBusType}.0");
                     break;
