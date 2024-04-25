@@ -34,11 +34,12 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
         _vm.Firmware.Type = (FirmwareType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
 
-        var isCustomType = _vm.Firmware.Type is FirmwareType.CustomPFlash or FirmwareType.X86CustomPc;
+        var isCustomPFlash = _vm.Firmware.Type == FirmwareType.CustomPFlash;
+        var isCustomType = isCustomPFlash || _vm.Firmware.Type == FirmwareType.X86CustomPc;
         CustomPath.IsEnabled = isCustomType;
         Browse.IsEnabled = isCustomType;
-        CustomNvRamPath.IsEnabled = isCustomType;
-        BrowseNvRam.IsEnabled = isCustomType;
+        CustomNvRamPath.IsEnabled = isCustomPFlash;
+        BrowseNvRam.IsEnabled = isCustomPFlash;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
