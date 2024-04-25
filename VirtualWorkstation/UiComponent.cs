@@ -8,6 +8,7 @@ public enum UiComponent
     Display,
     AudioHost,
     Processor,
+    TrustedPlatformModule,
     UsbController,
     NetworkInterface,
     GraphicsController,

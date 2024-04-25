@@ -15,8 +15,9 @@ public partial class VirtualMachineSettings : Window
     public bool HasSaved { get; private set; }
 
     // We want to store every component from "UsbController" to "CustomQemuArgument" included, so we subtract
-    // "CustomQemuArgument" to "Processor" since our enum values start at 0 (and "Processor" is not a controller).
-    public List<int> ComponentIndices { get; } = new(UiComponent.CustomQemuArgument - UiComponent.Processor);
+    // "CustomQemuArgument" to "TrustedPlatformModule" since our enum values start at 0 (and "TrustedPlatformModule" is
+    // not a controller).
+    public List<int> ComponentIndices { get; } = new(UiComponent.CustomQemuArgument - UiComponent.TrustedPlatformModule);
 
     private VirtualMachine _vm;
 
@@ -34,6 +35,7 @@ public partial class VirtualMachineSettings : Window
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Display.ToUiString(), Tag = new DisplaySettingsPage(ref vm) });
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.AudioHost.ToUiString(), Tag = new AudioHostSettingsPage(ref vm) });
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Processor.ToUiString(), Tag = new ProcessorSettingsPage(ref vm) });
+        ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.TrustedPlatformModule.ToUiString(), Tag = new TrustedPlatformModuleSettingsPage(ref vm) });
 
         for (var i = 0; i < vm.UsbControllers.Count; i++)
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.UsbController.ToUiString()} {i}", Tag = new UsbControllerSettingsPage(ref vm, i) });
@@ -80,7 +82,7 @@ public partial class VirtualMachineSettings : Window
         if (e.AddedItems[0] is not ListBoxItem item) throw new UnreachableException();
         if (item.Tag is not ITabPage settingsPage) throw new UnreachableException();
 
-        Remove.IsEnabled = ComponentList.SelectedIndex > (int)UiComponent.Processor;
+        Remove.IsEnabled = ComponentList.SelectedIndex > (int)UiComponent.TrustedPlatformModule;
 
         if (settingsPage.Opened)
         {

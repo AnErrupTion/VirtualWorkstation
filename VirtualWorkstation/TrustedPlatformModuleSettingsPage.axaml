@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.TrustedPlatformModuleSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Device type:</Label>
+            <ComboBox Grid.Column="1" Name="DeviceType" SelectionChanged="DeviceType_OnSelectionChanged">
+                <ComboBoxItem>None</ComboBoxItem>
+                <ComboBoxItem>Emulated</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Type:</Label>
+            <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
+                <ComboBoxItem>TIS (v1.2+)</ComboBoxItem>
+                <ComboBoxItem>CRB (v2.0+)</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+    </StackPanel>
+</UserControl>

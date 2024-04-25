@@ -397,6 +397,42 @@ public static class Launcher
         arguments.Add("-smp");
         arguments.Add($"sockets={vm.Processor.Sockets},cores={vm.Processor.Cores},threads={vm.Processor.Threads}");
 
+        if (vm.TrustedPlatformModule.DeviceType != TpmDeviceType.None)
+        {
+            arguments.Add("-tpmdev");
+            switch (vm.TrustedPlatformModule.DeviceType)
+            {
+                case TpmDeviceType.Emulated:
+                {
+                    arguments.Add("emulator,id=tpmdev,chardev=chartpm");
+
+                    var socketPath = Path.Combine(Path.GetTempPath(), $"swtpm-sock-{vm.Name}");
+                    var quotedSocketPath = addQuotes && socketPath.Contains(' ') ? $"\"{socketPath}\"" : socketPath;
+
+                    arguments.Add("-chardev");
+                    arguments.Add($"socket,id=chartpm,path={quotedSocketPath}");
+                    break;
+                }
+                default: throw new UnreachableException();
+            }
+
+            arguments.Add("-device");
+            switch (vm.TrustedPlatformModule.Type)
+            {
+                case TpmType.Tis:
+                {
+                    arguments.Add("tpm-tis,tpmdev=tpmdev");
+                    break;
+                }
+                case TpmType.Crb:
+                {
+                    arguments.Add("tpm-crb,tpmdev=tpmdev");
+                    break;
+                }
+                default: throw new UnreachableException();
+            }
+        }
+
         for (var i = 0; i < vm.UsbControllers.Count; i++)
         {
             var usbController = vm.UsbControllers[i];

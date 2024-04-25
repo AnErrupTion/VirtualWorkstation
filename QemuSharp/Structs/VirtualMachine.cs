@@ -13,6 +13,7 @@ public class VirtualMachine
     public Display Display { get; set; }
     public AudioHostDevice AudioHostDevice { get; set; }
     public Processor Processor { get; set; }
+    public TrustedPlatformModule TrustedPlatformModule { get; set; }
 
     public List<UsbController> UsbControllers { get; set; } = [];
     public List<NetworkInterface> NetworkInterfaces { get; set; } = [];
@@ -37,6 +38,7 @@ public class VirtualMachine
         Display = new Display(other.Display);
         AudioHostDevice = new AudioHostDevice(other.AudioHostDevice);
         Processor = new Processor(other.Processor);
+        TrustedPlatformModule = new TrustedPlatformModule(other.TrustedPlatformModule);
 
         foreach (var usbController in other.UsbControllers) UsbControllers.Add(new UsbController(usbController));
         foreach (var networkInterface in other.NetworkInterfaces) NetworkInterfaces.Add(new NetworkInterface(networkInterface));

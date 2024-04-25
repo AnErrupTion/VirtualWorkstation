@@ -40,6 +40,7 @@ public static class UiHelpers
         UiComponent.Display => "Display",
         UiComponent.AudioHost => "Audio Host",
         UiComponent.Processor => "Processor",
+        UiComponent.TrustedPlatformModule => "Trusted Platform Module",
         UiComponent.UsbController => "USB Controller",
         UiComponent.NetworkInterface => "Network Interface",
         UiComponent.GraphicsController => "Graphics Controller",
