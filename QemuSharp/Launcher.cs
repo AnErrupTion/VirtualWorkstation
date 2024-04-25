@@ -322,7 +322,7 @@ public static class Launcher
             }
             case ProcessorModel.Custom:
             {
-                var model = SanitizeQemuArgumentString(vm.Processor.CustomModel);
+                var model = SanitizeQemuArgumentStringWithOptions(vm.Processor.CustomModel);
 
                 if (string.IsNullOrEmpty(model))
                     errors.Add(new LauncherError(LauncherErrorType.EmptyCustomProcessorModel));
