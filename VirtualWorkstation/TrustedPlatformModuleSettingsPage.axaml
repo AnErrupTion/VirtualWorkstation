@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:virtualWorkstation="clr-namespace:VirtualWorkstation"
              x:Class="VirtualWorkstation.TrustedPlatformModuleSettingsPage">
     <StackPanel>
         <Grid ColumnDefinitions="*, *">
@@ -7,14 +8,28 @@
             <ComboBox Grid.Column="1" Name="DeviceType" SelectionChanged="DeviceType_OnSelectionChanged">
                 <ComboBoxItem>None</ComboBoxItem>
                 <ComboBoxItem>Emulated</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom device type:</Label>
+            <TextBox Grid.Column="1" Name="CustomDeviceType" TextChanged="CustomDeviceType_OnTextChanged"/>
         </Grid>
         <Grid ColumnDefinitions="*, *">
             <Label Grid.Column="0">Type:</Label>
             <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
                 <ComboBoxItem>TIS (v1.2+)</ComboBoxItem>
                 <ComboBoxItem>CRB (v2.0+)</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom type:</Label>
+            <TextBox Grid.Column="1" Name="CustomType" TextChanged="CustomType_OnTextChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom type bus:</Label>
+            <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
         </Grid>
     </StackPanel>
 </UserControl>

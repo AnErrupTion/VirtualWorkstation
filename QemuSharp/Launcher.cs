@@ -404,13 +404,26 @@ public static class Launcher
             {
                 case TpmDeviceType.Emulated:
                 {
-                    arguments.Add("emulator,id=tpmdev,chardev=chartpm");
+                    arguments.Add("emulator,chardev=chartpm,id=tpmdev");
 
                     var socketPath = Path.Combine(Path.GetTempPath(), $"swtpm-sock-{vm.Name}");
                     var quotedSocketPath = addQuotes && socketPath.Contains(' ') ? $"\"{socketPath}\"" : socketPath;
 
                     arguments.Add("-chardev");
                     arguments.Add($"socket,id=chartpm,path={quotedSocketPath}");
+                    break;
+                }
+                case TpmDeviceType.Custom:
+                {
+                    var deviceType = SanitizeQemuArgumentStringWithOptions(vm.TrustedPlatformModule.CustomDeviceType);
+
+                    if (string.IsNullOrEmpty(deviceType))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomTpmDeviceType));
+
+                    if (deviceType.Length != vm.TrustedPlatformModule.CustomDeviceType.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomTpmDeviceType));
+
+                    arguments.Add($"{deviceType},id=tpmdev");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -421,12 +434,26 @@ public static class Launcher
             {
                 case TpmType.Tis:
                 {
-                    arguments.Add("tpm-tis,tpmdev=tpmdev");
+                    arguments.Add("tpm-tis,bus=isa.0,tpmdev=tpmdev");
                     break;
                 }
                 case TpmType.Crb:
                 {
                     arguments.Add("tpm-crb,tpmdev=tpmdev");
+                    break;
+                }
+                case TpmType.Custom:
+                {
+                    var type = SanitizeQemuArgumentStringWithOptions(vm.TrustedPlatformModule.CustomType);
+
+                    if (string.IsNullOrEmpty(type))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomTpmType));
+
+                    if (type.Length != vm.TrustedPlatformModule.CustomType.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomTpmType));
+
+                    var busType = GetCustomBusType(vm.TrustedPlatformModule.CustomTypeBus, pciBusType);
+                    arguments.Add($"{type},bus={busType}.0,tpmdev=tpmdev");
                     break;
                 }
                 default: throw new UnreachableException();

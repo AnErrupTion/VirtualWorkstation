@@ -186,6 +186,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty custom processor model.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomTpmDeviceType:
+                {
+                    text.AppendLine(" * Empty custom TPM device type.");
+                    break;
+                }
+                case LauncherErrorType.EmptyCustomTpmType:
+                {
+                    text.AppendLine(" * Empty custom TPM type.");
+                    break;
+                }
                 case LauncherErrorType.EmptyCustomUsbControllerVersion:
                 {
                     text.AppendLine($" * Empty custom USB controller {index} version.");
@@ -284,6 +294,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomProcessorModel:
                 {
                     text.AppendLine(" * Custom processor model contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomTpmDeviceType:
+                {
+                    text.AppendLine(" * Custom TPM device type contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomTpmType:
+                {
+                    text.AppendLine(" * Custom TPM type contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomUsbControllerVersion:

@@ -4,4 +4,5 @@ public enum TpmType
 {
     Tis,
     Crb,
+    Custom
 }
