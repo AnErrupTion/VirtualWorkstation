@@ -21,5 +21,15 @@
         <CheckBox Name="ForceUseNormalPci" IsCheckedChanged="ForceUseNormalPci_OnIsCheckedChanged">
             Force use normal PCI (instead of PCI Express)
         </CheckBox>
+        <StackPanel Name="Q35Options">
+            <CheckBox Name="Q35EnablePs2Emulation" IsCheckedChanged="Q35EnablePs2Emulation_OnIsCheckedChanged">
+                Enable PS/2 emulation
+            </CheckBox>
+        </StackPanel>
+        <StackPanel Name="I440FxOptions">
+            <CheckBox Name="I440FxEnablePs2Emulation" IsCheckedChanged="I440FxEnablePs2Emulation_OnIsCheckedChanged">
+                Enable PS/2 emulation
+            </CheckBox>
+        </StackPanel>
     </StackPanel>
 </UserControl>

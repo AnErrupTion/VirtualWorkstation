@@ -140,8 +140,12 @@ public static class Launcher
                 if (vm.Chipset.ForceUseNormalPci)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
 
+                var chipset = new StringBuilder("q35");
+                if (vm.Chipset.Q35Options != null)
+                    chipset.Append($",i8042={(vm.Chipset.Q35Options.EnablePs2Emulation ? "on" : "off")}");
+
                 pciBusType = "pcie";
-                arguments.Add("q35");
+                arguments.Add(chipset.ToString());
                 break;
             }
             case ChipsetModel.X86I440Fx:
@@ -152,8 +156,12 @@ public static class Launcher
                 if (!vm.Chipset.ForceUseNormalPci)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
 
+                var chipset = new StringBuilder("pc");
+                if (vm.Chipset.I440FxOptions != null)
+                    chipset.Append($",i8042={(vm.Chipset.I440FxOptions.EnablePs2Emulation ? "on" : "off")}");
+
                 pciBusType = "pci";
-                arguments.Add("pc");
+                arguments.Add(chipset.ToString());
                 break;
             }
             case ChipsetModel.Custom:

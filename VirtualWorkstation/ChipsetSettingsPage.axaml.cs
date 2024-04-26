@@ -27,6 +27,9 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         Model.SelectedIndex = (int)vm.Chipset.Model;
         CustomModel.Text = vm.Chipset.CustomModel;
         ForceUseNormalPci.IsChecked = vm.Chipset.ForceUseNormalPci;
+
+        if (vm.Chipset.Q35Options != null) Q35EnablePs2Emulation.IsChecked = vm.Chipset.Q35Options.EnablePs2Emulation;
+        if (vm.Chipset.I440FxOptions != null) I440FxEnablePs2Emulation.IsChecked = vm.Chipset.I440FxOptions.EnablePs2Emulation;
     }
 
     private void Model_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -38,6 +41,9 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         CustomModel.IsEnabled = isCustomModel;
         ForceUseNormalPci.IsEnabled = isCustomModel;
         if (!isCustomModel) ForceUseNormalPci.IsChecked = _vm.Chipset.Model == ChipsetModel.X86I440Fx;
+
+        Q35Options.IsVisible = _vm.Chipset.Model == ChipsetModel.X86Q35;
+        I440FxOptions.IsVisible = _vm.Chipset.Model == ChipsetModel.X86I440Fx;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)
@@ -48,6 +54,18 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
 
     private void ForceUseNormalPci_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => _vm.Chipset.ForceUseNormalPci = ForceUseNormalPci.IsChecked!.Value;
+
+    private void Q35EnablePs2Emulation_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+    {
+        _vm.Chipset.Q35Options ??= new Q35Options();
+        _vm.Chipset.Q35Options.EnablePs2Emulation = Q35EnablePs2Emulation.IsChecked!.Value;
+    }
+
+    private void I440FxEnablePs2Emulation_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+    {
+        _vm.Chipset.I440FxOptions ??= new I440FxOptions();
+        _vm.Chipset.I440FxOptions.EnablePs2Emulation = I440FxEnablePs2Emulation.IsChecked!.Value;
+    }
 
     private void CheckForUnsupportedOptions()
     {
