@@ -894,7 +894,28 @@ public static class Launcher
                     arguments.Add($"floppy,drive=drive{i}");
                     break;
                 }
-                case DiskBus.Ide:
+                case DiskBus.Piix3Ide:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"piix3-ide,bus={pciBusType}.0,id=pata{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var insertedDrives = insertedDriveCount[usedController.Controller];
+                    insertedDriveCount[usedController.Controller] = insertedDrives + 1;
+
+                    if (insertedDrives >= 2)
+                        errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, i));
+
+                    var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
+                    arguments.Add($"{ideDevice},bus=pata{usedController.Controller}.{insertedDrives},drive=drive{i}");
+                    break;
+                }
+                case DiskBus.Piix4Ide:
                 {
                     if (usedController.Removable)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));

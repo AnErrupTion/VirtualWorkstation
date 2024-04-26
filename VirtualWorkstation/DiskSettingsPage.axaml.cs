@@ -45,7 +45,8 @@ public partial class DiskSettingsPage : UserControl, ITabPage
         var diskController = _vm.DiskControllers[Controller.SelectedIndex];
         switch (diskController.Model)
         {
-            case DiskBus.Ide:
+            case DiskBus.Piix3Ide:
+            case DiskBus.Piix4Ide:
             case DiskBus.Sata:
             {
                 IsCdrom.IsEnabled = true;

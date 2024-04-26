@@ -3,7 +3,8 @@ namespace QemuSharp.Structs.Enums;
 public enum DiskBus
 {
     Floppy,
-    Ide,
+    Piix3Ide,
+    Piix4Ide,
     Sata,
     Nvme,
     Usb,
