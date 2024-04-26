@@ -7,8 +7,7 @@ namespace QemuSharp;
 
 public static class Launcher
 {
-    public static (List<LauncherError>, string?, string?, List<string>) GetArguments(VirtualMachine vm, string customQemuPath,
-        bool addQuotes)
+    public static LauncherResult GetArguments(VirtualMachine vm, string customQemuPath, bool addQuotes)
     {
         var name = SanitizeName(vm.Name);
         var quotedName = addQuotes && name.Contains(' ') ? $"\"{name}\"" : name;
@@ -1088,8 +1087,7 @@ public static class Launcher
             arguments.Add(argument.ToString());
         }
 
-        var qemuSystemPath = !string.IsNullOrEmpty(customQemuPath)
-            ? customQemuPath
+        var qemuSystemPath = !string.IsNullOrEmpty(customQemuPath) ? customQemuPath
             : Path.GetDirectoryName(PathLookup.GetQemuImgPath());
         var quotedQemuSystemPath = qemuSystemPath;
 
@@ -1107,7 +1105,7 @@ public static class Launcher
             quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;
         } else errors.Add(new LauncherError(LauncherErrorType.EmptyQemuPath));
 
-        return (errors, quotedQemuSystemPath, nvRamPath, arguments);
+        return new LauncherResult(errors, quotedQemuSystemPath, nvRamPath, arguments);
     }
 
     private static bool IsFeatureUnsupported(Architecture architecture, ProcessorFeature feature)
