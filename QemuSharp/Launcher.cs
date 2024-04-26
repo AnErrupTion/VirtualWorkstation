@@ -1223,7 +1223,7 @@ public static class Launcher
         var newStr = new StringBuilder();
 
         foreach (var c in str)
-            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or ',')
+            if (char.IsAsciiLetterOrDigit(c) || c is '-' or '_' or '.' or ',' or '=')
                 newStr.Append(c);
 
         return newStr.ToString();
