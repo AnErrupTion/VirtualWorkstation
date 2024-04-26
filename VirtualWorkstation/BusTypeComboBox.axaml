@@ -5,6 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VirtualWorkstation.BusTypeComboBox">
     <ComboBox Name="ComboBox">
+        <ComboBoxItem>Default</ComboBoxItem>
         <ComboBoxItem>ISA</ComboBoxItem>
         <ComboBoxItem>PCI</ComboBoxItem>
         <ComboBoxItem>USB</ComboBoxItem>

@@ -453,7 +453,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomTpmType));
 
                     var busType = GetCustomBusType(vm.TrustedPlatformModule.CustomTypeBus, pciBusType);
-                    arguments.Add($"{type},bus={busType}.0,tpmdev=tpmdev");
+                    arguments.Add($"{type}{busType},tpmdev=tpmdev");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -498,7 +498,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomUsbControllerVersion, i));
 
                     var busType = GetCustomBusType(usbController.CustomVersionBus, pciBusType);
-                    arguments.Add($"{model},bus={busType}.0,id=usb{i}");
+                    arguments.Add($"{model}{busType},id=usb{i}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -583,7 +583,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomNetworkInterfaceCard, i));
 
                     var busType = GetCustomBusType(networkInterface.CustomCardBus, pciBusType);
-                    arguments.Add($"{card},bus={busType}.0,netdev=network{i}");
+                    arguments.Add($"{card}{busType},netdev=network{i}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -664,7 +664,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidGraphicsAccelerationOptionForGraphicsCard, i));
 
                     var busType = GetCustomBusType(graphicsController.CustomCardBus, pciBusType);
-                    arguments.Add($"{card},bus={busType}.0");
+                    arguments.Add($"{card}{busType}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -766,7 +766,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
 
                     var busType = GetCustomBusType(audioController.CustomCardBus, pciBusType);
-                    arguments.Add($"{card},bus={busType}.0,audiodev=audiodev");
+                    arguments.Add($"{card}{busType},audiodev=audiodev");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -928,7 +928,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskControllerModel, i));
 
                     var busType = GetCustomBusType(diskController.CustomModelBus, pciBusType);
-                    arguments.Add($"{model},bus={busType}.0,drive=drive{i}");
+                    arguments.Add($"{model}{busType},drive=drive{i}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -969,7 +969,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomKeyboardModel, i));
 
                     var busType = GetCustomBusType(keyboard.CustomModelBus, pciBusType);
-                    arguments.Add($"{model},bus={busType}.0");
+                    arguments.Add($"{model}{busType}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -1015,7 +1015,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidAbsolutePointingOptionForMouse, i));
 
                     var busType = GetCustomBusType(mouse.CustomModelBus, pciBusType);
-                    arguments.Add($"{model},bus={busType}.0");
+                    arguments.Add($"{model}{busType}");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -1137,9 +1137,10 @@ public static class Launcher
 
     private static string GetCustomBusType(BusType busType, string pciBusType) => busType switch
     {
-        BusType.Isa => "isa",
-        BusType.Pci => pciBusType,
-        BusType.Usb => "usb",
+        BusType.Default => string.Empty,
+        BusType.Isa => ",bus=isa.0",
+        BusType.Pci => $",bus={pciBusType}.0",
+        BusType.Usb => ",bus=usb.0",
         _ => throw new UnreachableException()
     };
 
