@@ -839,6 +839,7 @@ public static class Launcher
                 errors.Add(new LauncherError(LauncherErrorType.UnusedDiskController, i));
 
         var usedSataControllers = new Dictionary<ulong, ulong>();
+        var ideBus = 0UL;
 
         foreach (var (i, usedController) in usedControllers)
         {
@@ -867,7 +868,7 @@ public static class Launcher
                         errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
 
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    arguments.Add($"{ideDevice},drive=drive{i}");
+                    arguments.Add($"{ideDevice},bus=ide.{ideBus++},drive=drive{i}");
                     break;
                 }
                 case DiskBus.Sata:
