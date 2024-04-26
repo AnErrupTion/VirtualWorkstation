@@ -554,14 +554,7 @@ public static class Launcher
                     if (card.Length != networkInterface.CustomCard.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomNetworkInterfaceCard, i));
 
-                    var busType = networkInterface.CustomCardBus switch
-                    {
-                        BusType.Isa => "isa",
-                        BusType.Pci => pciBusType,
-                        BusType.Usb => "usb",
-                        _ => throw new UnreachableException()
-                    };
-
+                    var busType = GetCustomBusType(networkInterface.CustomCardBus, pciBusType);
                     arguments.Add($"{card},bus={busType}.0,netdev=network{i}");
                     break;
                 }
@@ -642,7 +635,8 @@ public static class Launcher
                     if (graphicsController.HasGraphicsAcceleration)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidGraphicsAccelerationOptionForGraphicsCard, i));
 
-                    arguments.Add($"{card},bus={pciBusType}.0");
+                    var busType = GetCustomBusType(graphicsController.CustomCardBus, pciBusType);
+                    arguments.Add($"{card},bus={busType}.0");
                     break;
                 }
                 default: throw new UnreachableException();
@@ -1096,6 +1090,14 @@ public static class Launcher
             }
         }
     }
+
+    private static string GetCustomBusType(BusType busType, string pciBusType) => busType switch
+    {
+        BusType.Isa => "isa",
+        BusType.Pci => pciBusType,
+        BusType.Usb => "usb",
+        _ => throw new UnreachableException()
+    };
 
     private static string SanitizeName(string name)
     {
