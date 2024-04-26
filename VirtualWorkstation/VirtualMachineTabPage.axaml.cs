@@ -59,7 +59,27 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
             if (!File.Exists(vmNvRamPath)) File.Copy(nvRamPath, vmNvRamPath);
         }
 
-        Process.Start(new ProcessStartInfo(qemuPath!, arguments) { WorkingDirectory = vmDirectory });
+        var process = Process.Start(new ProcessStartInfo(qemuPath!, arguments)
+        {
+            WorkingDirectory = vmDirectory,
+            RedirectStandardError = true
+        });
+
+        if (process == null)
+        {
+            var box = MessageBoxManager.GetMessageBoxStandard("Process Error", "The QEMU proces didn't start.");
+
+            await box.ShowAsync();
+            return;
+        }
+
+        await process.WaitForExitAsync();
+
+        var qemuErrors = await process.StandardError.ReadToEndAsync();
+        if (string.IsNullOrEmpty(qemuErrors)) return;
+
+        var qemuErrorBox = MessageBoxManager.GetMessageBoxStandard("QEMU Errors", qemuErrors);
+        await qemuErrorBox.ShowAsync();
     }
 
     private async void Settings_OnClick(object? _, RoutedEventArgs e)
