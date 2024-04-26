@@ -737,7 +737,8 @@ public static class Launcher
                     if (audioController.HasOutput)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidOutputOptionForSoundCard, i));
 
-                    arguments.Add($"{card},bus={pciBusType}.0,audiodev=audiodev");
+                    var busType = GetCustomBusType(audioController.CustomCardBus, pciBusType);
+                    arguments.Add($"{card},bus={busType}.0,audiodev=audiodev");
                     break;
                 }
                 default: throw new UnreachableException();
