@@ -1,6 +1,5 @@
 namespace QemuSharp;
 
-// TODO: macOS
 public static class PathLookup
 {
     private static readonly string QemuWindowsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "qemu");
@@ -10,6 +9,7 @@ public static class PathLookup
     [
         "/usr/share/qemu",
         "/usr/share/seabios",
+        "/opt/homebrew/share/qemu",
         QemuWindowsFirmwarePath
     ];
 
@@ -24,6 +24,7 @@ public static class PathLookup
         "/usr/share/OVMF",
         "/usr/share/OVMF/x64",
         "/usr/share/ovmf",
+        "/opt/homebrew/share/qemu",
         QemuWindowsFirmwarePath
     ];
 
@@ -56,6 +57,7 @@ public static class PathLookup
     public static readonly string[] QemuPaths =
     [
         "/usr/bin",
+        "/opt/homebrew/bin",
         QemuWindowsPath
     ];
 
