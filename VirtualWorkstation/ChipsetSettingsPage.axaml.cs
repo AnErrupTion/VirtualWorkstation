@@ -28,8 +28,17 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         CustomModel.Text = vm.Chipset.CustomModel;
         ForceUseNormalPci.IsChecked = vm.Chipset.ForceUseNormalPci;
 
-        if (vm.Chipset.Q35Options != null) Q35EnablePs2Emulation.IsChecked = vm.Chipset.Q35Options.EnablePs2Emulation;
-        if (vm.Chipset.I440FxOptions != null) I440FxEnablePs2Emulation.IsChecked = vm.Chipset.I440FxOptions.EnablePs2Emulation;
+        if (vm.Chipset.Q35Options != null)
+        {
+            Q35EnablePs2Emulation.IsChecked = vm.Chipset.Q35Options.EnablePs2Emulation;
+            Q35EnableAcpi.IsChecked = vm.Chipset.Q35Options.EnableAcpi;
+        }
+
+        if (vm.Chipset.I440FxOptions != null)
+        {
+            I440FxEnablePs2Emulation.IsChecked = vm.Chipset.I440FxOptions.EnablePs2Emulation;
+            I440FxEnableAcpi.IsChecked = vm.Chipset.I440FxOptions.EnableAcpi;
+        }
     }
 
     private void Model_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -65,6 +74,18 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
     {
         _vm.Chipset.I440FxOptions ??= new I440FxOptions();
         _vm.Chipset.I440FxOptions.EnablePs2Emulation = I440FxEnablePs2Emulation.IsChecked!.Value;
+    }
+
+    private void Q35EnableAcpi_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+    {
+        _vm.Chipset.Q35Options ??= new Q35Options();
+        _vm.Chipset.Q35Options.EnableAcpi = Q35EnableAcpi.IsChecked!.Value;
+    }
+
+    private void I440FxEnableAcpi_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+    {
+        _vm.Chipset.I440FxOptions ??= new I440FxOptions();
+        _vm.Chipset.I440FxOptions.EnableAcpi = I440FxEnableAcpi.IsChecked!.Value;
     }
 
     private void CheckForUnsupportedOptions()

@@ -25,10 +25,16 @@
             <CheckBox Name="Q35EnablePs2Emulation" IsCheckedChanged="Q35EnablePs2Emulation_OnIsCheckedChanged">
                 Enable PS/2 emulation
             </CheckBox>
+            <CheckBox Name="Q35EnableAcpi" IsCheckedChanged="Q35EnableAcpi_OnIsCheckedChanged">
+                Enable ACPI
+            </CheckBox>
         </StackPanel>
         <StackPanel Name="I440FxOptions">
             <CheckBox Name="I440FxEnablePs2Emulation" IsCheckedChanged="I440FxEnablePs2Emulation_OnIsCheckedChanged">
                 Enable PS/2 emulation
+            </CheckBox>
+            <CheckBox Name="I440FxEnableAcpi" IsCheckedChanged="I440FxEnableAcpi_OnIsCheckedChanged">
+                Enable ACPI
             </CheckBox>
         </StackPanel>
     </StackPanel>

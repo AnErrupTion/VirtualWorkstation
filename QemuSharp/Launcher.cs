@@ -142,7 +142,13 @@ public static class Launcher
 
                 var chipset = new StringBuilder("q35");
                 if (vm.Chipset.Q35Options != null)
-                    chipset.Append($",i8042={(vm.Chipset.Q35Options.EnablePs2Emulation ? "on" : "off")}");
+                {
+                    chipset.Append(",i8042=");
+                    chipset.Append(vm.Chipset.Q35Options.EnablePs2Emulation ? "on" : "off");
+
+                    chipset.Append(",acpi=");
+                    chipset.Append(vm.Chipset.Q35Options.EnableAcpi ? "on" : "off");
+                }
 
                 pciBusType = "pcie";
                 arguments.Add(chipset.ToString());
@@ -158,7 +164,13 @@ public static class Launcher
 
                 var chipset = new StringBuilder("pc");
                 if (vm.Chipset.I440FxOptions != null)
-                    chipset.Append($",i8042={(vm.Chipset.I440FxOptions.EnablePs2Emulation ? "on" : "off")}");
+                {
+                    chipset.Append(",i8042=");
+                    chipset.Append(vm.Chipset.I440FxOptions.EnablePs2Emulation ? "on" : "off");
+
+                    chipset.Append(",acpi=");
+                    chipset.Append(vm.Chipset.I440FxOptions.EnableAcpi ? "on" : "off");
+                }
 
                 pciBusType = "pci";
                 arguments.Add(chipset.ToString());
