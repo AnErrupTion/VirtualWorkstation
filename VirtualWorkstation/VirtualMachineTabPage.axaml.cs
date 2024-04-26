@@ -566,6 +566,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Invalid removable option for disk controller \"{index}\".");
                     break;
                 }
+                case LauncherErrorType.TooManyDrivesForDiskBus:
+                {
+                    text.AppendLine($" * Too many drives attached to disk controller \"{index}\".");
+                    break;
+                }
                 default: throw new UnreachableException();
             }
         }

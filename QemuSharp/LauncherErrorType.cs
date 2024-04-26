@@ -97,5 +97,7 @@ public enum LauncherErrorType
     InvalidDiskControllerForDisk,
 
     InvalidCdromOptionForDiskBus,
-    InvalidRemovableOptionForDiskBus
+    InvalidRemovableOptionForDiskBus,
+
+    TooManyDrivesForDiskBus
 }

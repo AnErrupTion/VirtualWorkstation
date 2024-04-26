@@ -859,8 +859,7 @@ public static class Launcher
             if (!usedControllers.ContainsKey(i))
                 errors.Add(new LauncherError(LauncherErrorType.UnusedDiskController, i));
 
-        var usedSataControllers = new Dictionary<ulong, ulong>();
-        var ideBus = 0UL;
+        var insertedDriveCount = new Dictionary<ulong, ulong>();
 
         foreach (var (i, usedController) in usedControllers)
         {
@@ -888,8 +887,20 @@ public static class Launcher
                     if (usedController.Removable)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
 
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"piix4-ide,bus={pciBusType}.0,id=pata{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var insertedDrives = insertedDriveCount[usedController.Controller];
+                    insertedDriveCount[usedController.Controller] = insertedDrives + 1;
+
+                    if (insertedDrives >= 2)
+                        errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, i));
+
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    arguments.Add($"{ideDevice},bus=ide.{ideBus++},drive=drive{i}");
+                    arguments.Add($"{ideDevice},bus=pata{usedController.Controller}.{insertedDrives},drive=drive{i}");
                     break;
                 }
                 case DiskBus.Sata:
@@ -897,14 +908,14 @@ public static class Launcher
                     if (usedController.Removable)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
 
-                    if (usedSataControllers.TryAdd(usedController.Controller, 0))
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
                     {
                         arguments.Add($"ahci,bus={pciBusType}.0,id=ahci{usedController.Controller}");
                         arguments.Add("-device");
                     }
 
-                    var insertedDrives = usedSataControllers[usedController.Controller];
-                    usedSataControllers[usedController.Controller] = insertedDrives + 1;
+                    var insertedDrives = insertedDriveCount[usedController.Controller];
+                    insertedDriveCount[usedController.Controller] = insertedDrives + 1;
 
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
                     arguments.Add($"{ideDevice},bus=ahci{usedController.Controller}.{insertedDrives},drive=drive{i}");
