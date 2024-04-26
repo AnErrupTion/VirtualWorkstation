@@ -470,7 +470,8 @@ public static class Launcher
                     if (model.Length != usbController.CustomVersion.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomUsbControllerVersion, i));
 
-                    arguments.Add($"{model},bus={pciBusType}.0,id=usb{i}");
+                    var busType = GetCustomBusType(usbController.CustomVersionBus, pciBusType);
+                    arguments.Add($"{model},bus={busType}.0,id=usb{i}");
                     break;
                 }
                 default: throw new UnreachableException();
