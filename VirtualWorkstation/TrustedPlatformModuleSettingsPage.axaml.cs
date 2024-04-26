@@ -45,7 +45,7 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
             return;
         }
 
-        Type_OnSelectionChanged(null, null!);
+        if (Type.SelectedIndex != -1) Type_OnSelectionChanged(null, null!);
     }
 
     private void CustomDeviceType_OnTextChanged(object? _, TextChangedEventArgs e)
