@@ -6,6 +6,7 @@ public class Keyboard
 {
     public KeyboardModel Model { get; set; }
     public string CustomModel { get; set; } = string.Empty;
+    public BusType CustomModelBus { get; set; }
     public ulong UsbController { get; set; }
 
     public Keyboard() {}
@@ -14,6 +15,7 @@ public class Keyboard
     {
         Model = other.Model;
         CustomModel = other.CustomModel;
+        CustomModelBus = other.CustomModelBus;
         UsbController = other.UsbController;
     }
 }
