@@ -53,6 +53,7 @@ public partial class DiskSettingsPage : UserControl, ITabPage
                 IsRemovable.IsChecked = false;
                 break;
             }
+            case DiskBus.Floppy:
             case DiskBus.Nvme:
             case DiskBus.VirtIo:
             case DiskBus.Custom:

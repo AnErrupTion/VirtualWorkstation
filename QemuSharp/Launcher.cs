@@ -842,6 +842,17 @@ public static class Launcher
             arguments.Add("-device");
             switch (diskController.Model)
             {
+                case DiskBus.Floppy:
+                {
+                    if (usedController.Cdrom)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCdromOptionForDiskBus, i));
+
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    arguments.Add($"floppy,drive=drive{i}");
+                    break;
+                }
                 case DiskBus.Ide:
                 {
                     if (usedController.Removable)

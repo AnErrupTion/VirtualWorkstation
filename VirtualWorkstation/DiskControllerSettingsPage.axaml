@@ -6,6 +6,7 @@
         <Grid ColumnDefinitions="*, *">
             <Label Grid.Column="0">Card:</Label>
             <ComboBox Grid.Column="1" Name="Model" SelectionChanged="Model_OnSelectionChanged">
+                <ComboBoxItem>Floppy</ComboBoxItem>
                 <ComboBoxItem>IDE</ComboBoxItem>
                 <ComboBoxItem>SATA (AHCI)</ComboBoxItem>
                 <ComboBoxItem>NVMe</ComboBoxItem>
