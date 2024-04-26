@@ -975,7 +975,8 @@ public static class Launcher
                     if (mouse.UseAbsolutePointing)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidAbsolutePointingOptionForMouse, i));
 
-                    arguments.Add($"{model},bus={pciBusType}.0");
+                    var busType = GetCustomBusType(mouse.CustomModelBus, pciBusType);
+                    arguments.Add($"{model},bus={busType}.0");
                     break;
                 }
                 default: throw new UnreachableException();

@@ -36,6 +36,7 @@ public partial class MouseSettingsPage : UserControl, ITabPage, IController
         var mouse = vm.Mice[index];
         Model.SelectedIndex = (int)mouse.Model;
         CustomModel.Text = mouse.CustomModel;
+        CustomModelBus.SelectedIndex = (int)mouse.CustomModelBus;
         UsbController.SelectedIndex = (int)mouse.UsbController;
         UseAbsolutePointing.IsChecked = mouse.UseAbsolutePointing;
     }
@@ -47,6 +48,7 @@ public partial class MouseSettingsPage : UserControl, ITabPage, IController
 
         var isCustomModel = model == MouseModel.Custom;
         CustomModel.IsEnabled = isCustomModel;
+        CustomModelBus.IsEnabled = isCustomModel;
         UseAbsolutePointing.IsEnabled = !isCustomModel;
         if (isCustomModel) UseAbsolutePointing.IsChecked = false;
 
@@ -55,6 +57,9 @@ public partial class MouseSettingsPage : UserControl, ITabPage, IController
 
     private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.Mice[Index].CustomModel = CustomModel.Text!;
+
+    private void CustomModelBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
+        => _vm.Mice[Index].CustomModelBus = (BusType)CustomModelBus.SelectedIndex;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.Mice[Index].UsbController = (ulong)UsbController.SelectedIndex;
