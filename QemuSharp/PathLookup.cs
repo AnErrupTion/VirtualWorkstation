@@ -64,8 +64,6 @@ public static class PathLookup
     public static readonly string QemuImgFile = OperatingSystem.IsWindows() ? "qemu-img.exe" : "qemu-img";
     public const string SwtpmFile = "swtpm";
 
-    public static string GetQemuImgPath() => LookupFile(ExecutablePaths, QemuImgFile);
-    
     public static string LookupFile(string[] paths, string file)
     {
         foreach (var path in paths)

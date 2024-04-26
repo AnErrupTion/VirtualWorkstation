@@ -10,30 +10,20 @@ public static class GlobalSettings
 {
     public static string VmFolder
     {
-        get
-        {
-            Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
-            return (string)_configModel["vm_folder"];
-        }
-        set
-        {
-            Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
-            _configModel["vm_folder"] = value;
-        }
+        get => GetValue("vm_folder");
+        set => SetValue("vm_folder", value);
     }
 
     public static string CustomQemuPath
     {
-        get
-        {
-            Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
-            return (string)_configModel["custom_qemu_path"];
-        }
-        set
-        {
-            Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
-            _configModel["custom_qemu_path"] = value;
-        }
+        get => GetValue("custom_qemu_path");
+        set => SetValue("custom_qemu_path", value);
+    }
+
+    public static string CustomSwtpmPath
+    {
+        get => GetValue("custom_swtpm_path");
+        set => SetValue("custom_swtpm_path", value);
     }
 
     private static readonly string ConfigDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirtualWorkstation");
@@ -49,6 +39,7 @@ public static class GlobalSettings
             _configModel = [];
             Directory.CreateDirectory(VmFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualWorkstation"));
             CustomQemuPath = string.Empty;
+            CustomSwtpmPath = string.Empty;
             return;
         }
 
@@ -59,5 +50,17 @@ public static class GlobalSettings
     {
         Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
         File.WriteAllText(ConfigPath, Toml.FromModel(_configModel));
+    }
+
+    private static string GetValue(string key)
+    {
+        Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
+        return (string)_configModel[key];
+    }
+
+    public static void SetValue(string key, string value)
+    {
+        Debug.Assert(_configModel != null, $"{nameof(_configModel)} != null");
+        _configModel[key] = value;
     }
 }

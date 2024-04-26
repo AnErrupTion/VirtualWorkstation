@@ -27,6 +27,7 @@ public enum LauncherErrorType
     EmptyCustomMouseModel,
     EmptyDiskPath,
     EmptyQemuPath,
+    EmptySwtpmPath,
     EmptyCustomQemuArgumentValue,
     EmptyCustomQemuArgumentParameterKey,
     EmptyCustomQemuArgumentParameterValue,

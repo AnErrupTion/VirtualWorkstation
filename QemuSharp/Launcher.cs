@@ -7,7 +7,7 @@ namespace QemuSharp;
 
 public static class Launcher
 {
-    public static LauncherResult GetArguments(VirtualMachine vm, string customQemuPath, bool addQuotes)
+    public static LauncherResult GetArguments(VirtualMachine vm, string customQemuPath, string customSwtpmPath, bool addQuotes)
     {
         var name = SanitizeName(vm.Name);
         var quotedName = addQuotes && name.Contains(' ') ? $"\"{name}\"" : name;
@@ -420,20 +420,25 @@ public static class Launcher
                     arguments.Add("-chardev");
                     arguments.Add($"socket,id=chartpm,path={quotedSocketPath}");
 
-                    // swtpm doesn't support Windows
+                    // Swtpm doesn't support Windows
                     if (!OperatingSystem.IsWindows())
                     {
-                        var swtpmPath = PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.SwtpmFile);
-                        var swtpmArguments = new List<string>
+                        var swtpmPath = !string.IsNullOrEmpty(customSwtpmPath) ? customSwtpmPath
+                            : PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.SwtpmFile);
+
+                        if (!string.IsNullOrEmpty(swtpmPath))
                         {
-                            "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={socketPath}"
-                        };
+                            if (!File.Exists(swtpmPath)) errors.Add(new LauncherError(LauncherErrorType.SwtpmDoesNotExist));
 
-                        if (vm.TrustedPlatformModule.Version == TpmVersion.V20) swtpmArguments.Add("--tpm2");
-                        if (!File.Exists(swtpmPath)) errors.Add(new LauncherError(LauncherErrorType.SwtpmDoesNotExist));
+                            var swtpmArguments = new List<string>
+                            {
+                                "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={socketPath}"
+                            };
+                            if (vm.TrustedPlatformModule.Version == TpmVersion.V20) swtpmArguments.Add("--tpm2");
 
-                        var quotedSwtpmPath = addQuotes && swtpmPath.Contains(' ') ? $"\"{swtpmPath}\"" : swtpmPath;
-                        programs.Add(new Program(quotedSwtpmPath, swtpmArguments, false));
+                            var quotedSwtpmPath = addQuotes && swtpmPath.Contains(' ') ? $"\"{swtpmPath}\"" : swtpmPath;
+                            programs.Add(new Program(quotedSwtpmPath, swtpmArguments, false));
+                        } else errors.Add(new LauncherError(LauncherErrorType.EmptySwtpmPath));
                     }
                     break;
                 }
@@ -1105,8 +1110,7 @@ public static class Launcher
         }
 
         var qemuSystemPath = !string.IsNullOrEmpty(customQemuPath) ? customQemuPath
-            : Path.GetDirectoryName(PathLookup.GetQemuImgPath());
-        var quotedQemuSystemPath = qemuSystemPath;
+            : Path.GetDirectoryName(PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.QemuImgFile));
 
         if (!string.IsNullOrEmpty(qemuSystemPath))
         {
@@ -1119,10 +1123,10 @@ public static class Launcher
             if (OperatingSystem.IsWindows()) qemuSystemPath += ".exe";
             if (!File.Exists(qemuSystemPath)) errors.Add(new LauncherError(LauncherErrorType.QemuSystemDoesNotExist));
 
-            quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;
+            var quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;
+            programs.Add(new Program(quotedQemuSystemPath, arguments, true));
         } else errors.Add(new LauncherError(LauncherErrorType.EmptyQemuPath));
 
-        programs.Add(new Program(quotedQemuSystemPath, arguments, true));
         return new LauncherResult(errors, nvRamPath, programs);
     }
 

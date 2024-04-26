@@ -39,7 +39,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
     private async void Run_OnClick(object? _, RoutedEventArgs e)
     {
         var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm,
-            GlobalSettings.CustomQemuPath, false);
+            GlobalSettings.CustomQemuPath, GlobalSettings.CustomSwtpmPath, false);
 
         if (errors.Count != 0)
         {
@@ -111,7 +111,8 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private void RefreshArguments_OnClick(object? _, RoutedEventArgs e)
     {
-        var (_, _, programs) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath, true);
+        var (_, _, programs) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath,
+            GlobalSettings.CustomSwtpmPath, true);
         var sb = new StringBuilder();
 
         for (var i = 0; i < programs.Count; i++)
@@ -268,6 +269,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.EmptyQemuPath:
                 {
                     text.AppendLine(" * Empty QEMU path.");
+                    break;
+                }
+                case LauncherErrorType.EmptySwtpmPath:
+                {
+                    text.AppendLine(" * Empty Swtpm path.");
                     break;
                 }
                 case LauncherErrorType.EmptyCustomQemuArgumentValue:

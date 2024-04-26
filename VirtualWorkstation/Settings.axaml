@@ -4,7 +4,7 @@
         Title="Settings"
         Width="400" SizeToContent="Height"
         WindowStartupLocation="CenterScreen">
-    <Grid RowDefinitions="Auto, Auto, *">
+    <Grid RowDefinitions="Auto, Auto, Auto, *">
         <Grid Grid.Row="0" ColumnDefinitions="*, *, Auto">
             <Label Grid.Column="0">VM folder:</Label>
             <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
@@ -19,6 +19,13 @@
                 <Button Grid.Column="1" Name="BrowseQemu" Click="BrowseQemu_OnClick">...</Button>
             </Grid>
         </Grid>
-        <Button Grid.Row="2" Name="Save" Click="Save_OnClick">Save</Button>
+        <Grid Grid.Row="2" ColumnDefinitions="*, *, Auto">
+            <Label Grid.Column="0">Custom swtpm path:</Label>
+            <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                <TextBox Grid.Column="0" Name="CustomSwtpmPath"/>
+                <Button Grid.Column="1" Name="BrowseSwtpm" Click="BrowseSwtpm_OnClick">...</Button>
+            </Grid>
+        </Grid>
+        <Button Grid.Row="3" Name="Save" Click="Save_OnClick">Save</Button>
     </Grid>
 </Window>

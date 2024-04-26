@@ -10,7 +10,7 @@ public static class DiskManager
     {
         var qemuImgPath = !string.IsNullOrEmpty(customQemuPath)
             ? Path.Combine(customQemuPath, PathLookup.QemuImgFile)
-            : PathLookup.GetQemuImgPath();
+            : PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.QemuImgFile);
 
         if (string.IsNullOrEmpty(qemuImgPath)) return DiskManagerError.EmptyQemuPath;
         if (!File.Exists(qemuImgPath)) return DiskManagerError.QemuImgDoesNotExist;
@@ -47,7 +47,7 @@ public static class DiskManager
     {
         var qemuImgPath = !string.IsNullOrEmpty(customQemuPath)
             ? Path.Combine(customQemuPath, PathLookup.QemuImgFile)
-            : PathLookup.GetQemuImgPath();
+            : PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.QemuImgFile);
 
         if (string.IsNullOrEmpty(qemuImgPath)) return (DiskManagerError.EmptyQemuPath, null);
         if (!File.Exists(qemuImgPath)) return (DiskManagerError.QemuImgDoesNotExist, null);
