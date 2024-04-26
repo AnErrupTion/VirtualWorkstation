@@ -888,7 +888,8 @@ public static class Launcher
                     if (model.Length != diskController.CustomModel.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomDiskControllerModel, i));
 
-                    arguments.Add($"{model},bus={pciBusType}.0,drive=drive{i}");
+                    var busType = GetCustomBusType(diskController.CustomModelBus, pciBusType);
+                    arguments.Add($"{model},bus={busType}.0,drive=drive{i}");
                     break;
                 }
                 default: throw new UnreachableException();

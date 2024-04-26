@@ -35,6 +35,7 @@ public partial class DiskControllerSettingsPage : UserControl, ITabPage, IContro
         var diskController = vm.DiskControllers[index];
         Model.SelectedIndex = (int)diskController.Model;
         CustomModel.Text = diskController.CustomModel;
+        CustomModelBus.SelectedIndex = (int)diskController.CustomModelBus;
         UsbController.SelectedIndex = (int)diskController.UsbController;
     }
 
@@ -43,12 +44,18 @@ public partial class DiskControllerSettingsPage : UserControl, ITabPage, IContro
         var model = (DiskBus)Model.SelectedIndex;
         _vm.DiskControllers[Index].Model = model;
 
-        CustomModel.IsEnabled = model == DiskBus.Custom;
+        var isModelCustom = model == DiskBus.Custom;
+        CustomModel.IsEnabled = isModelCustom;
+        CustomModelBus.IsEnabled = isModelCustom;
+
         UsbController.IsEnabled = model == DiskBus.Usb;
     }
 
     private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.DiskControllers[Index].CustomModel = CustomModel.Text!;
+
+    private void CustomModelBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
+        => _vm.DiskControllers[Index].CustomModelBus = (BusType)CustomModelBus.SelectedIndex;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.DiskControllers[Index].UsbController = (ulong)UsbController.SelectedIndex;
