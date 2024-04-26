@@ -8,6 +8,7 @@ public class NetworkInterface
     public string CustomType { get; set; } = string.Empty;
     public NetworkCard Card { get; set; }
     public string CustomCard { get; set; } = string.Empty;
+    public BusType CustomCardBus { get; set; }
     public ulong UsbController { get; set; }
 
     public NetworkInterface() {}
@@ -18,6 +19,7 @@ public class NetworkInterface
         CustomType = other.CustomType;
         Card = other.Card;
         CustomCard = other.CustomCard;
+        CustomCardBus = other.CustomCardBus;
         UsbController = other.UsbController;
     }
 }

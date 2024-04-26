@@ -554,7 +554,15 @@ public static class Launcher
                     if (card.Length != networkInterface.CustomCard.Length)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCustomNetworkInterfaceCard, i));
 
-                    arguments.Add($"{card},bus={pciBusType}.0,netdev=network{i}");
+                    var busType = networkInterface.CustomCardBus switch
+                    {
+                        BusType.Isa => "isa",
+                        BusType.Pci => pciBusType,
+                        BusType.Usb => "usb",
+                        _ => throw new UnreachableException()
+                    };
+
+                    arguments.Add($"{card},bus={busType}.0,netdev=network{i}");
                     break;
                 }
                 default: throw new UnreachableException();
