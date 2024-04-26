@@ -47,7 +47,7 @@ public static class GlobalSettings
         {
             Directory.CreateDirectory(ConfigDirectory);
             _configModel = [];
-            VmFolder = ConfigDirectory;
+            VmFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualWorkstation");
             CustomQemuPath = string.Empty;
             return;
         }
