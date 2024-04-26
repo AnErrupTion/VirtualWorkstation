@@ -12,6 +12,7 @@ public static class Launcher
         var name = SanitizeName(vm.Name);
         var quotedName = addQuotes && name.Contains(' ') ? $"\"{name}\"" : name;
         var arguments = new List<string> { "-nodefaults" };
+        var programs = new List<Program>();
         var errors = new List<LauncherError>();
 
         if (string.IsNullOrEmpty(name)) errors.Add(new LauncherError(LauncherErrorType.EmptyName));
@@ -1105,7 +1106,8 @@ public static class Launcher
             quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;
         } else errors.Add(new LauncherError(LauncherErrorType.EmptyQemuPath));
 
-        return new LauncherResult(errors, quotedQemuSystemPath, nvRamPath, arguments);
+        programs.Add(new Program(quotedQemuSystemPath, arguments, true));
+        return new LauncherResult(errors, nvRamPath, programs);
     }
 
     private static bool IsFeatureUnsupported(Architecture architecture, ProcessorFeature feature)

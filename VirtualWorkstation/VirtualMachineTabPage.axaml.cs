@@ -38,7 +38,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private async void Run_OnClick(object? _, RoutedEventArgs e)
     {
-        var (errors, qemuPath, nvRamPath, arguments) = Launcher.GetArguments(Vm,
+        var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm,
             GlobalSettings.CustomQemuPath, false);
 
         if (errors.Count != 0)
@@ -59,27 +59,33 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
             if (!File.Exists(vmNvRamPath)) File.Copy(nvRamPath, vmNvRamPath);
         }
 
-        var process = Process.Start(new ProcessStartInfo(qemuPath!, arguments)
+        foreach (var (path, arguments, waitForExit) in programs)
         {
-            WorkingDirectory = vmDirectory,
-            RedirectStandardError = true
-        });
+            var name = Path.GetFileNameWithoutExtension(path!);
+            var process = Process.Start(new ProcessStartInfo(path!, arguments)
+            {
+                WorkingDirectory = vmDirectory,
+                RedirectStandardError = waitForExit
+            });
 
-        if (process == null)
-        {
-            var box = MessageBoxManager.GetMessageBoxStandard("Process Error", "The QEMU proces didn't start.");
+            if (process == null)
+            {
+                var box = MessageBoxManager.GetMessageBoxStandard("Execution Error", $"The process for \"{name}\" didn't start.");
 
-            await box.ShowAsync();
-            return;
+                await box.ShowAsync();
+                return;
+            }
+
+            if (!waitForExit) continue;
+
+            await process.WaitForExitAsync();
+
+            var processErrors = await process.StandardError.ReadToEndAsync();
+            if (string.IsNullOrEmpty(processErrors)) return;
+
+            var processErrorBox = MessageBoxManager.GetMessageBoxStandard("Process Errors", processErrors);
+            await processErrorBox.ShowAsync();
         }
-
-        await process.WaitForExitAsync();
-
-        var qemuErrors = await process.StandardError.ReadToEndAsync();
-        if (string.IsNullOrEmpty(qemuErrors)) return;
-
-        var qemuErrorBox = MessageBoxManager.GetMessageBoxStandard("QEMU Errors", qemuErrors);
-        await qemuErrorBox.ShowAsync();
     }
 
     private async void Settings_OnClick(object? _, RoutedEventArgs e)
@@ -105,18 +111,26 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private void RefreshArguments_OnClick(object? _, RoutedEventArgs e)
     {
-        var (_, qemuPath, _, arguments) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath, true);
-        if (!string.IsNullOrEmpty(qemuPath)) arguments.Insert(0, qemuPath);
-
+        var (_, _, programs) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath, true);
         var sb = new StringBuilder();
-        for (var i = 0; i < arguments.Count; i++)
-        {
-            var argument = arguments[i];
-            sb.Append(argument);
 
-            if (i == arguments.Count - 1) continue;
-            sb.AppendLine(" \\");
-            sb.Append('\t');
+        for (var i = 0; i < programs.Count; i++)
+        {
+            var program = programs[i];
+            if (!string.IsNullOrEmpty(program.Path)) program.Arguments.Insert(0, program.Path);
+
+            for (var j = 0; j < program.Arguments.Count; j++)
+            {
+                var argument = program.Arguments[j];
+                sb.Append(argument);
+
+                if (j == program.Arguments.Count - 1) continue;
+                sb.AppendLine(" \\");
+                sb.Append('\t');
+            }
+
+            if (i == programs.Count - 1) continue;
+            sb.AppendLine(" && ");
         }
 
         Arguments.Text = sb.ToString();
