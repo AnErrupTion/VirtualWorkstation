@@ -1054,6 +1054,7 @@ public static class Launcher
                 Architecture.I386 => "qemu-system-i386",
                 _ => throw new UnreachableException()
             });
+            if (OperatingSystem.IsWindows()) qemuSystemPath += ".exe";
             if (!File.Exists(qemuSystemPath)) errors.Add(new LauncherError(LauncherErrorType.QemuSystemDoesNotExist));
 
             quotedQemuSystemPath = addQuotes && qemuSystemPath.Contains(' ') ? $"\"{qemuSystemPath}\"" : qemuSystemPath;

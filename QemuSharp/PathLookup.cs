@@ -1,12 +1,16 @@
 namespace QemuSharp;
 
-// TODO: Windows and macOS
+// TODO: macOS
 public static class PathLookup
 {
+    private static readonly string QemuWindowsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "qemu");
+    private static readonly string QemuWindowsFirmwarePath = Path.Combine(QemuWindowsPath, "share");
+
     public static readonly string[] BiosPaths =
     [
         "/usr/share/qemu",
-        "/usr/share/seabios"
+        "/usr/share/seabios",
+        QemuWindowsFirmwarePath
     ];
 
     public static readonly string[] BiosFiles =
@@ -19,7 +23,8 @@ public static class PathLookup
         "/usr/share/qemu",
         "/usr/share/OVMF",
         "/usr/share/OVMF/x64",
-        "/usr/share/ovmf"
+        "/usr/share/ovmf",
+        QemuWindowsFirmwarePath
     ];
 
     public static readonly string[] EfiFiles =
@@ -31,7 +36,7 @@ public static class PathLookup
     
     public static readonly string[] EfiSecureBootFiles =
     [
-        "edk2-x86_64-code.secboot.fd",
+        "edk2-x86_64-secure-code.fd",
         "OVMF_CODE.secboot.fd",
         "OVMF.secboot.fd"
     ];
@@ -44,24 +49,29 @@ public static class PathLookup
 
     public static readonly string[] EfiSecureBootNvramFiles =
     [
-        "edk2-i386-vars.secboot.fd",
+        "edk2-i386-vars.fd", // This one doesn't have a special name
         "OVMF_VARS.secboot.fd"
     ];
 
     public static readonly string[] QemuPaths =
     [
-        "/usr/bin"
+        "/usr/bin",
+        QemuWindowsPath
     ];
 
-    public const string QemuImgFile = "qemu-img";
+    public static readonly string QemuImgFile = OperatingSystem.IsWindows() ? "qemu-img.exe" : "qemu-img";
     
     public static string GetQemuImgPath() => LookupFile(QemuPaths, QemuImgFile);
     
     public static string LookupFile(string[] paths, string file)
     {
         foreach (var path in paths)
+        {
+            if (!Directory.Exists(path)) continue;
+
             foreach (var fullFileName in Directory.EnumerateFiles(path))
                 if (Path.GetFileName(fullFileName) == file) return fullFileName;
+        }
 
         return string.Empty;
     }
@@ -69,8 +79,12 @@ public static class PathLookup
     public static string LookupFiles(string[] paths, string[] files)
     {
         foreach (var path in paths)
+        {
+            if (!Directory.Exists(path)) continue;
+
             foreach (var fullFileName in Directory.EnumerateFiles(path))
                 if (files.Any(file => Path.GetFileName(fullFileName) == file)) return fullFileName;
+        }
 
         return string.Empty;
     }

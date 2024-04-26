@@ -36,12 +36,24 @@ public static class GlobalSettings
         }
     }
 
-    private static readonly string ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "VirtualWorkstation.toml");
+    private static readonly string ConfigDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirtualWorkstation");
+    private static readonly string ConfigPath = Path.Combine(ConfigDirectory, "VirtualWorkstation.toml");
 
     private static TomlTable? _configModel;
 
-    public static void Load() => _configModel = Toml.ToModel(File.ReadAllText(ConfigPath));
+    public static void Load()
+    {
+        if (!File.Exists(ConfigPath))
+        {
+            Directory.CreateDirectory(ConfigDirectory);
+            _configModel = [];
+            VmFolder = ConfigDirectory;
+            CustomQemuPath = string.Empty;
+            return;
+        }
+
+        _configModel = Toml.ToModel(File.ReadAllText(ConfigPath));
+    }
 
     public static void Save()
     {
