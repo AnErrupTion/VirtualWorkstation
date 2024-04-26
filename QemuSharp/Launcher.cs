@@ -247,7 +247,7 @@ public static class Launcher
         {
             case AudioHostType.None:
             {
-                arguments.Add("none");
+                arguments.Add("none,id=audiodev");
                 break;
             }
             case AudioHostType.Auto:
