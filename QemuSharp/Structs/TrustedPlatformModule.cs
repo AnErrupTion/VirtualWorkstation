@@ -9,6 +9,7 @@ public class TrustedPlatformModule
     public TpmType Type { get; set; }
     public string CustomType { get; set; } = string.Empty;
     public DeviceBus CustomTypeBus { get; set; } = new();
+    public TpmVersion Version { get; set; }
 
     public TrustedPlatformModule() {}
 
@@ -19,5 +20,6 @@ public class TrustedPlatformModule
         Type = other.Type;
         CustomType = other.CustomType;
         CustomTypeBus = new DeviceBus(other.CustomTypeBus);
+        Version = other.Version;
     }
 }

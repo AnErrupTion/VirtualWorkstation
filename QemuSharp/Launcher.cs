@@ -414,11 +414,27 @@ public static class Launcher
                 {
                     arguments.Add("emulator,chardev=chartpm,id=tpmdev");
 
-                    var socketPath = Path.Combine(Path.GetTempPath(), $"swtpm-sock-{vm.Name}");
+                    var socketPath = $"swtpm-socket-{vm.Name}";
                     var quotedSocketPath = addQuotes && socketPath.Contains(' ') ? $"\"{socketPath}\"" : socketPath;
 
                     arguments.Add("-chardev");
                     arguments.Add($"socket,id=chartpm,path={quotedSocketPath}");
+
+                    // swtpm doesn't support Windows
+                    if (!OperatingSystem.IsWindows())
+                    {
+                        var swtpmPath = PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.SwtpmFile);
+                        var swtpmArguments = new List<string>
+                        {
+                            "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={socketPath}"
+                        };
+
+                        if (vm.TrustedPlatformModule.Version == TpmVersion.V20) swtpmArguments.Add("--tpm2");
+                        if (!File.Exists(swtpmPath)) errors.Add(new LauncherError(LauncherErrorType.SwtpmDoesNotExist));
+
+                        var quotedSwtpmPath = addQuotes && swtpmPath.Contains(' ') ? $"\"{swtpmPath}\"" : swtpmPath;
+                        programs.Add(new Program(quotedSwtpmPath, swtpmArguments, false));
+                    }
                     break;
                 }
                 case TpmDeviceType.Custom:

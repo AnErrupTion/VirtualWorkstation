@@ -54,7 +54,7 @@ public static class PathLookup
         "OVMF_VARS.secboot.fd"
     ];
 
-    public static readonly string[] QemuPaths =
+    public static readonly string[] ExecutablePaths =
     [
         "/usr/bin",
         "/opt/homebrew/bin",
@@ -62,8 +62,9 @@ public static class PathLookup
     ];
 
     public static readonly string QemuImgFile = OperatingSystem.IsWindows() ? "qemu-img.exe" : "qemu-img";
-    
-    public static string GetQemuImgPath() => LookupFile(QemuPaths, QemuImgFile);
+    public const string SwtpmFile = "swtpm";
+
+    public static string GetQemuImgPath() => LookupFile(ExecutablePaths, QemuImgFile);
     
     public static string LookupFile(string[] paths, string file)
     {

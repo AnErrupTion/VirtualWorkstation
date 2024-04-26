@@ -55,6 +55,7 @@ public enum LauncherErrorType
     CustomEfiNvRamDoesNotExist,
     DiskDoesNotExist,
     QemuSystemDoesNotExist,
+    SwtpmDoesNotExist,
 
     HardwareAccelerationUnavailable,
     AudioUnavailable,

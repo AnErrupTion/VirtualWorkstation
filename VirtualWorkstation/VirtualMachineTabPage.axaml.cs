@@ -405,6 +405,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * QEMU system executable file does not exist.");
                     break;
                 }
+                case LauncherErrorType.SwtpmDoesNotExist:
+                {
+                    text.AppendLine(" * Swtpm executable file does not exist.");
+                    break;
+                }
                 case LauncherErrorType.HardwareAccelerationUnavailable:
                 {
                     text.AppendLine(" * Unavailable hardware acceleration on host OS.");
