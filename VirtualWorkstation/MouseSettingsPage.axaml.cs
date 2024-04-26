@@ -47,12 +47,12 @@ public partial class MouseSettingsPage : UserControl, ITabPage, IController
         _vm.Mice[Index].Model = model;
 
         var isCustomModel = model == MouseModel.Custom;
-        CustomModel.IsEnabled = isCustomModel;
-        CustomModelBus.IsEnabled = isCustomModel;
+        CustomModelGrid.IsVisible = isCustomModel;
+        CustomModelBusGrid.IsVisible = isCustomModel;
         UseAbsolutePointing.IsEnabled = !isCustomModel;
         if (isCustomModel) UseAbsolutePointing.IsChecked = false;
 
-        UsbController.IsEnabled = model == MouseModel.Usb;
+        UsbControllerGrid.IsVisible = model == MouseModel.Usb;
     }
 
     private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)

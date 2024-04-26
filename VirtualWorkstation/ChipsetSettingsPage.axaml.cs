@@ -38,7 +38,7 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         CheckForUnsupportedOptions();
 
         var isCustomModel = _vm.Chipset.Model == ChipsetModel.Custom;
-        CustomModel.IsEnabled = isCustomModel;
+        CustomModelGrid.IsVisible = isCustomModel;
         ForceUseNormalPci.IsEnabled = isCustomModel;
         if (!isCustomModel) ForceUseNormalPci.IsChecked = _vm.Chipset.Model == ChipsetModel.X86I440Fx;
 

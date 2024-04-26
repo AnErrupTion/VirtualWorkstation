@@ -45,10 +45,10 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
         _vm.Keyboards[Index].Model = model;
 
         var isModelCustom = model == KeyboardModel.Custom;
-        CustomModel.IsEnabled = isModelCustom;
-        CustomModelBus.IsEnabled = isModelCustom;
+        CustomModelGrid.IsVisible = isModelCustom;
+        CustomModelBusGrid.IsVisible = isModelCustom;
 
-        UsbController.IsEnabled = model == KeyboardModel.Usb;
+        UsbControllerGrid.IsVisible = model == KeyboardModel.Usb;
     }
 
     private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)

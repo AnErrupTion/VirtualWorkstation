@@ -34,7 +34,7 @@ public partial class DisplaySettingsPage : UserControl, ITabPage
         _vm.Display.Type = (DisplayType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
 
-        CustomType.IsEnabled = _vm.Display.Type == DisplayType.Custom;
+        CustomTypeGrid.IsVisible = _vm.Display.Type == DisplayType.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)

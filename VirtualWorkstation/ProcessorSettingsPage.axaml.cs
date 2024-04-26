@@ -50,7 +50,7 @@ public partial class ProcessorSettingsPage : UserControl, ITabPage
         _vm.Processor.Model = (ProcessorModel)Model.SelectedIndex;
         CheckForUnsupportedOptions();
 
-        CustomModel.IsEnabled = _vm.Processor.Model == ProcessorModel.Custom;
+        CustomModelGrid.IsVisible = _vm.Processor.Model == ProcessorModel.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)

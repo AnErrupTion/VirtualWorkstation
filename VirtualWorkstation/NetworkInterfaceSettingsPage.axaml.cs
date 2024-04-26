@@ -46,7 +46,7 @@ public partial class NetworkInterfaceSettingsPage : UserControl, ITabPage, ICont
         var type = (NetworkType)Type.SelectedIndex;
         _vm.NetworkInterfaces[Index].Type = type;
 
-        CustomType.IsEnabled = type == NetworkType.Custom;
+        CustomTypeGrid.IsVisible = type == NetworkType.Custom;
     }
 
     private void CustomType_OnTextChanged(object? _, TextChangedEventArgs e)
@@ -59,10 +59,10 @@ public partial class NetworkInterfaceSettingsPage : UserControl, ITabPage, ICont
         _vm.NetworkInterfaces[Index].Card = card;
 
         var isCardCustom = card == NetworkCard.Custom;
-        CustomCard.IsEnabled = isCardCustom;
-        CustomCardBus.IsEnabled = isCardCustom;
+        CustomCardGrid.IsVisible = isCardCustom;
+        CustomCardBusGrid.IsVisible = isCardCustom;
 
-        UsbController.IsEnabled = card == NetworkCard.Usb;
+        UsbControllerGrid.IsVisible = card == NetworkCard.Usb;
     }
 
     private void CustomCard_OnTextChanged(object? _, TextChangedEventArgs e)

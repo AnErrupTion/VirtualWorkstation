@@ -48,10 +48,10 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
         _vm.AudioControllers[Index].Card = card;
 
         var isCardCustom = card == SoundCard.Custom;
-        CustomCard.IsEnabled = isCardCustom;
-        CustomCardBus.IsEnabled = isCardCustom;
+        CustomCardGrid.IsVisible = isCardCustom;
+        CustomCardBusGrid.IsVisible = isCardCustom;
 
-        UsbController.IsEnabled = card == SoundCard.Usb;
+        UsbControllerGrid.IsVisible = card == SoundCard.Usb;
 
         switch (card)
         {

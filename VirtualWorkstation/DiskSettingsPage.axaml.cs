@@ -79,7 +79,7 @@ public partial class DiskSettingsPage : UserControl, ITabPage
         var format = (DiskFormat)Format.SelectedIndex;
         _vm.Disks[Index].Format = format;
 
-        CustomFormat.IsEnabled = format == DiskFormat.Custom;
+        CustomFormatGrid.IsVisible = format == DiskFormat.Custom;
     }
 
     private void CustomFormat_OnTextChanged(object? _, TextChangedEventArgs e)
@@ -90,7 +90,7 @@ public partial class DiskSettingsPage : UserControl, ITabPage
         var cacheMethod = (DiskCacheMethod)CacheMethod.SelectedIndex;
         _vm.Disks[Index].CacheMethod = cacheMethod;
 
-        CustomCacheMethod.IsEnabled = cacheMethod == DiskCacheMethod.Custom;
+        CustomCacheMethodGrid.IsVisible = cacheMethod == DiskCacheMethod.Custom;
     }
 
     private void CustomCacheMethod_OnTextChanged(object? _, TextChangedEventArgs e)

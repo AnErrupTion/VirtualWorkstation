@@ -14,7 +14,7 @@
         <CheckBox Name="EnableUnsupportedOptions" IsCheckedChanged="EnableUnsupportedOptions_OnIsCheckedChanged">
             Enable unsupported options
         </CheckBox>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomModelGrid">
             <Label Grid.Column="0">Custom model:</Label>
             <TextBox Grid.Column="1" Name="CustomModel" TextChanged="CustomModel_OnTextChanged"/>
         </Grid>

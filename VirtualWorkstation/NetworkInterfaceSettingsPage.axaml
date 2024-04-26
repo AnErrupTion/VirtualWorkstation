@@ -10,7 +10,7 @@
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeGrid">
             <Label Grid.Column="0">Custom type:</Label>
             <TextBox Grid.Column="1" Name="CustomType" TextChanged="CustomType_OnTextChanged"/>
         </Grid>
@@ -26,15 +26,15 @@
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomCardGrid">
             <Label Grid.Column="0">Custom card:</Label>
             <TextBox Grid.Column="1" Name="CustomCard" TextChanged="CustomCard_OnTextChanged"/>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomCardBusGrid">
             <Label Grid.Column="0">Custom card bus:</Label>
             <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomCardBus" SelectionChanged="CustomCardBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *">
+        <Grid ColumnDefinitions="*, *" Name="UsbControllerGrid">
             <Label Grid.Column="0">USB controller:</Label>
             <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
         </Grid>

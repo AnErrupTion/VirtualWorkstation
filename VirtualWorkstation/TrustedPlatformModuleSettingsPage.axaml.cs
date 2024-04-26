@@ -32,15 +32,15 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
         var deviceType = (TpmDeviceType)DeviceType.SelectedIndex;
         _vm.TrustedPlatformModule.DeviceType = deviceType;
 
-        CustomDeviceType.IsEnabled = deviceType == TpmDeviceType.Custom;
+        CustomDeviceTypeGrid.IsVisible = deviceType == TpmDeviceType.Custom;
 
         var isTpmPresent = deviceType != TpmDeviceType.None;
-        Type.IsEnabled = isTpmPresent;
+        TypeGrid.IsVisible = isTpmPresent;
 
         if (!isTpmPresent)
         {
-            CustomType.IsEnabled = false;
-            CustomTypeBus.IsEnabled = false;
+            CustomTypeGrid.IsVisible = false;
+            CustomTypeBusGrid.IsVisible = false;
             return;
         }
 
@@ -56,8 +56,8 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
         _vm.TrustedPlatformModule.Type = type;
 
         var isTypeCustom = type == TpmType.Custom;
-        CustomType.IsEnabled = isTypeCustom;
-        CustomTypeBus.IsEnabled = isTypeCustom;
+        CustomTypeGrid.IsVisible = isTypeCustom;
+        CustomTypeBusGrid.IsVisible = isTypeCustom;
     }
 
     private void CustomType_OnTextChanged(object? _, TextChangedEventArgs e)

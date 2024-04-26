@@ -38,8 +38,8 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
         _vm.GraphicControllers[Index].Card = card;
 
         var isCardCustom = card == GraphicsCard.Custom;
-        CustomCard.IsEnabled = isCardCustom;
-        CustomCardBus.IsEnabled = isCardCustom;
+        CustomCardGrid.IsVisible = isCardCustom;
+        CustomCardBusGrid.IsVisible = isCardCustom;
 
         switch (card)
         {

@@ -36,10 +36,8 @@ public partial class FirmwareSettingsPage : UserControl, ITabPage
 
         var isCustomPFlash = _vm.Firmware.Type == FirmwareType.CustomPFlash;
         var isCustomType = isCustomPFlash || _vm.Firmware.Type == FirmwareType.X86CustomPc;
-        CustomPath.IsEnabled = isCustomType;
-        Browse.IsEnabled = isCustomType;
-        CustomNvRamPath.IsEnabled = isCustomPFlash;
-        BrowseNvRam.IsEnabled = isCustomPFlash;
+        CustomPathGrid.IsVisible = isCustomType;
+        CustomNvRamPathGrid.IsVisible = isCustomPFlash;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)

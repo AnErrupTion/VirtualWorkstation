@@ -15,15 +15,15 @@
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomModelGrid">
             <Label Grid.Column="0">Custom model:</Label>
             <TextBox Grid.Column="1" Name="CustomModel" TextChanged="CustomModel_OnTextChanged"/>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomModelBusGrid">
             <Label Grid.Column="0">Custom model bus:</Label>
             <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomModelBus" SelectionChanged="CustomModelBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *">
+        <Grid ColumnDefinitions="*, *" Name="UsbControllerGrid">
             <Label Grid.Column="0">USB controller:</Label>
             <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
         </Grid>

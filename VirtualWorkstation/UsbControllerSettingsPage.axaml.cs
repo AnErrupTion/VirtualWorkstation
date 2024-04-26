@@ -34,8 +34,8 @@ public partial class UsbControllerSettingsPage : UserControl, ITabPage
         _vm.UsbControllers[Index].Version = version;
 
         var isVersionCustom = version == UsbVersion.Custom;
-        CustomVersion.IsEnabled = isVersionCustom;
-        CustomVersionBus.IsEnabled = isVersionCustom;
+        CustomVersionGrid.IsVisible = isVersionCustom;
+        CustomVersionBusGrid.IsVisible = isVersionCustom;
     }
 
     private void CustomVersion_OnTextChanged(object? _, TextChangedEventArgs e)

@@ -11,11 +11,11 @@
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomDeviceTypeGrid">
             <Label Grid.Column="0">Custom device type:</Label>
             <TextBox Grid.Column="1" Name="CustomDeviceType" TextChanged="CustomDeviceType_OnTextChanged"/>
         </Grid>
-        <Grid ColumnDefinitions="*, *">
+        <Grid ColumnDefinitions="*, *" Name="TypeGrid">
             <Label Grid.Column="0">Type:</Label>
             <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
                 <ComboBoxItem>TIS (v1.2+)</ComboBoxItem>
@@ -23,11 +23,11 @@
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeGrid">
             <Label Grid.Column="0">Custom type:</Label>
             <TextBox Grid.Column="1" Name="CustomType" TextChanged="CustomType_OnTextChanged"/>
         </Grid>
-        <Grid ColumnDefinitions="*, *, Auto">
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeBusGrid">
             <Label Grid.Column="0">Custom type bus:</Label>
             <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
         </Grid>

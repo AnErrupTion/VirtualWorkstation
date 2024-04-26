@@ -34,7 +34,7 @@ public partial class AudioHostSettingsPage : UserControl, ITabPage
         _vm.AudioHostDevice.Type = (AudioHostType)Type.SelectedIndex;
         CheckForUnsupportedOptions();
 
-        CustomType.IsEnabled = _vm.AudioHostDevice.Type == AudioHostType.Custom;
+        CustomTypeGrid.IsVisible = _vm.AudioHostDevice.Type == AudioHostType.Custom;
     }
 
     private void EnableUnsupportedOptions_OnIsCheckedChanged(object? _, RoutedEventArgs e)

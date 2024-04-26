@@ -45,10 +45,10 @@ public partial class DiskControllerSettingsPage : UserControl, ITabPage, IContro
         _vm.DiskControllers[Index].Model = model;
 
         var isModelCustom = model == DiskBus.Custom;
-        CustomModel.IsEnabled = isModelCustom;
-        CustomModelBus.IsEnabled = isModelCustom;
+        CustomModelGrid.IsVisible = isModelCustom;
+        CustomModelBusGrid.IsVisible = isModelCustom;
 
-        UsbController.IsEnabled = model == DiskBus.Usb;
+        UsbControllerGrid.IsVisible = model == DiskBus.Usb;
     }
 
     private void CustomModel_OnTextChanged(object? _, TextChangedEventArgs e)
