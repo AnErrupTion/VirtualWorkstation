@@ -19,7 +19,7 @@
         </Grid>
         <Grid ColumnDefinitions="*, *, Auto" Name="CustomVersionBusGrid">
             <Label Grid.Column="0">Custom version bus:</Label>
-            <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomVersionBus" SelectionChanged="CustomVersionBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
+            <virtualWorkstation:DeviceBusControl Grid.Column="1" Name="CustomVersionBus" SelectionChanged="CustomVersionBus_OnSelectionChanged" TextChanged="CustomVersionBus_OnTextChanged"></virtualWorkstation:DeviceBusControl>
         </Grid>
     </StackPanel>
 </UserControl>

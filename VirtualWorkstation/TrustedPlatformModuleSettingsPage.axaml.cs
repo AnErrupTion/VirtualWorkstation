@@ -24,7 +24,8 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
         CustomDeviceType.Text = vm.TrustedPlatformModule.CustomDeviceType;
         Type.SelectedIndex = (int)vm.TrustedPlatformModule.Type;
         CustomType.Text = vm.TrustedPlatformModule.CustomType;
-        CustomTypeBus.SelectedIndex = (int)vm.TrustedPlatformModule.CustomTypeBus;
+        CustomTypeBus.SelectedIndex = (int)vm.TrustedPlatformModule.CustomTypeBus.Type;
+        CustomTypeBus.Text = vm.TrustedPlatformModule.CustomTypeBus.CustomType;
     }
 
     private void DeviceType_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -64,5 +65,8 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
         => _vm.TrustedPlatformModule.CustomType = CustomType.Text!;
 
     private void CustomTypeBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.TrustedPlatformModule.CustomTypeBus = (BusType)CustomTypeBus.SelectedIndex;
+        => _vm.TrustedPlatformModule.CustomTypeBus.Type = (BusType)CustomTypeBus.SelectedIndex;
+
+    private void CustomTypeBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.TrustedPlatformModule.CustomTypeBus.CustomType = CustomTypeBus.Text!;
 }

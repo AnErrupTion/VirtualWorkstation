@@ -27,7 +27,8 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
         var graphicsController = vm.GraphicControllers[index];
         Card.SelectedIndex = (int)graphicsController.Card;
         CustomCard.Text = graphicsController.CustomCard;
-        CustomCardBus.SelectedIndex = (int)graphicsController.CustomCardBus;
+        CustomCardBus.SelectedIndex = (int)graphicsController.CustomCardBus.Type;
+        CustomCardBus.Text = graphicsController.CustomCardBus.CustomType;
         HasVgaEmulation.IsChecked = graphicsController.HasVgaEmulation;
         HasGraphicsAcceleration.IsChecked = graphicsController.HasGraphicsAcceleration;
     }
@@ -82,7 +83,10 @@ public partial class GraphicsControllerSettingsPage : UserControl, ITabPage
         => _vm.GraphicControllers[Index].CustomCard = CustomCard.Text!;
 
     private void CustomCardBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.GraphicControllers[Index].CustomCardBus = (BusType)CustomCardBus.SelectedIndex;
+        => _vm.GraphicControllers[Index].CustomCardBus.Type = (BusType)CustomCardBus.SelectedIndex;
+
+    private void CustomCardBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.GraphicControllers[Index].CustomCardBus.CustomType = CustomCardBus.Text!;
 
     private void HasVgaEmulation_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => _vm.GraphicControllers[Index].HasVgaEmulation = HasVgaEmulation.IsChecked!.Value;

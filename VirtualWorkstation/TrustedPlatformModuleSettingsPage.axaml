@@ -29,7 +29,7 @@
         </Grid>
         <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeBusGrid">
             <Label Grid.Column="0">Custom type bus:</Label>
-            <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
+            <virtualWorkstation:DeviceBusControl Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged" TextChanged="CustomTypeBus_OnTextChanged"></virtualWorkstation:DeviceBusControl>
         </Grid>
     </StackPanel>
 </UserControl>

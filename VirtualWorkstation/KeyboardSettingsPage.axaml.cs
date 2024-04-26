@@ -35,7 +35,8 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
         var keyboard = vm.Keyboards[index];
         Model.SelectedIndex = (int)keyboard.Model;
         CustomModel.Text = keyboard.CustomModel;
-        CustomModelBus.SelectedIndex = (int)keyboard.CustomModelBus;
+        CustomModelBus.SelectedIndex = (int)keyboard.CustomModelBus.Type;
+        CustomModelBus.Text = keyboard.CustomModelBus.CustomType;
         UsbController.SelectedIndex = (int)keyboard.UsbController;
     }
 
@@ -55,7 +56,10 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
         => _vm.Keyboards[Index].CustomModel = CustomModel.Text!;
 
     private void CustomModelBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.Keyboards[Index].CustomModelBus = (BusType)CustomModelBus.SelectedIndex;
+        => _vm.Keyboards[Index].CustomModelBus.Type = (BusType)CustomModelBus.SelectedIndex;
+
+    private void CustomModelBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.Keyboards[Index].CustomModelBus.CustomType = CustomModelBus.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.Keyboards[Index].UsbController = (ulong)UsbController.SelectedIndex;

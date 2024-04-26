@@ -17,7 +17,7 @@
         </Grid>
         <Grid ColumnDefinitions="*, *, Auto" Name="CustomModelBusGrid">
             <Label Grid.Column="0">Custom model bus:</Label>
-            <virtualWorkstation:BusTypeComboBox Grid.Column="1" Name="CustomModelBus" SelectionChanged="CustomModelBus_OnSelectionChanged"></virtualWorkstation:BusTypeComboBox>
+            <virtualWorkstation:DeviceBusControl Grid.Column="1" Name="CustomModelBus" SelectionChanged="CustomModelBus_OnSelectionChanged" TextChanged="CustomModelBus_OnTextChanged"></virtualWorkstation:DeviceBusControl>
         </Grid>
         <Grid ColumnDefinitions="*, *" Name="UsbControllerGrid">
             <Label Grid.Column="0">USB controller:</Label>

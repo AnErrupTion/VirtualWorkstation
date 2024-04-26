@@ -6,7 +6,7 @@ public class AudioController
 {
     public SoundCard Card { get; set; }
     public string CustomCard { get; set; } = string.Empty;
-    public BusType CustomCardBus { get; set; }
+    public DeviceBus CustomCardBus { get; set; } = new();
     public ulong UsbController { get; set; }
     public bool HasInput { get; set; }
     public bool HasOutput { get; set; }
@@ -17,7 +17,7 @@ public class AudioController
     {
         Card = other.Card;
         CustomCard = other.CustomCard;
-        CustomCardBus = other.CustomCardBus;
+        CustomCardBus = new DeviceBus(other.CustomCardBus);
         UsbController = other.UsbController;
         HasInput = other.HasInput;
         HasOutput = other.HasOutput;

@@ -5,5 +5,6 @@ public enum BusType
     Default,
     Isa,
     Pci,
-    Usb
+    Usb,
+    Custom
 }

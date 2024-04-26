@@ -25,7 +25,8 @@ public partial class UsbControllerSettingsPage : UserControl, ITabPage
         var usbController = vm.UsbControllers[index];
         Version.SelectedIndex = (int)usbController.Version;
         CustomVersion.Text = usbController.CustomVersion;
-        CustomVersionBus.SelectedIndex = (int)usbController.CustomVersionBus;
+        CustomVersionBus.SelectedIndex = (int)usbController.CustomVersionBus.Type;
+        CustomVersionBus.Text = usbController.CustomVersionBus.CustomType;
     }
 
     private void Version_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -42,5 +43,8 @@ public partial class UsbControllerSettingsPage : UserControl, ITabPage
         => _vm.UsbControllers[Index].CustomVersion = CustomVersion.Text!;
 
     private void CustomVersionBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.UsbControllers[Index].CustomVersionBus = (BusType)CustomVersionBus.SelectedIndex;
+        => _vm.UsbControllers[Index].CustomVersionBus.Type = (BusType)CustomVersionBus.SelectedIndex;
+
+    private void CustomVersionBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.UsbControllers[Index].CustomVersionBus.CustomType = CustomVersionBus.Text!;
 }

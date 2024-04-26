@@ -36,7 +36,8 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
         var audioController = vm.AudioControllers[index];
         Card.SelectedIndex = (int)audioController.Card;
         CustomCard.Text = audioController.CustomCard;
-        CustomCardBus.SelectedIndex = (int)audioController.CustomCardBus;
+        CustomCardBus.SelectedIndex = (int)audioController.CustomCardBus.Type;
+        CustomCardBus.Text = audioController.CustomCardBus.CustomType;
         HasInput.IsChecked = audioController.HasInput;
         HasOutput.IsChecked = audioController.HasOutput;
         UsbController.SelectedIndex = (int)audioController.UsbController;
@@ -95,7 +96,10 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
         => _vm.AudioControllers[Index].CustomCard = CustomCard.Text!;
 
     private void CustomCardBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.AudioControllers[Index].CustomCardBus = (BusType)CustomCardBus.SelectedIndex;
+        => _vm.AudioControllers[Index].CustomCardBus.Type = (BusType)CustomCardBus.SelectedIndex;
+
+    private void CustomCardBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.AudioControllers[Index].CustomCardBus.CustomType = CustomCardBus.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.AudioControllers[Index].UsbController = (ulong)UsbController.SelectedIndex;

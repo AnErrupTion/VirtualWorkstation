@@ -1142,12 +1142,13 @@ public static class Launcher
         }
     }
 
-    private static string GetCustomBusType(BusType busType, string pciBusType) => busType switch
+    private static string GetCustomBusType(DeviceBus deviceBus, string pciBusType) => deviceBus.Type switch
     {
         BusType.Default => string.Empty,
         BusType.Isa => ",bus=isa.0",
         BusType.Pci => $",bus={pciBusType}.0",
         BusType.Usb => ",bus=usb.0",
+        BusType.Custom => $",bus={deviceBus.CustomType}",
         _ => throw new UnreachableException()
     };
 

@@ -37,7 +37,8 @@ public partial class NetworkInterfaceSettingsPage : UserControl, ITabPage, ICont
         CustomType.Text = networkInterface.CustomType;
         Card.SelectedIndex = (int)networkInterface.Card;
         CustomCard.Text = networkInterface.CustomCard;
-        CustomCardBus.SelectedIndex = (int)networkInterface.CustomCardBus;
+        CustomCardBus.SelectedIndex = (int)networkInterface.CustomCardBus.Type;
+        CustomCardBus.Text = networkInterface.CustomCardBus.CustomType;
         UsbController.SelectedIndex = (int)networkInterface.UsbController;
     }
 
@@ -69,7 +70,10 @@ public partial class NetworkInterfaceSettingsPage : UserControl, ITabPage, ICont
         => _vm.NetworkInterfaces[Index].CustomCard = CustomCard.Text!;
 
     private void CustomCardBus_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
-        => _vm.NetworkInterfaces[Index].CustomCardBus = (BusType)CustomCardBus.SelectedIndex;
+        => _vm.NetworkInterfaces[Index].CustomCardBus.Type = (BusType)CustomCardBus.SelectedIndex;
+
+    private void CustomCardBus_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.NetworkInterfaces[Index].CustomCardBus.CustomType = CustomCardBus.Text!;
 
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.NetworkInterfaces[Index].UsbController = (ulong)UsbController.SelectedIndex;

@@ -79,7 +79,7 @@
         <DependentUpon>TrustedPlatformModuleSettingsPage.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="BusTypeComboBox.axaml.cs">
+      <Compile Update="DeviceBusControl.axaml.cs">
         <DependentUpon>BusTypeComboBox.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>

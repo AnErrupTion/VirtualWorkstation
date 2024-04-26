@@ -8,7 +8,7 @@ public class TrustedPlatformModule
     public string CustomDeviceType { get; set; } = string.Empty;
     public TpmType Type { get; set; }
     public string CustomType { get; set; } = string.Empty;
-    public BusType CustomTypeBus { get; set; }
+    public DeviceBus CustomTypeBus { get; set; } = new();
 
     public TrustedPlatformModule() {}
 
@@ -18,6 +18,6 @@ public class TrustedPlatformModule
         CustomDeviceType = other.CustomDeviceType;
         Type = other.Type;
         CustomType = other.CustomType;
-        CustomTypeBus = other.CustomTypeBus;
+        CustomTypeBus = new DeviceBus(other.CustomTypeBus);
     }
 }
