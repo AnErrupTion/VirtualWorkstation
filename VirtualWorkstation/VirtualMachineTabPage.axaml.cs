@@ -556,6 +556,16 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Invalid disk controller for disk \"{index}\".");
                     break;
                 }
+                case LauncherErrorType.NoSouthbridgeIdeAvailable:
+                {
+                    text.AppendLine($" * No Southbridge IDE controller is available for chipset \"{Vm.Chipset.Model}\".");
+                    break;
+                }
+                case LauncherErrorType.SouthbridgeIdeAllowedOnce:
+                {
+                    text.AppendLine(" * The Southbridge IDE controller is only allowed once.");
+                    break;
+                }
                 case LauncherErrorType.InvalidCdromOptionForDiskBus:
                 {
                     text.AppendLine($" * Invalid CD-ROM option for disk controller \"{index}\".");

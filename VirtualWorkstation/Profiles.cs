@@ -41,7 +41,7 @@ public static class Profiles
         DiskControllers =
         [
             new DiskController { Model = DiskBus.Nvme },
-            new DiskController { Model = DiskBus.Sata }
+            new DiskController { Model = DiskBus.Ich9Ahci }
         ],
         Disks =
         [
@@ -83,8 +83,8 @@ public static class Profiles
         ],
         DiskControllers =
         [
-            new DiskController { Model = DiskBus.VirtIo },
-            new DiskController { Model = DiskBus.Sata }
+            new DiskController { Model = DiskBus.VirtIoBlock },
+            new DiskController { Model = DiskBus.Ich9Ahci }
         ],
         Disks =
         [

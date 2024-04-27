@@ -867,9 +867,25 @@ public static class Launcher
             usedControllers[i] = (disk.Controller, disk.IsCdrom, disk.IsRemovable);
         }
 
+        var southbridgeIdeControllerCount = 0;
+
         for (var i = 0; i < vm.DiskControllers.Count; i++)
+        {
+            var diskController = vm.DiskControllers[i];
+            if (diskController.Model == DiskBus.SouthbridgeIde) southbridgeIdeControllerCount++;
+
             if (!usedControllers.ContainsKey(i))
                 errors.Add(new LauncherError(LauncherErrorType.UnusedDiskController, i));
+        }
+
+        if (southbridgeIdeControllerCount > 0)
+        {
+            if (vm.Chipset.Model != ChipsetModel.X86I440Fx)
+                errors.Add(new LauncherError(LauncherErrorType.NoSouthbridgeIdeAvailable));
+
+            if (southbridgeIdeControllerCount > 1)
+                errors.Add(new LauncherError(LauncherErrorType.SouthbridgeIdeAllowedOnce));
+        }
 
         var insertedDriveCount = new Dictionary<ulong, ulong>();
         var bootIndex = 0UL;
@@ -907,7 +923,18 @@ public static class Launcher
                     }
 
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
+                    AddDisk(i, usedController.Controller, $"pata{usedController.Controller}", ideDevice, 2, 4);
+                    break;
+                }
+                case DiskBus.SouthbridgeIde:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    _ = insertedDriveCount.TryAdd(usedController.Controller, 0);
+
+                    var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
+                    AddDisk(i, usedController.Controller, "ide", ideDevice, 2, 4);
                     break;
                 }
                 case DiskBus.Piix3Ide:
@@ -922,7 +949,7 @@ public static class Launcher
                     }
 
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
+                    AddDisk(i, usedController.Controller, $"pata{usedController.Controller}", ideDevice, 2, 4);
                     break;
                 }
                 case DiskBus.Piix4Ide:
@@ -937,7 +964,7 @@ public static class Launcher
                     }
 
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
+                    AddDisk(i, usedController.Controller, $"pata{usedController.Controller}", ideDevice, 2, 4);
                     break;
                 }
                 case DiskBus.PvScsi:
@@ -952,7 +979,7 @@ public static class Launcher
                     }
 
                     var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
-                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    AddDisk(i, usedController.Controller, $"scsi{usedController.Controller}", scsiDevice, 4, 0);
                     break;
                 }
                 case DiskBus.AmdScsi:
@@ -967,7 +994,7 @@ public static class Launcher
                     }
 
                     var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
-                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    AddDisk(i, usedController.Controller, $"scsi{usedController.Controller}", scsiDevice, 4, 0);
                     break;
                 }
                 case DiskBus.LsiScsi:
@@ -982,7 +1009,7 @@ public static class Launcher
                     }
 
                     var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
-                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    AddDisk(i, usedController.Controller, $"scsi{usedController.Controller}", scsiDevice, 4, 0);
                     break;
                 }
                 case DiskBus.LsiScsiA:
@@ -997,10 +1024,10 @@ public static class Launcher
                     }
 
                     var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
-                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    AddDisk(i, usedController.Controller, $"scsi{usedController.Controller}", scsiDevice, 4, 0);
                     break;
                 }
-                case DiskBus.Sata:
+                case DiskBus.Ich9Ahci:
                 {
                     if (usedController.Removable)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
@@ -1044,7 +1071,7 @@ public static class Launcher
                     arguments.Add($"usb-storage,bus=usb{diskController.UsbController}.0,drive=drive{i},removable={removable}");
                     break;
                 }
-                case DiskBus.VirtIo:
+                case DiskBus.VirtIoBlock:
                 {
                     if (usedController.Cdrom)
                         errors.Add(new LauncherError(LauncherErrorType.InvalidCdromOptionForDiskBus, i));
@@ -1273,7 +1300,7 @@ public static class Launcher
             if (maxDriveCount != 0 && insertedDrives == maxDriveCount)
                 errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, (int)controller));
 
-            arguments.Add($"{device},bus={busId}{controller}.{insertedDrives},bootindex={bootIndex++},drive=drive{i}");
+            arguments.Add($"{device},bus={busId}.{insertedDrives},bootindex={bootIndex++},drive=drive{i}");
         }
     }
 

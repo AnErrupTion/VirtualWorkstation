@@ -4,15 +4,16 @@ public enum DiskBus
 {
     Floppy,
     IsaIde,
+    SouthbridgeIde,
     Piix3Ide,
     Piix4Ide,
     PvScsi,
     AmdScsi,
     LsiScsi,
     LsiScsiA,
-    Sata,
+    Ich9Ahci,
     Nvme,
     Usb,
-    VirtIo,
+    VirtIoBlock,
     Custom
 }

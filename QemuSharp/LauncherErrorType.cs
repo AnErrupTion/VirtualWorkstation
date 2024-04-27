@@ -96,6 +96,10 @@ public enum LauncherErrorType
     UnusedDiskController,
     InvalidDiskControllerForDisk,
 
+    NoSouthbridgeIdeAvailable,
+
+    SouthbridgeIdeAllowedOnce,
+
     InvalidCdromOptionForDiskBus,
     InvalidRemovableOptionForDiskBus,
 

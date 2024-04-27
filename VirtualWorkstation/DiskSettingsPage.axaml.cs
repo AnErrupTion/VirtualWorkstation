@@ -46,13 +46,14 @@ public partial class DiskSettingsPage : UserControl, ITabPage
         switch (diskController.Model)
         {
             case DiskBus.IsaIde:
+            case DiskBus.SouthbridgeIde:
             case DiskBus.Piix3Ide:
             case DiskBus.Piix4Ide:
             case DiskBus.PvScsi:
             case DiskBus.AmdScsi:
             case DiskBus.LsiScsi:
             case DiskBus.LsiScsiA:
-            case DiskBus.Sata:
+            case DiskBus.Ich9Ahci:
             {
                 IsCdrom.IsEnabled = true;
                 IsRemovable.IsEnabled = false;
@@ -61,7 +62,7 @@ public partial class DiskSettingsPage : UserControl, ITabPage
             }
             case DiskBus.Floppy:
             case DiskBus.Nvme:
-            case DiskBus.VirtIo:
+            case DiskBus.VirtIoBlock:
             case DiskBus.Custom:
             {
                 IsCdrom.IsEnabled = false;
