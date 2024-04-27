@@ -8,6 +8,7 @@ using QemuSharp;
 using QemuSharp.Structs;
 using QemuSharp.Structs.Enums;
 using Tomlyn;
+using VirtualWorkstation.Profile;
 
 namespace VirtualWorkstation;
 

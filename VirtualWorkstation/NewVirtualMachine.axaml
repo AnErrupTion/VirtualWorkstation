@@ -28,7 +28,7 @@
                         <Label Grid.Column="0">Profile:</Label>
                         <ComboBox Grid.Column="1" Name="Profile" SelectionChanged="Profile_OnSelectionChanged">
                             <ComboBoxItem>Windows 10</ComboBoxItem>
-                            <ComboBoxItem>Linux (VirtIO)</ComboBoxItem>
+                            <ComboBoxItem>Linux</ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </StackPanel>
