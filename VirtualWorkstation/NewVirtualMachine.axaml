@@ -11,8 +11,8 @@
             <controls:GroupBox Grid.Column="0" Header="Basic information">
                 <StackPanel>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">Name:</Label>
-                        <TextBox Grid.Column="1" Name="Name"/>
+                        <Label Grid.Column="0" Name="NameLabel">Name:</Label>
+                        <TextBox Grid.Column="1" Name="Name" TextChanged="Name_OnTextChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *, Auto">
                         <Label Grid.Column="0">Folder:</Label>
@@ -20,8 +20,8 @@
                         <Button Grid.Column="2" Name="FolderBrowse" Click="FolderBrowse_OnClick">...</Button>
                     </Grid>
                     <Grid ColumnDefinitions="*, *, Auto">
-                        <Label Grid.Column="0">Boot image:</Label>
-                        <TextBox Grid.Column="1" Name="BootImage"/>
+                        <Label Grid.Column="0" Name="BootImageLabel">Boot image:</Label>
+                        <TextBox Grid.Column="1" Name="BootImage" TextChanged="BootImage_OnTextChanged"/>
                         <Button Grid.Column="2" Name="BootImageBrowse" Click="BootImageBrowse_OnClick">...</Button>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
@@ -40,20 +40,20 @@
             <controls:GroupBox Grid.Column="1" Header="Hardware">
                 <StackPanel>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">Sockets:</Label>
-                        <NumericUpDown Grid.Column="1" Name="Sockets" Minimum="1" FormatString="0" Value="1"/>
+                        <Label Grid.Column="0" Name="SocketsLabel">Sockets:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Sockets" Minimum="1" FormatString="0" Value="1" ValueChanged="Sockets_OnValueChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">Cores:</Label>
-                        <NumericUpDown Grid.Column="1" Name="Cores" Minimum="1" FormatString="0" Value="1"/>
+                        <Label Grid.Column="0" Name="CoresLabel">Cores:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Cores" Minimum="1" FormatString="0" Value="1" ValueChanged="Cores_OnValueChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">Threads:</Label>
-                        <NumericUpDown Grid.Column="1" Name="Threads" Minimum="1" FormatString="0" Value="1"/>
+                        <Label Grid.Column="0" Name="ThreadsLabel">Threads:</Label>
+                        <NumericUpDown Grid.Column="1" Name="Threads" Minimum="1" FormatString="0" Value="1" ValueChanged="Threads_OnValueChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
-                        <Label Grid.Column="0">RAM (in MiB):</Label>
-                        <NumericUpDown Grid.Column="1" Name="Ram" Minimum="1" FormatString="0" Value="1"/>
+                        <Label Grid.Column="0" Name="RamLabel">RAM (in MiB):</Label>
+                        <NumericUpDown Grid.Column="1" Name="Ram" Minimum="1" FormatString="0" Value="1" ValueChanged="Ram_OnValueChanged"/>
                     </Grid>
                 </StackPanel>
             </controls:GroupBox>
@@ -63,8 +63,8 @@
                 <RadioButton Name="CreateNewDisk" IsChecked="True" IsCheckedChanged="CreateNewDisk_OnIsCheckedChanged">Create a new virtual disk</RadioButton>
                 <StackPanel Name="NewDiskPanel">
                     <Grid ColumnDefinitions="*, *, Auto">
-                        <Label Grid.Column="0">Custom path:</Label>
-                        <TextBox Grid.Column="1" Name="NewDiskCustomPath"/>
+                        <Label Grid.Column="0" Name="NewDiskCustomPathLabel">Custom path:</Label>
+                        <TextBox Grid.Column="1" Name="NewDiskCustomPath" TextChanged="NewDiskCustomPath_OnTextChanged"/>
                         <Button Grid.Column="2" Name="NewDiskCustomPathBrowse" Click="NewDiskCustomPathBrowse_OnClick">...</Button>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
@@ -72,8 +72,8 @@
                         <virtualWorkstation:DiskFormatComboBox Grid.Column="1" Name="NewDiskFormat" SelectedIndex="0" SelectionChanged="NewDiskFormat_OnSelectionChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *, Auto">
-                        <Label Grid.Column="0">Custom format:</Label>
-                        <TextBox Grid.Column="1" Name="NewDiskCustomFormat" IsEnabled="False"/>
+                        <Label Grid.Column="0" Name="NewDiskCustomFormatLabel">Custom format:</Label>
+                        <TextBox Grid.Column="1" Name="NewDiskCustomFormat" IsEnabled="False" TextChanged="NewDiskCustomFormat_OnTextChanged"/>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Size (in GiB):</Label>
@@ -84,7 +84,7 @@
                 <RadioButton Name="UseExistingDisk" IsCheckedChanged="UseExistingDisk_OnIsCheckedChanged">Use an existing virtual disk</RadioButton>
                 <StackPanel Name="ExistingDiskPanel" IsEnabled="False">
                     <Grid ColumnDefinitions="*, *, Auto">
-                        <Label Grid.Column="0">Path:</Label>
+                        <Label Grid.Column="0" Name="ExistingDiskPathLabel">Path:</Label>
                         <TextBox Grid.Column="1" Name="ExistingDiskPath" TextChanged="ExistingDiskPath_OnTextChanged"/>
                         <Button Grid.Column="2" Name="ExistingDiskPathBrowse" Click="ExistingDiskPathBrowse_OnClick">...</Button>
                     </Grid>

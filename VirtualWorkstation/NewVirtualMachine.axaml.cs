@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using QemuSharp;
 using QemuSharp.Structs;
 using QemuSharp.Structs.Enums;
@@ -15,6 +16,7 @@ namespace VirtualWorkstation;
 public partial class NewVirtualMachine : Window
 {
     private readonly MainWindow _parent;
+    private readonly IBrush? _labelBrush, _textBrush, _numericUpDownBrush;
 
     // I swear it's not null! I swear!!!!!
     private VirtualMachine _currentProfile = null!;
@@ -24,6 +26,9 @@ public partial class NewVirtualMachine : Window
         InitializeComponent();
 
         _parent = parent;
+        _labelBrush = NameLabel.Foreground;
+        _textBrush = Name.Foreground;
+        _numericUpDownBrush = Sockets.Foreground;
 
         // FIXME: Determine correct amount of sockets, cores and threads
         Sockets.Maximum = Environment.ProcessorCount;
@@ -38,12 +43,24 @@ public partial class NewVirtualMachine : Window
         Folder.Text = GlobalSettings.VmFolder;
     }
 
+    private void Name_OnTextChanged(object? _, TextChangedEventArgs e)
+    {
+        NameLabel.Foreground = _labelBrush;
+        Name.Foreground = _textBrush;
+    }
+
     private async void FolderBrowse_OnClick(object? _, RoutedEventArgs e)
     {
         var storageFolders = await StorageProvider.OpenFolderPickerAsync(UiHelpers.DefaultFolderPickerOpenOptions);
         if (storageFolders.Count != 1) return;
 
         Folder.Text = storageFolders[0].Path.LocalPath;
+    }
+
+    private void BootImage_OnTextChanged(object? _, TextChangedEventArgs e)
+    {
+        BootImageLabel.Foreground = _labelBrush;
+        BootImage.Foreground = _textBrush;
     }
 
     private async void BootImageBrowse_OnClick(object? _, RoutedEventArgs e)
@@ -66,11 +83,41 @@ public partial class NewVirtualMachine : Window
         CheckResources();
     }
 
+    private void Sockets_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
+    {
+        SocketsLabel.Foreground = _labelBrush;
+        Sockets.Foreground = _numericUpDownBrush;
+    }
+
+    private void Cores_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
+    {
+        CoresLabel.Foreground = _labelBrush;
+        Cores.Foreground = _numericUpDownBrush;
+    }
+
+    private void Threads_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
+    {
+        ThreadsLabel.Foreground = _labelBrush;
+        Threads.Foreground = _numericUpDownBrush;
+    }
+
+    private void Ram_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
+    {
+        RamLabel.Foreground = _labelBrush;
+        Ram.Foreground = _numericUpDownBrush;
+    }
+
     private void CreateNewDisk_OnIsCheckedChanged(object? _, RoutedEventArgs e)
     {
         if (!CreateNewDisk.IsChecked!.Value) return;
         NewDiskPanel.IsEnabled = true;
         ExistingDiskPanel.IsEnabled = false;
+    }
+
+    private void NewDiskCustomPath_OnTextChanged(object? _, TextChangedEventArgs e)
+    {
+        NewDiskCustomPathLabel.Foreground = _labelBrush;
+        NewDiskCustomPath.Foreground = _textBrush;
     }
 
     private async void NewDiskCustomPathBrowse_OnClick(object? _, RoutedEventArgs e)
@@ -87,6 +134,12 @@ public partial class NewVirtualMachine : Window
         NewDiskCustomFormat.IsEnabled = format == DiskFormat.Custom;
     }
 
+    private void NewDiskCustomFormat_OnTextChanged(object? _, TextChangedEventArgs e)
+    {
+        NewDiskCustomFormatLabel.Foreground = _labelBrush;
+        NewDiskCustomFormat.Foreground = _textBrush;
+    }
+
     private void UseExistingDisk_OnIsCheckedChanged(object? _, RoutedEventArgs e)
     {
         if (!UseExistingDisk.IsChecked!.Value) return;
@@ -96,24 +149,31 @@ public partial class NewVirtualMachine : Window
 
     private void ExistingDiskPath_OnTextChanged(object? _, TextChangedEventArgs e)
     {
-        var vmDiskPath = ExistingDiskPath.Text!;
-        if (!File.Exists(vmDiskPath))
-        {
-            ExistingDiskType.Content = "N/A";
-            ExistingDiskSize.Content = "N/A";
+        ExistingDiskPathLabel.Foreground = _labelBrush;
+        ExistingDiskPath.Foreground = _textBrush;
 
-            Status.Content = "Invalid disk path. (Does it exist?)";
-            return;
-        }
+        ExistingDiskType.Content = "N/A";
+        ExistingDiskSize.Content = "N/A";
+    }
 
-        var vmDiskFolder = Path.GetDirectoryName(vmDiskPath);
+    private async void ExistingDiskPathBrowse_OnClick(object? _, RoutedEventArgs e)
+    {
+        var storageFiles = await StorageProvider.OpenFilePickerAsync(UiHelpers.DefaultFilePickerOpenOptions);
+        if (storageFiles.Count != 1) return;
+
+        ExistingDiskPath.Text = storageFiles[0].Path.LocalPath;
+
+        var vmDiskFolder = Path.GetDirectoryName(ExistingDiskPath.Text);
         if (string.IsNullOrEmpty(vmDiskFolder))
         {
+            ExistingDiskPathLabel.Foreground = Brushes.Red;
+            ExistingDiskPath.Foreground = Brushes.Red;
+
             Status.Content = "Invalid disk path. (Does it point to a root directory?)";
             return;
         }
 
-        var (error, diskInfo) = DiskManager.GetDiskInfo(GlobalSettings.CustomQemuPath, vmDiskFolder, vmDiskPath);
+        var (error, diskInfo) = DiskManager.GetDiskInfo(GlobalSettings.CustomQemuPath, vmDiskFolder, ExistingDiskPath.Text!);
         if (error != null)
         {
             switch (error)
@@ -156,14 +216,6 @@ public partial class NewVirtualMachine : Window
         Status.Content = "N/A";
     }
 
-    private async void ExistingDiskPathBrowse_OnClick(object? _, RoutedEventArgs e)
-    {
-        var storageFiles = await StorageProvider.OpenFilePickerAsync(UiHelpers.DefaultFilePickerOpenOptions);
-        if (storageFiles.Count != 1) return;
-
-        ExistingDiskPath.Text = storageFiles[0].Path.LocalPath;
-    }
-
     private void NoDisk_OnIsCheckedChanged(object? _, RoutedEventArgs e)
     {
         if (!NoDisk.IsChecked!.Value) return;
@@ -175,12 +227,18 @@ public partial class NewVirtualMachine : Window
     {
         if (string.IsNullOrEmpty(Name.Text))
         {
+            NameLabel.Foreground = Brushes.Red;
+            Name.Foreground = Brushes.Red;
+
             Status.Content = "Please enter a valid name.";
             return;
         }
 
         if (Name.Text.Any(c => !char.IsAsciiLetterOrDigit(c) && c is not ' ' and not '.'))
         {
+            NameLabel.Foreground = Brushes.Red;
+            Name.Foreground = Brushes.Red;
+
             Status.Content = "Name contains invalid characters.";
             return;
         }
@@ -195,6 +253,9 @@ public partial class NewVirtualMachine : Window
         {
             if (!File.Exists(BootImage.Text))
             {
+                BootImageLabel.Foreground = Brushes.Red;
+                BootImage.Foreground = Brushes.Red;
+
                 Status.Content = "Boot image file doesn't exist.";
                 return;
             }
@@ -214,12 +275,17 @@ public partial class NewVirtualMachine : Window
 
             if (string.IsNullOrEmpty(vmDiskFormatString))
             {
+                NewDiskCustomFormatLabel.Foreground = Brushes.Red;
+
                 Status.Content = "Custom disk format is empty.";
                 return;
             }
 
             if (vmDiskFormatString.Any(c => !char.IsAsciiLetterOrDigit(c) && c is not '-' and not '_'))
             {
+                NewDiskCustomFormatLabel.Foreground = Brushes.Red;
+                NewDiskCustomFormat.Foreground = Brushes.Red;
+
                 Status.Content = "Custom disk format contains invalid characters.";
                 return;
             }
@@ -231,6 +297,9 @@ public partial class NewVirtualMachine : Window
             var vmDiskFolder = Path.GetDirectoryName(vmDiskPath);
             if (string.IsNullOrEmpty(vmDiskFolder))
             {
+                NewDiskCustomPathLabel.Foreground = Brushes.Red;
+                NewDiskCustomPath.Foreground = Brushes.Red;
+
                 Status.Content = "Invalid disk path. (Does it point to a root directory?)";
                 return;
             }
@@ -283,6 +352,9 @@ public partial class NewVirtualMachine : Window
             var vmDiskPath = ExistingDiskPath.Text!;
             if (!File.Exists(vmDiskPath))
             {
+                ExistingDiskPathLabel.Foreground = Brushes.Red;
+                ExistingDiskPath.Foreground = Brushes.Red;
+
                 Status.Content = "Disk file does not exist.";
                 return;
             }
@@ -327,24 +399,36 @@ public partial class NewVirtualMachine : Window
         {
             status += " sockets";
             notEnoughResources = true;
+
+            SocketsLabel.Foreground = Brushes.Red;
+            Sockets.Foreground = Brushes.Red;
         } else Sockets.Value = _currentProfile.Processor.Sockets;
 
         if (Cores.Maximum < _currentProfile.Processor.Cores)
         {
             status += notEnoughResources ? ", cores" : " cores";
             notEnoughResources = true;
+
+            CoresLabel.Foreground = Brushes.Red;
+            Cores.Foreground = Brushes.Red;
         } else Cores.Value = _currentProfile.Processor.Cores;
 
         if (Threads.Maximum < _currentProfile.Processor.Threads)
         {
             status += notEnoughResources ? ", threads" : " threads";
             notEnoughResources = true;
+
+            ThreadsLabel.Foreground = Brushes.Red;
+            Threads.Foreground = Brushes.Red;
         } else Threads.Value = _currentProfile.Processor.Threads;
 
         if (Ram.Maximum < _currentProfile.Ram)
         {
             status += notEnoughResources ? ", RAM" : " RAM";
             notEnoughResources = true;
+
+            RamLabel.Foreground = Brushes.Red;
+            Ram.Foreground = Brushes.Red;
         } else Ram.Value = _currentProfile.Ram;
 
         if (notEnoughResources) Status.Content = $"{status} for this profile.";
