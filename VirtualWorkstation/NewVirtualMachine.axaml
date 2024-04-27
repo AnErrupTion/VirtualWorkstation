@@ -27,11 +27,18 @@
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Profile:</Label>
                         <ComboBox Grid.Column="1" Name="Profile" SelectionChanged="Profile_OnSelectionChanged">
-                            <ComboBoxItem>Windows 11</ComboBoxItem>
+                            <ComboBoxItem>Windows 11 (x64)</ComboBoxItem>
                             <ComboBoxItem>Windows 10 (x64)</ComboBoxItem>
                             <ComboBoxItem>Windows 10 (x86)</ComboBoxItem>
                             <ComboBoxItem>Windows 8.x (x64)</ComboBoxItem>
                             <ComboBoxItem>Windows 8.x (x86)</ComboBoxItem>
+                            <ComboBoxItem>Windows 7 (x64)</ComboBoxItem>
+                            <ComboBoxItem>Windows 7 (x86)</ComboBoxItem>
+                            <ComboBoxItem>Windows Vista (x64)</ComboBoxItem>
+                            <ComboBoxItem>Windows Vista (x86)</ComboBoxItem>
+                            <ComboBoxItem>Windows XP (x64)</ComboBoxItem>
+                            <ComboBoxItem>Windows XP (x86)</ComboBoxItem>
+                            <ComboBoxItem>Windows 2000 (x86)</ComboBoxItem>
                             <ComboBoxItem>Linux (x64)</ComboBoxItem>
                         </ComboBox>
                     </Grid>

@@ -5,35 +5,28 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows8X64 = new()
+    private static readonly VirtualMachine WindowsXpX64 = new()
     {
         Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
-        Firmware = new Firmware { Type = FirmwareType.Efi },
+        Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
         Chipset = new Chipset
         {
-            Model = ChipsetModel.X86Q35,
-            Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
+            Model = ChipsetModel.X86I440Fx,
+            I440FxOptions = new I440FxOptions { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On, SouthbridgeType = I440FxSouthbridgeType.Piix4Isa }
         },
-        Ram = 2048,
+        Ram = 256,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor
-        {
-            Model = ProcessorModel.X86Host,
-            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
-            Sockets = 1,
-            Cores = 1,
-            Threads = 1
-        },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
-        UsbControllers =
+        UsbControllers = 
         [
-            new UsbController { Version = UsbVersion.Xhci }
+            new UsbController { Version = UsbVersion.Uhci }
         ],
         NetworkInterfaces =
         [
-            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.E1000E }
+            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.Rtl8139 }
         ],
         GraphicControllers =
         [
@@ -41,11 +34,11 @@ public static partial class Profiles
         ],
         AudioControllers =
         [
-            new AudioController { Card = SoundCard.IntelHda9, HasOutput = true }
+            new AudioController { Card = SoundCard.IntelAc97, HasOutput = true }
         ],
         DiskControllers =
         [
-            new DiskController { Model = DiskBus.Ich9Ahci }
+            new DiskController { Model = DiskBus.SouthbridgeIde }
         ],
         Disks =
         [

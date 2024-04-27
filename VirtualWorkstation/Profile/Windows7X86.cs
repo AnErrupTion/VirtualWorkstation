@@ -5,7 +5,7 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10X86 = new()
+    private static readonly VirtualMachine Windows7X86 = new()
     {
         Architecture = Architecture.I386,
         UseHardwareAcceleration = true,
@@ -18,14 +18,7 @@ public static partial class Profiles
         Ram = 1024,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor
-        {
-            Model = ProcessorModel.X86Host,
-            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
-            Sockets = 1,
-            Cores = 1,
-            Threads = 1
-        },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [

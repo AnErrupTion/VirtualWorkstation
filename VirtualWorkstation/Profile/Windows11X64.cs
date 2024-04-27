@@ -5,17 +5,17 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10X86 = new()
+    private static readonly VirtualMachine Windows11X64 = new()
     {
-        Architecture = Architecture.I386,
+        Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
-        Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
+        Firmware = new Firmware { Type = FirmwareType.EfiSecureBoot },
         Chipset = new Chipset
         {
             Model = ChipsetModel.X86Q35,
             Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
         },
-        Ram = 1024,
+        Ram = 4096,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor
@@ -23,10 +23,10 @@ public static partial class Profiles
             Model = ProcessorModel.X86Host,
             AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
             Sockets = 1,
-            Cores = 1,
+            Cores = 2,
             Threads = 1
         },
-        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
+        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.Emulated, Type = TpmType.Crb, Version = TpmVersion.V20 },
         NetworkInterfaces =
         [
             new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.VirtIo }

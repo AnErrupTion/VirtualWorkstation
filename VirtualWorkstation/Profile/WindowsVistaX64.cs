@@ -5,9 +5,9 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10X86 = new()
+    private static readonly VirtualMachine WindowsVistaX64 = new()
     {
-        Architecture = Architecture.I386,
+        Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
         Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
         Chipset = new Chipset
@@ -15,47 +15,43 @@ public static partial class Profiles
             Model = ChipsetModel.X86Q35,
             Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
         },
-        Ram = 1024,
+        Ram = 512,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor
-        {
-            Model = ProcessorModel.X86Host,
-            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
-            Sockets = 1,
-            Cores = 1,
-            Threads = 1
-        },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
+        UsbControllers = 
+        [
+            new UsbController { Version = UsbVersion.Ehci }
+        ],
         NetworkInterfaces =
         [
-            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.VirtIo }
+            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.E1000 }
         ],
         GraphicControllers =
         [
-            new GraphicsController { Card = GraphicsCard.Qxl, HasVgaEmulation = true }
+            new GraphicsController { Card = GraphicsCard.Cirrus, HasVgaEmulation = true }
         ],
         AudioControllers =
         [
-            new AudioController { Card = SoundCard.IntelHda9, HasOutput = true }
+            new AudioController { Card = SoundCard.IntelAc97, HasOutput = true }
         ],
         DiskControllers =
         [
-            new DiskController { Model = DiskBus.VirtIoBlock },
             new DiskController { Model = DiskBus.Ich9Ahci }
         ],
         Disks =
         [
             new Disk { Controller = 0, CacheMethod = DiskCacheMethod.None, IsSsd = true },
-            new Disk { Controller = 1, Format = DiskFormat.Raw, CacheMethod = DiskCacheMethod.None, IsCdrom = true }
+            new Disk { Controller = 0, Format = DiskFormat.Raw, CacheMethod = DiskCacheMethod.None, IsCdrom = true }
         ],
         Keyboards =
         [
-            new Keyboard { Model = KeyboardModel.VirtIo }
+            new Keyboard { Model = KeyboardModel.Usb, UsbController = 0 }
         ],
         Mice =
         [
-            new Mouse { Model = MouseModel.VirtIo, UseAbsolutePointing = true }
+            new Mouse { Model = MouseModel.Usb, UsbController = 0, UseAbsolutePointing = true }
         ]
     };
 }

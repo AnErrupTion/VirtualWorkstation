@@ -51,11 +51,11 @@ public static partial class Profiles
         ],
         Keyboards =
         [
-            new Keyboard { Model = KeyboardModel.VirtIo, UsbController = 0 }
+            new Keyboard { Model = KeyboardModel.VirtIo }
         ],
         Mice =
         [
-            new Mouse { Model = MouseModel.VirtIo, UsbController = 0, UseAbsolutePointing = true }
+            new Mouse { Model = MouseModel.VirtIo, UseAbsolutePointing = true }
         ]
     };
 }

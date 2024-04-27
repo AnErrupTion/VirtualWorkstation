@@ -5,28 +5,21 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows11 = new()
+    private static readonly VirtualMachine Windows7X64 = new()
     {
         Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
-        Firmware = new Firmware { Type = FirmwareType.EfiSecureBoot },
+        Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
         Chipset = new Chipset
         {
             Model = ChipsetModel.X86Q35,
             Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
         },
-        Ram = 4096,
+        Ram = 2048,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor
-        {
-            Model = ProcessorModel.X86Host,
-            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
-            Sockets = 1,
-            Cores = 2,
-            Threads = 1
-        },
-        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.Emulated, Type = TpmType.Crb, Version = TpmVersion.V20 },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
+        TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [
             new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.VirtIo }
@@ -51,11 +44,11 @@ public static partial class Profiles
         ],
         Keyboards =
         [
-            new Keyboard { Model = KeyboardModel.VirtIo, UsbController = 0 }
+            new Keyboard { Model = KeyboardModel.VirtIo }
         ],
         Mice =
         [
-            new Mouse { Model = MouseModel.VirtIo, UsbController = 0, UseAbsolutePointing = true }
+            new Mouse { Model = MouseModel.VirtIo, UseAbsolutePointing = true }
         ]
     };
 }
