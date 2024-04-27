@@ -16,13 +16,17 @@
                     </Grid>
                     <Grid ColumnDefinitions="*, *, Auto">
                         <Label Grid.Column="0">Folder:</Label>
-                        <TextBox Grid.Column="1" Name="Folder"/>
-                        <Button Grid.Column="2" Name="FolderBrowse" Click="FolderBrowse_OnClick">...</Button>
+                        <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                            <TextBox Grid.Column="0" Name="Folder"/>
+                            <Button Grid.Column="1" Name="FolderBrowse" Click="FolderBrowse_OnClick">...</Button>
+                        </Grid>
                     </Grid>
                     <Grid ColumnDefinitions="*, *, Auto">
                         <Label Grid.Column="0" Name="BootImageLabel">Boot image:</Label>
-                        <TextBox Grid.Column="1" Name="BootImage" TextChanged="BootImage_OnTextChanged"/>
-                        <Button Grid.Column="2" Name="BootImageBrowse" Click="BootImageBrowse_OnClick">...</Button>
+                        <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                            <TextBox Grid.Column="0" Name="BootImage" TextChanged="BootImage_OnTextChanged"/>
+                            <Button Grid.Column="1" Name="BootImageBrowse" Click="BootImageBrowse_OnClick">...</Button>
+                        </Grid>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Profile:</Label>
@@ -71,8 +75,10 @@
                 <StackPanel Name="NewDiskPanel">
                     <Grid ColumnDefinitions="*, *, Auto">
                         <Label Grid.Column="0" Name="NewDiskCustomPathLabel">Custom path:</Label>
-                        <TextBox Grid.Column="1" Name="NewDiskCustomPath" TextChanged="NewDiskCustomPath_OnTextChanged"/>
-                        <Button Grid.Column="2" Name="NewDiskCustomPathBrowse" Click="NewDiskCustomPathBrowse_OnClick">...</Button>
+                        <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                            <TextBox Grid.Column="0" Name="NewDiskCustomPath" TextChanged="NewDiskCustomPath_OnTextChanged"/>
+                            <Button Grid.Column="1" Name="NewDiskCustomPathBrowse" Click="NewDiskCustomPathBrowse_OnClick">...</Button>
+                        </Grid>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Format:</Label>
@@ -92,8 +98,10 @@
                 <StackPanel Name="ExistingDiskPanel" IsEnabled="False">
                     <Grid ColumnDefinitions="*, *, Auto">
                         <Label Grid.Column="0" Name="ExistingDiskPathLabel">Path:</Label>
-                        <TextBox Grid.Column="1" Name="ExistingDiskPath" TextChanged="ExistingDiskPath_OnTextChanged"/>
-                        <Button Grid.Column="2" Name="ExistingDiskPathBrowse" Click="ExistingDiskPathBrowse_OnClick">...</Button>
+                        <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
+                            <TextBox Grid.Column="0" Name="ExistingDiskPath" TextChanged="ExistingDiskPath_OnTextChanged"/>
+                            <Button Grid.Column="1" Name="ExistingDiskPathBrowse" Click="ExistingDiskPathBrowse_OnClick">...</Button>
+                        </Grid>
                     </Grid>
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Type:</Label>
