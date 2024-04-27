@@ -147,7 +147,13 @@ public static class Launcher
                     chipset.Append(vm.Chipset.Q35Options.EnablePs2Emulation ? "on" : "off");
 
                     chipset.Append(",acpi=");
-                    chipset.Append(vm.Chipset.Q35Options.EnableAcpi ? "on" : "off");
+                    chipset.Append(vm.Chipset.Q35Options.AcpiState switch
+                    {
+                        AcpiChipsetState.On => "on",
+                        AcpiChipsetState.Off => "off",
+                        AcpiChipsetState.Auto => "auto",
+                        _ => throw new UnreachableException()
+                    });
                 }
 
                 pciBusType = "pcie";
@@ -169,7 +175,13 @@ public static class Launcher
                     chipset.Append(vm.Chipset.I440FxOptions.EnablePs2Emulation ? "on" : "off");
 
                     chipset.Append(",acpi=");
-                    chipset.Append(vm.Chipset.I440FxOptions.EnableAcpi ? "on" : "off");
+                    chipset.Append(vm.Chipset.I440FxOptions.AcpiState switch
+                    {
+                        AcpiChipsetState.On => "on",
+                        AcpiChipsetState.Off => "off",
+                        AcpiChipsetState.Auto => "auto",
+                        _ => throw new UnreachableException()
+                    });
 
                     chipset.Append(",x-south-bridge=");
                     chipset.Append(vm.Chipset.I440FxOptions.SouthbridgeType switch

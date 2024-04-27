@@ -25,17 +25,27 @@
             <CheckBox Name="Q35EnablePs2Emulation" IsCheckedChanged="Q35EnablePs2Emulation_OnIsCheckedChanged">
                 Enable PS/2 emulation
             </CheckBox>
-            <CheckBox Name="Q35EnableAcpi" IsCheckedChanged="Q35EnableAcpi_OnIsCheckedChanged">
-                Enable ACPI
-            </CheckBox>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">ACPI:</Label>
+                <ComboBox Grid.Column="1" Name="Q35AcpiState" SelectionChanged="Q35AcpiState_OnSelectionChanged">
+                    <ComboBoxItem>On</ComboBoxItem>
+                    <ComboBoxItem>Off</ComboBoxItem>
+                    <ComboBoxItem>Auto</ComboBoxItem>
+                </ComboBox>
+            </Grid>
         </StackPanel>
         <StackPanel Name="I440FxOptions">
             <CheckBox Name="I440FxEnablePs2Emulation" IsCheckedChanged="I440FxEnablePs2Emulation_OnIsCheckedChanged">
                 Enable PS/2 emulation
             </CheckBox>
-            <CheckBox Name="I440FxEnableAcpi" IsCheckedChanged="I440FxEnableAcpi_OnIsCheckedChanged">
-                Enable ACPI
-            </CheckBox>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">ACPI:</Label>
+                <ComboBox Grid.Column="1" Name="I440FxAcpiState" SelectionChanged="I440FxAcpiState_OnSelectionChanged">
+                    <ComboBoxItem>On</ComboBoxItem>
+                    <ComboBoxItem>Off</ComboBoxItem>
+                    <ComboBoxItem>Auto</ComboBoxItem>
+                </ComboBox>
+            </Grid>
             <Grid ColumnDefinitions="*, *">
                 <Label Grid.Column="0">Southbridge:</Label>
                 <ComboBox Grid.Column="1" Name="I440FxSouthbridgeType" SelectionChanged="I440FxSouthbridgeType_OnSelectionChanged">
