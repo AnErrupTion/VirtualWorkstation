@@ -745,14 +745,14 @@ public static class Launcher
                 {
                     arguments.Add($"intel-hda,bus={pciBusType}.0,id=hda{i}");
 
-                    AddHdaDevices(ref arguments, ref audioController, i);
+                    AddHdaDevices(audioController, i);
                     break;
                 }
                 case SoundCard.IntelHda9:
                 {
                     arguments.Add($"ich9-intel-hda,bus={pciBusType}.0,id=hda{i}");
 
-                    AddHdaDevices(ref arguments, ref audioController, i);
+                    AddHdaDevices(audioController, i);
                     break;
                 }
                 case SoundCard.Usb:
@@ -872,6 +872,7 @@ public static class Launcher
                 errors.Add(new LauncherError(LauncherErrorType.UnusedDiskController, i));
 
         var insertedDriveCount = new Dictionary<ulong, ulong>();
+        var bootIndex = 0UL;
 
         foreach (var (i, usedController) in usedControllers)
         {
@@ -894,6 +895,21 @@ public static class Launcher
                     arguments.Add($"floppy,drive=drive{i}");
                     break;
                 }
+                case DiskBus.IsaIde:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"isa-ide,bus=isa.0,id=pata{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
+                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
+                    break;
+                }
                 case DiskBus.Piix3Ide:
                 {
                     if (usedController.Removable)
@@ -905,14 +921,8 @@ public static class Launcher
                         arguments.Add("-device");
                     }
 
-                    var insertedDrives = insertedDriveCount[usedController.Controller];
-                    insertedDriveCount[usedController.Controller] = insertedDrives + 1;
-
-                    if (insertedDrives >= 2)
-                        errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, i));
-
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    arguments.Add($"{ideDevice},bus=pata{usedController.Controller}.{insertedDrives},drive=drive{i}");
+                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
                     break;
                 }
                 case DiskBus.Piix4Ide:
@@ -926,14 +936,68 @@ public static class Launcher
                         arguments.Add("-device");
                     }
 
-                    var insertedDrives = insertedDriveCount[usedController.Controller];
-                    insertedDriveCount[usedController.Controller] = insertedDrives + 1;
-
-                    if (insertedDrives >= 2)
-                        errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, i));
-
                     var ideDevice = usedController.Cdrom ? "ide-cd" : "ide-hd";
-                    arguments.Add($"{ideDevice},bus=pata{usedController.Controller}.{insertedDrives},drive=drive{i}");
+                    AddDisk(i, usedController.Controller, "pata", ideDevice, 2, 4);
+                    break;
+                }
+                case DiskBus.PvScsi:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"pvscsi,bus={pciBusType}.0,id=scsi{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
+                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    break;
+                }
+                case DiskBus.AmdScsi:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"am53c974,bus={pciBusType}.0,id=scsi{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
+                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    break;
+                }
+                case DiskBus.LsiScsi:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"lsi53c810,bus={pciBusType}.0,id=scsi{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
+                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
+                    break;
+                }
+                case DiskBus.LsiScsiA:
+                {
+                    if (usedController.Removable)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidRemovableOptionForDiskBus, i));
+
+                    if (insertedDriveCount.TryAdd(usedController.Controller, 0))
+                    {
+                        arguments.Add($"lsi53c895a,bus={pciBusType}.0,id=scsi{usedController.Controller}");
+                        arguments.Add("-device");
+                    }
+
+                    var scsiDevice = usedController.Cdrom ? "scsi-cd" : "scsi-hd";
+                    AddDisk(i, usedController.Controller, "scsi", scsiDevice, 4, 0);
                     break;
                 }
                 case DiskBus.Sata:
@@ -1172,6 +1236,42 @@ public static class Launcher
         } else errors.Add(new LauncherError(LauncherErrorType.EmptyQemuPath));
 
         return new LauncherResult(errors, nvRamPath, programs);
+
+        // These methods feels illegal for some reason
+        void AddHdaDevices(AudioController audioController, int i)
+        {
+            arguments.Add("-device");
+            switch (audioController)
+            {
+                case { HasInput: true, HasOutput: true }:
+                {
+                    arguments.Add($"hda-duplex,bus=hda{i}.0,audiodev=audiodev");
+                    break;
+                }
+                case { HasInput: false, HasOutput: true }:
+                {
+                    arguments.Add($"hda-output,bus=hda{i}.0,audiodev=audiodev");
+                    break;
+                }
+                default:
+                {
+                    arguments.Add($"hda-input,bus=hda{i}.0,audiodev=audiodev");
+                    break;
+                }
+            }
+        }
+
+        void AddDisk(int i, ulong controller, string busId, string device, ulong maxDrivesPerBus, ulong maxDriveCount)
+        {
+            var insertedDrives = insertedDriveCount[controller];
+            if (insertedDrives > 0 && insertedDrives % maxDrivesPerBus == 0)
+                insertedDriveCount[controller] = insertedDrives + 1;
+
+            if (maxDriveCount != 0 && insertedDrives == maxDriveCount)
+                errors.Add(new LauncherError(LauncherErrorType.TooManyDrivesForDiskBus, (int)controller));
+
+            arguments.Add($"{device},bus={busId}{controller}.{insertedDrives},bootindex={bootIndex++},drive=drive{i}");
+        }
     }
 
     private static bool IsFeatureUnsupported(Architecture architecture, ProcessorFeature feature)
@@ -1184,29 +1284,6 @@ public static class Launcher
         ProcessorFeature.X86HyperVPassThrough => "hv-passthrough",
         _ => throw new UnreachableException()
     };
-
-    private static void AddHdaDevices(ref List<string> arguments, ref AudioController audioController, int i)
-    {
-        arguments.Add("-device");
-        switch (audioController)
-        {
-            case { HasInput: true, HasOutput: true }:
-            {
-                arguments.Add($"hda-duplex,bus=hda{i}.0,audiodev=audiodev");
-                break;
-            }
-            case { HasInput: false, HasOutput: true }:
-            {
-                arguments.Add($"hda-output,bus=hda{i}.0,audiodev=audiodev");
-                break;
-            }
-            default:
-            {
-                arguments.Add($"hda-input,bus=hda{i}.0,audiodev=audiodev");
-                break;
-            }
-        }
-    }
 
     private static string GetCustomBusType(DeviceBus deviceBus, string pciBusType) => deviceBus.Type switch
     {

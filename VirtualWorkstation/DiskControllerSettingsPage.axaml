@@ -7,9 +7,14 @@
             <Label Grid.Column="0">Card:</Label>
             <ComboBox Grid.Column="1" Name="Model" SelectionChanged="Model_OnSelectionChanged">
                 <ComboBoxItem>Floppy</ComboBoxItem>
-                <ComboBoxItem>PIIX3 IDE</ComboBoxItem>
-                <ComboBoxItem>PIIX4 IDE</ComboBoxItem>
-                <ComboBoxItem>SATA (AHCI)</ComboBoxItem>
+                <ComboBoxItem>ISA IDE</ComboBoxItem>
+                <ComboBoxItem>Intel PIIX3 IDE</ComboBoxItem>
+                <ComboBoxItem>Intel PIIX4 IDE</ComboBoxItem>
+                <ComboBoxItem>Paravirtualized SCSI</ComboBoxItem>
+                <ComboBoxItem>AMD AM53C974 SCSI</ComboBoxItem>
+                <ComboBoxItem>LSI Logic LSI53C810 SCSI</ComboBoxItem>
+                <ComboBoxItem>LSI Logic LSI53C895A SCSI</ComboBoxItem>
+                <ComboBoxItem>SATA</ComboBoxItem>
                 <ComboBoxItem>NVMe</ComboBoxItem>
                 <ComboBoxItem>USB</ComboBoxItem>
                 <ComboBoxItem>VirtIO</ComboBoxItem>
