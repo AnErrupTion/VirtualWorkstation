@@ -5,7 +5,7 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10 = new()
+    private static readonly VirtualMachine Windows10X64 = new()
     {
         Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
@@ -14,7 +14,7 @@ public static partial class Profiles
         Ram = 2048,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 2, Threads = 1 },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [

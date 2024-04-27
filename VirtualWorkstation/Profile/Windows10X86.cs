@@ -5,16 +5,16 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Linux = new()
+    private static readonly VirtualMachine Windows10X86 = new()
     {
-        Architecture = Architecture.Amd64,
+        Architecture = Architecture.I386,
         UseHardwareAcceleration = true,
-        Firmware = new Firmware { Type = FirmwareType.Efi },
+        Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
         Chipset = new Chipset { Model = ChipsetModel.X86Q35, Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On } },
         Ram = 1024,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 2, Threads = 1 },
+        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [
@@ -22,11 +22,11 @@ public static partial class Profiles
         ],
         GraphicControllers =
         [
-            new GraphicsController { Card = GraphicsCard.VirtIo, HasVgaEmulation = true, HasGraphicsAcceleration = true }
+            new GraphicsController { Card = GraphicsCard.Qxl, HasVgaEmulation = true }
         ],
         AudioControllers =
         [
-            new AudioController { Card = SoundCard.VirtIo, HasOutput = true }
+            new AudioController { Card = SoundCard.IntelHda9, HasOutput = true }
         ],
         DiskControllers =
         [
@@ -40,11 +40,11 @@ public static partial class Profiles
         ],
         Keyboards =
         [
-            new Keyboard { Model = KeyboardModel.VirtIo }
+            new Keyboard { Model = KeyboardModel.VirtIo, UsbController = 0 }
         ],
         Mice =
         [
-            new Mouse { Model = MouseModel.VirtIo, UseAbsolutePointing = true }
+            new Mouse { Model = MouseModel.VirtIo, UsbController = 0, UseAbsolutePointing = true }
         ]
     };
 }

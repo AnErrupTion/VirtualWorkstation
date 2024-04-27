@@ -27,8 +27,10 @@
                     <Grid ColumnDefinitions="*, *">
                         <Label Grid.Column="0">Profile:</Label>
                         <ComboBox Grid.Column="1" Name="Profile" SelectionChanged="Profile_OnSelectionChanged">
-                            <ComboBoxItem>Windows 10</ComboBoxItem>
-                            <ComboBoxItem>Linux</ComboBoxItem>
+                            <ComboBoxItem>Windows 11</ComboBoxItem>
+                            <ComboBoxItem>Windows 10 (x64)</ComboBoxItem>
+                            <ComboBoxItem>Windows 10 (x86)</ComboBoxItem>
+                            <ComboBoxItem>Linux (x64)</ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </StackPanel>
