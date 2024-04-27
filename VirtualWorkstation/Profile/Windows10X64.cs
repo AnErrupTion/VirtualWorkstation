@@ -13,7 +13,7 @@ public static partial class Profiles
         Chipset = new Chipset
         {
             Model = ChipsetModel.X86Q35,
-            Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On }
+            Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
         },
         Ram = 2048,
         Display = new Display { Type = DisplayType.Auto },
