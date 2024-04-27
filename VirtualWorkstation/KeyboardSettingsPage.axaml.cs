@@ -27,8 +27,6 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
         {
             if (Model.Items[(int)KeyboardModel.Usb] is not ComboBoxItem item) throw new UnreachableException();
             item.IsEnabled = false;
-
-            UsbController.IsEnabled = false;
         }
         for (var i = 0; i < _vm.UsbControllers.Count; i++) UsbController.Items.Add(new ComboBoxItem { Content = i.ToString() });
 
@@ -64,7 +62,15 @@ public partial class KeyboardSettingsPage : UserControl, ITabPage, IController
     private void UsbController_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
         => _vm.Keyboards[Index].UsbController = (ulong)UsbController.SelectedIndex;
 
-    public void RefreshUsbControllerList(int startIndex) => UiHelpers.RefreshControllerList(ref UsbController, startIndex);
+    public void RefreshUsbControllerList(int startIndex)
+    {
+        UiHelpers.RefreshControllerList(ref UsbController, startIndex);
+
+        if (Model.Items[(int)KeyboardModel.Usb] is not ComboBoxItem item) throw new UnreachableException();
+        item.IsEnabled = UsbController.Items.Count > 0;
+
+        if (UsbController.SelectedIndex == -1) UsbController.SelectedIndex = 0;
+    }
 
     public void TriggerSelectionChangedEvent() => UsbController_OnSelectionChanged(null, null!);
 }

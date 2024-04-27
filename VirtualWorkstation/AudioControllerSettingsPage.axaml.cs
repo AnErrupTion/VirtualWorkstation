@@ -28,8 +28,6 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
         {
             if (Card.Items[(int)SoundCard.Usb] is not ComboBoxItem item) throw new UnreachableException();
             item.IsEnabled = false;
-
-            UsbController.IsEnabled = false;
         }
         for (var i = 0; i < _vm.UsbControllers.Count; i++) UsbController.Items.Add(new ComboBoxItem { Content = i.ToString() });
 
@@ -110,7 +108,15 @@ public partial class AudioControllerSettingsPage : UserControl, ITabPage, IContr
     private void HasOutput_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => _vm.AudioControllers[Index].HasOutput = HasOutput.IsChecked!.Value;
 
-    public void RefreshUsbControllerList(int startIndex) => UiHelpers.RefreshControllerList(ref UsbController, startIndex);
+    public void RefreshUsbControllerList(int startIndex)
+    {
+        UiHelpers.RefreshControllerList(ref UsbController, startIndex);
+
+        if (Card.Items[(int)SoundCard.Usb] is not ComboBoxItem item) throw new UnreachableException();
+        item.IsEnabled = UsbController.Items.Count > 0;
+
+        if (UsbController.SelectedIndex == -1) UsbController.SelectedIndex = 0;
+    }
 
     public void TriggerSelectionChangedEvent() => UsbController_OnSelectionChanged(null, null!);
 }
