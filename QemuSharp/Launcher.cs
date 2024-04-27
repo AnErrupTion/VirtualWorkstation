@@ -140,7 +140,7 @@ public static class Launcher
                 if (vm.Chipset.ForceUseNormalPci)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
 
-                var chipset = new StringBuilder("q35");
+                var chipset = new StringBuilder("q35,sata=off,usb=off,vmport=off");
                 if (vm.Chipset.Q35Options != null)
                 {
                     chipset.Append(",i8042=");
@@ -162,7 +162,7 @@ public static class Launcher
                 if (!vm.Chipset.ForceUseNormalPci)
                     errors.Add(new LauncherError(LauncherErrorType.InvalidForcePciOptionForChipsetModel));
 
-                var chipset = new StringBuilder("pc");
+                var chipset = new StringBuilder("pc,sata=off,usb=off,vmport=off");
                 if (vm.Chipset.I440FxOptions != null)
                 {
                     chipset.Append(",i8042=");
@@ -1007,7 +1007,7 @@ public static class Launcher
 
                     if (insertedDriveCount.TryAdd(usedController.Controller, 0))
                     {
-                        arguments.Add($"ahci,bus={pciBusType}.0,id=ahci{usedController.Controller}");
+                        arguments.Add($"ich9-ahci,bus={pciBusType}.0,id=ahci{usedController.Controller}");
                         arguments.Add("-device");
                     }
 
