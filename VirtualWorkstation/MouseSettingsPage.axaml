@@ -6,8 +6,8 @@
         <Grid ColumnDefinitions="*, *">
             <Label Grid.Column="0">Model:</Label>
             <ComboBox Grid.Column="1" Name="Model" SelectionChanged="Model_OnSelectionChanged">
-                <ComboBoxItem>USB</ComboBoxItem>
                 <ComboBoxItem>VirtIO</ComboBoxItem>
+                <ComboBoxItem>USB</ComboBoxItem>
                 <ComboBoxItem>Custom</ComboBoxItem>
             </ComboBox>
         </Grid>
