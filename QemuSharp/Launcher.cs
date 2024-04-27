@@ -170,6 +170,14 @@ public static class Launcher
 
                     chipset.Append(",acpi=");
                     chipset.Append(vm.Chipset.I440FxOptions.EnableAcpi ? "on" : "off");
+
+                    chipset.Append(",x-south-bridge=");
+                    chipset.Append(vm.Chipset.I440FxOptions.SouthbridgeType switch
+                    {
+                        I440FxSouthbridgeType.Piix3 => "PIIX3",
+                        I440FxSouthbridgeType.Piix4Isa => "piix4-isa",
+                        _ => throw new UnreachableException()
+                    });
                 }
 
                 pciBusType = "pci";
@@ -1318,8 +1326,8 @@ public static class Launcher
     private static string GetCustomBusType(DeviceBus deviceBus, string pciBusType) => deviceBus.Type switch
     {
         BusType.Default => string.Empty,
-        BusType.Isa => ",bus=isa.0",
-        BusType.Pci => $",bus={pciBusType}.0",
+        BusType.SouthbridgeIsa => ",bus=isa.0",
+        BusType.SouthbridgePci => $",bus={pciBusType}.0",
         BusType.Usb => ",bus=usb.0",
         BusType.Custom => $",bus={deviceBus.CustomType}",
         _ => throw new UnreachableException()

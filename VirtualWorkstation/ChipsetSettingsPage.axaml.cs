@@ -38,6 +38,7 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
         {
             I440FxEnablePs2Emulation.IsChecked = vm.Chipset.I440FxOptions.EnablePs2Emulation;
             I440FxEnableAcpi.IsChecked = vm.Chipset.I440FxOptions.EnableAcpi;
+            I440FxSouthbridgeType.SelectedIndex = (int)vm.Chipset.I440FxOptions.SouthbridgeType;
         }
     }
 
@@ -86,6 +87,12 @@ public partial class ChipsetSettingsPage : UserControl, ITabPage
     {
         _vm.Chipset.I440FxOptions ??= new I440FxOptions();
         _vm.Chipset.I440FxOptions.EnableAcpi = I440FxEnableAcpi.IsChecked!.Value;
+    }
+
+    private void I440FxSouthbridgeType_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
+    {
+        _vm.Chipset.I440FxOptions ??= new I440FxOptions();
+        _vm.Chipset.I440FxOptions.SouthbridgeType = (I440FxSouthbridgeType)I440FxSouthbridgeType.SelectedIndex;
     }
 
     private void CheckForUnsupportedOptions()

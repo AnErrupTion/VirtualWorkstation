@@ -36,6 +36,13 @@
             <CheckBox Name="I440FxEnableAcpi" IsCheckedChanged="I440FxEnableAcpi_OnIsCheckedChanged">
                 Enable ACPI
             </CheckBox>
+            <Grid ColumnDefinitions="*, *">
+                <Label Grid.Column="0">Southbridge:</Label>
+                <ComboBox Grid.Column="1" Name="I440FxSouthbridgeType" SelectionChanged="I440FxSouthbridgeType_OnSelectionChanged">
+                    <ComboBoxItem>PIIX3</ComboBoxItem>
+                    <ComboBoxItem>PIIX4 ISA</ComboBoxItem>
+                </ComboBox>
+            </Grid>
         </StackPanel>
     </StackPanel>
 </UserControl>

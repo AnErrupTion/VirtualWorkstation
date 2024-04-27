@@ -7,8 +7,8 @@
     <Grid ColumnDefinitions="*, *">
         <ComboBox Grid.Column="0" Name="ComboBox" SelectionChanged="ComboBox_OnSelectionChanged">
             <ComboBoxItem>Default</ComboBoxItem>
-            <ComboBoxItem>ISA</ComboBoxItem>
-            <ComboBoxItem>PCI</ComboBoxItem>
+            <ComboBoxItem>Southbridge ISA</ComboBoxItem>
+            <ComboBoxItem>Southbridge PCI</ComboBoxItem>
             <ComboBoxItem>USB</ComboBoxItem>
             <ComboBoxItem>Custom</ComboBoxItem>
         </ComboBox>
