@@ -154,14 +154,8 @@ public partial class NewVirtualMachine : Window
 
         ExistingDiskType.Content = "N/A";
         ExistingDiskSize.Content = "N/A";
-    }
 
-    private async void ExistingDiskPathBrowse_OnClick(object? _, RoutedEventArgs e)
-    {
-        var storageFiles = await StorageProvider.OpenFilePickerAsync(UiHelpers.DefaultFilePickerOpenOptions);
-        if (storageFiles.Count != 1) return;
-
-        ExistingDiskPath.Text = storageFiles[0].Path.LocalPath;
+        if (!File.Exists(ExistingDiskPath.Text!)) return;
 
         var vmDiskFolder = Path.GetDirectoryName(ExistingDiskPath.Text);
         if (string.IsNullOrEmpty(vmDiskFolder))
@@ -214,6 +208,14 @@ public partial class NewVirtualMachine : Window
         ExistingDiskSize.Content = diskInfo.Size.ToString();
 
         Status.Content = "N/A";
+    }
+
+    private async void ExistingDiskPathBrowse_OnClick(object? _, RoutedEventArgs e)
+    {
+        var storageFiles = await StorageProvider.OpenFilePickerAsync(UiHelpers.DefaultFilePickerOpenOptions);
+        if (storageFiles.Count != 1) return;
+
+        ExistingDiskPath.Text = storageFiles[0].Path.LocalPath;
     }
 
     private void NoDisk_OnIsCheckedChanged(object? _, RoutedEventArgs e)
