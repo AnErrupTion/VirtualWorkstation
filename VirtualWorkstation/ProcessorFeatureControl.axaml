@@ -3,6 +3,9 @@
              x:Class="VirtualWorkstation.ProcessorFeatureControl">
     <Grid ColumnDefinitions="*, Auto">
         <ComboBox Grid.Column="0" Name="Features" HorizontalAlignment="Stretch" SelectionChanged="Features_OnSelectionChanged">
+            <ComboBoxItem>PAE (x86)</ComboBoxItem>
+            <ComboBoxItem>NX bit (x86)</ComboBoxItem>
+            <ComboBoxItem>SSE2 (x86)</ComboBoxItem>
             <ComboBoxItem>KVM flag (x86)</ComboBoxItem>
             <ComboBoxItem>Hyper-V pass-through (x86)</ComboBoxItem>
         </ComboBox>

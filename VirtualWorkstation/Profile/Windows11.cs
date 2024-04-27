@@ -10,7 +10,11 @@ public static partial class Profiles
         Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
         Firmware = new Firmware { Type = FirmwareType.EfiSecureBoot },
-        Chipset = new Chipset { Model = ChipsetModel.X86Q35, Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On } },
+        Chipset = new Chipset
+        {
+            Model = ChipsetModel.X86Q35,
+            Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On }
+        },
         Ram = 4096,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },

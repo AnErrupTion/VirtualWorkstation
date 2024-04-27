@@ -1325,11 +1325,14 @@ public static class Launcher
     }
 
     private static bool IsFeatureUnsupported(Architecture architecture, ProcessorFeature feature)
-        => feature is >= ProcessorFeature.X86Kvm and <= ProcessorFeature.X86HyperVPassThrough
+        => feature is >= ProcessorFeature.X86Pae and <= ProcessorFeature.X86HyperVPassThrough
            && architecture is not Architecture.Amd64 and not Architecture.I386;
 
     private static string ProcessorFeatureToString(ProcessorFeature feature) => feature switch
     {
+        ProcessorFeature.X86Pae => "pae",
+        ProcessorFeature.X86Nx => "nx",
+        ProcessorFeature.X86Sse2 => "sse2",
         ProcessorFeature.X86Kvm => "kvm",
         ProcessorFeature.X86HyperVPassThrough => "hv-passthrough",
         _ => throw new UnreachableException()

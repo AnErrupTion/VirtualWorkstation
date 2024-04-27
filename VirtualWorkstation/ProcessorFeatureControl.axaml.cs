@@ -60,7 +60,7 @@ public partial class ProcessorFeatureControl : UserControl
         }
 
         var currentFeature = _features[_index];
-        if (currentFeature is >= ProcessorFeature.X86Kvm and <= ProcessorFeature.X86HyperVPassThrough)
+        if (currentFeature is >= ProcessorFeature.X86Pae and <= ProcessorFeature.X86HyperVPassThrough)
         {
             _enableUnsupportedOptions.IsEnabled = false;
             _enableUnsupportedOptions.IsChecked = true;
@@ -69,7 +69,7 @@ public partial class ProcessorFeatureControl : UserControl
 
         _enableUnsupportedOptions.IsEnabled = true;
 
-        for (var i = ProcessorFeature.X86Kvm; i <= ProcessorFeature.X86HyperVPassThrough; i++)
+        for (var i = ProcessorFeature.X86Pae; i <= ProcessorFeature.X86HyperVPassThrough; i++)
         {
             if (Features.Items[(int)i] is not ComboBoxItem item) throw new UnreachableException();
             item.IsEnabled = _enableUnsupportedOptions.IsChecked!.Value;

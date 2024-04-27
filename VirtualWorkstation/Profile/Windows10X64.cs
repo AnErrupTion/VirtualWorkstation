@@ -10,11 +10,22 @@ public static partial class Profiles
         Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
         Firmware = new Firmware { Type = FirmwareType.Efi },
-        Chipset = new Chipset { Model = ChipsetModel.X86Q35, Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On } },
+        Chipset = new Chipset
+        {
+            Model = ChipsetModel.X86Q35,
+            Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On }
+        },
         Ram = 2048,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },
+        Processor = new Processor
+        {
+            Model = ProcessorModel.X86Host,
+            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
+            Sockets = 1,
+            Cores = 1,
+            Threads = 1
+        },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
         NetworkInterfaces =
         [

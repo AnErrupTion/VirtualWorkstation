@@ -124,7 +124,7 @@ public partial class ProcessorSettingsPage : UserControl, ITabPage
 
     private ProcessorFeature GetDefaultFeature() => _vm.Architecture switch
     {
-        Architecture.Amd64 or Architecture.I386 => ProcessorFeature.X86Kvm,
+        Architecture.Amd64 or Architecture.I386 => ProcessorFeature.X86Pae,
         _ => throw new UnreachableException()
     };
 }

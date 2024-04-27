@@ -12,9 +12,11 @@ public static partial class Profiles
 {
     public static (VirtualMachine vm, ulong diskSize) ToProfile(UiProfile profile) => profile switch
     {
-        UiProfile.Windows11 => (Windows11, 32),
+        UiProfile.Windows11 => (Windows11, 64),
         UiProfile.Windows10X64 => (Windows10X64, 32),
         UiProfile.Windows10X86 => (Windows10X86, 32),
+        UiProfile.Windows8X64 => (Windows8X64, 20),
+        UiProfile.Windows8X86 => (Windows8X86, 16),
         UiProfile.LinuxX64 => (LinuxX64, 16),
         _ => throw new UnreachableException()
     };

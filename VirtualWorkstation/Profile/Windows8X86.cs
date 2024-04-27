@@ -5,7 +5,7 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10X86 = new()
+    private static readonly VirtualMachine Windows8X86 = new()
     {
         Architecture = Architecture.I386,
         UseHardwareAcceleration = true,

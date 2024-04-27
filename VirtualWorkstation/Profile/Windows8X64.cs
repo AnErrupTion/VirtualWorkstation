@@ -5,17 +5,17 @@ namespace VirtualWorkstation.Profile;
 
 public static partial class Profiles
 {
-    private static readonly VirtualMachine Windows10X86 = new()
+    private static readonly VirtualMachine Windows8X64 = new()
     {
-        Architecture = Architecture.I386,
+        Architecture = Architecture.Amd64,
         UseHardwareAcceleration = true,
-        Firmware = new Firmware { Type = FirmwareType.X86LegacyBios },
+        Firmware = new Firmware { Type = FirmwareType.Efi },
         Chipset = new Chipset
         {
             Model = ChipsetModel.X86Q35,
             Q35Options = new Q35Options { EnablePs2Emulation = false, AcpiState = AcpiChipsetState.On }
         },
-        Ram = 1024,
+        Ram = 2048,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor

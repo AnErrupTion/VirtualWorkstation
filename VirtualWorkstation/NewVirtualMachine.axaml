@@ -30,6 +30,8 @@
                             <ComboBoxItem>Windows 11</ComboBoxItem>
                             <ComboBoxItem>Windows 10 (x64)</ComboBoxItem>
                             <ComboBoxItem>Windows 10 (x86)</ComboBoxItem>
+                            <ComboBoxItem>Windows 8.x (x64)</ComboBoxItem>
+                            <ComboBoxItem>Windows 8.x (x86)</ComboBoxItem>
                             <ComboBoxItem>Linux (x64)</ComboBoxItem>
                         </ComboBox>
                     </Grid>
