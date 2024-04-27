@@ -27,9 +27,13 @@ public static partial class Profiles
             Threads = 1
         },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.None },
+        UsbControllers =
+        [
+            new UsbController { Version = UsbVersion.Xhci }
+        ],
         NetworkInterfaces =
         [
-            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.VirtIo }
+            new NetworkInterface { Type = NetworkType.Nat, Card = NetworkCard.E1000E }
         ],
         GraphicControllers =
         [
@@ -41,21 +45,20 @@ public static partial class Profiles
         ],
         DiskControllers =
         [
-            new DiskController { Model = DiskBus.VirtIoBlock },
             new DiskController { Model = DiskBus.Ich9Ahci }
         ],
         Disks =
         [
             new Disk { Controller = 0, CacheMethod = DiskCacheMethod.None, IsSsd = true },
-            new Disk { Controller = 1, Format = DiskFormat.Raw, CacheMethod = DiskCacheMethod.None, IsCdrom = true }
+            new Disk { Controller = 0, Format = DiskFormat.Raw, CacheMethod = DiskCacheMethod.None, IsCdrom = true }
         ],
         Keyboards =
         [
-            new Keyboard { Model = KeyboardModel.VirtIo, UsbController = 0 }
+            new Keyboard { Model = KeyboardModel.Usb, UsbController = 0 }
         ],
         Mice =
         [
-            new Mouse { Model = MouseModel.VirtIo, UsbController = 0, UseAbsolutePointing = true }
+            new Mouse { Model = MouseModel.Usb, UsbController = 0, UseAbsolutePointing = true }
         ]
     };
 }
