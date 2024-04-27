@@ -18,7 +18,14 @@ public static partial class Profiles
         Ram = 4096,
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
-        Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 2, Threads = 1 },
+        Processor = new Processor
+        {
+            Model = ProcessorModel.X86Host,
+            AddFeatures = [ProcessorFeature.X86Pae, ProcessorFeature.X86Nx, ProcessorFeature.X86Sse2],
+            Sockets = 1,
+            Cores = 2,
+            Threads = 1
+        },
         TrustedPlatformModule = new TrustedPlatformModule { DeviceType = TpmDeviceType.Emulated, Type = TpmType.Crb, Version = TpmVersion.V20 },
         NetworkInterfaces =
         [
