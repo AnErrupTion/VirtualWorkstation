@@ -83,6 +83,10 @@
         <DependentUpon>BusTypeComboBox.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="SerialControllerSettingsPage.axaml.cs">
+        <DependentUpon>SerialControllerSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

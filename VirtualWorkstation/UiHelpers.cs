@@ -44,6 +44,7 @@ public static class UiHelpers
         UiComponent.UsbController => "USB Controller",
         UiComponent.NetworkInterface => "Network Interface",
         UiComponent.GraphicsController => "Graphics Controller",
+        UiComponent.SerialController => "Serial Controller",
         UiComponent.AudioController => "Audio Controller",
         UiComponent.DiskController => "Disk Controller",
         UiComponent.Disk => "Disk",
@@ -100,6 +101,8 @@ public static class UiHelpers
     {
         RefreshUsbControllerList<NetworkInterfaceSettingsPage>(ref componentList,
             componentIndices[UiComponent.NetworkInterface - UiComponent.UsbController] - vm.NetworkInterfaces.Count, startIndex);
+        RefreshUsbControllerList<SerialControllerSettingsPage>(ref componentList,
+            componentIndices[UiComponent.SerialController - UiComponent.UsbController] - vm.SerialControllers.Count, startIndex);
         RefreshUsbControllerList<AudioControllerSettingsPage>(ref componentList,
             componentIndices[UiComponent.AudioController - UiComponent.UsbController] - vm.AudioControllers.Count, startIndex);
         RefreshUsbControllerList<DiskControllerSettingsPage>(ref componentList,
@@ -114,6 +117,8 @@ public static class UiHelpers
     {
         TriggerUsbControllerEvent<NetworkInterfaceSettingsPage>(ref componentList,
             componentIndices[UiComponent.NetworkInterface - UiComponent.UsbController] - vm.NetworkInterfaces.Count);
+        TriggerUsbControllerEvent<SerialControllerSettingsPage>(ref componentList,
+            componentIndices[UiComponent.SerialController - UiComponent.UsbController] - vm.SerialControllers.Count);
         TriggerUsbControllerEvent<AudioControllerSettingsPage>(ref componentList,
             componentIndices[UiComponent.AudioController - UiComponent.UsbController] - vm.AudioControllers.Count);
         TriggerUsbControllerEvent<DiskControllerSettingsPage>(ref componentList,

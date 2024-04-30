@@ -9,6 +9,7 @@
             <ListBoxItem>USB Controller</ListBoxItem>
             <ListBoxItem>Network Interface</ListBoxItem>
             <ListBoxItem>Graphics Controller</ListBoxItem>
+            <ListBoxItem>Serial Controller</ListBoxItem>
             <ListBoxItem>Audio Controller</ListBoxItem>
             <ListBoxItem>Disk Controller</ListBoxItem>
             <ListBoxItem>Disk</ListBoxItem>

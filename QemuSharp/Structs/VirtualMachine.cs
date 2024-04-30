@@ -18,6 +18,7 @@ public class VirtualMachine
     public List<UsbController> UsbControllers { get; set; } = [];
     public List<NetworkInterface> NetworkInterfaces { get; set; } = [];
     public List<GraphicsController> GraphicControllers { get; set; } = [];
+    public List<SerialController> SerialControllers { get; set; } = [];
     public List<AudioController> AudioControllers { get; set; } = [];
     public List<DiskController> DiskControllers { get; set; } = [];
     public List<Disk> Disks { get; set; } = [];
@@ -43,6 +44,7 @@ public class VirtualMachine
         foreach (var usbController in other.UsbControllers) UsbControllers.Add(new UsbController(usbController));
         foreach (var networkInterface in other.NetworkInterfaces) NetworkInterfaces.Add(new NetworkInterface(networkInterface));
         foreach (var graphicsController in other.GraphicControllers) GraphicControllers.Add(new GraphicsController(graphicsController));
+        foreach (var serialController in other.SerialControllers) SerialControllers.Add(new SerialController(serialController));
         foreach (var audioController in other.AudioControllers) AudioControllers.Add(new AudioController(audioController));
         foreach (var diskController in other.DiskControllers) DiskControllers.Add(new DiskController(diskController));
         foreach (var disk in other.Disks) Disks.Add(new Disk(disk));

@@ -732,6 +732,57 @@ public static class Launcher
             }
         }
 
+        for (var i = 0; i < vm.SerialControllers.Count; i++)
+        {
+            var serialController = vm.SerialControllers[i];
+
+            arguments.Add("-device");
+            switch (serialController.Type)
+            {
+                case SerialType.Isa:
+                {
+                    arguments.Add("isa-serial,bus=isa.0");
+                    break;
+                }
+                case SerialType.Pci:
+                {
+                    arguments.Add($"pci-serial,bus={pciBusType}.0");
+                    break;
+                }
+                case SerialType.Usb:
+                {
+                    if (vm.UsbControllers.Count == 0)
+                        errors.Add(new LauncherError(LauncherErrorType.NoUsbControllersForSerialType, i));
+
+                    if (serialController.UsbController >= (ulong)vm.UsbControllers.Count)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidUsbControllerForSerialType, i));
+
+                    arguments.Add($"usb-serial,bus=usb{serialController.UsbController}.0");
+                    break;
+                }
+                case SerialType.VirtIo:
+                {
+                    arguments.Add($"virtio-serial-pci,bus={pciBusType}.0");
+                    break;
+                }
+                case SerialType.Custom:
+                {
+                    var model = SanitizeQemuArgumentStringWithOptions(serialController.CustomType);
+
+                    if (string.IsNullOrEmpty(model))
+                        errors.Add(new LauncherError(LauncherErrorType.EmptyCustomSerialControllerType, i));
+
+                    if (model.Length != serialController.CustomType.Length)
+                        errors.Add(new LauncherError(LauncherErrorType.InvalidCustomSerialControllerType, i));
+
+                    var busType = GetCustomBusType(serialController.CustomTypeBus, pciBusType);
+                    arguments.Add($"{model}{busType}");
+                    break;
+                }
+                default: throw new UnreachableException();
+            }
+        }
+
         for (var i = 0; i < vm.AudioControllers.Count; i++)
         {
             var audioController = vm.AudioControllers[i];

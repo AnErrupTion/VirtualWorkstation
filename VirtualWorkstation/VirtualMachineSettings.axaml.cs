@@ -49,6 +49,10 @@ public partial class VirtualMachineSettings : Window
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.GraphicsController.ToUiString()} {i}", Tag = new GraphicsControllerSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
 
+        for (var i = 0; i < vm.SerialControllers.Count; i++)
+            ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.SerialController.ToUiString()} {i}", Tag = new SerialControllerSettingsPage(ref vm, i) });
+        ComponentIndices.Add(ComponentList.Items.Count);
+
         for (var i = 0; i < vm.AudioControllers.Count; i++)
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.AudioController.ToUiString()} {i}", Tag = new AudioControllerSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
@@ -144,6 +148,17 @@ public partial class VirtualMachineSettings : Window
                 _vm.GraphicControllers.RemoveAt(index);
 
                 for (var i = UiComponent.GraphicsController - UiComponent.UsbController; i < ComponentIndices.Count; i++)
+                    ComponentIndices[i]--;
+                break;
+            }
+            case SerialControllerSettingsPage serialControllerSettingsPage:
+            {
+                var index = serialControllerSettingsPage.Index;
+                UiHelpers.RemoveCurrentListItem<SerialControllerSettingsPage>(ref ComponentList);
+
+                _vm.SerialControllers.RemoveAt(index);
+
+                for (var i = UiComponent.SerialController - UiComponent.UsbController; i < ComponentIndices.Count; i++)
                     ComponentIndices[i]--;
                 break;
             }
@@ -251,6 +266,15 @@ public partial class VirtualMachineSettings : Window
             if (networkInterface.Card != NetworkCard.Usb || networkInterface.UsbController != usbController) continue;
 
             text.AppendLine($" * Network Interface {i}");
+            usedCount++;
+        }
+
+        for (var i = 0; i < _vm.SerialControllers.Count; i++)
+        {
+            var serialController = _vm.SerialControllers[i];
+            if (serialController.Type != SerialType.Usb || serialController.UsbController != usbController) continue;
+
+            text.AppendLine($" * Serial Controller {i}");
             usedCount++;
         }
 

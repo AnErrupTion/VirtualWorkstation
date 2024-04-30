@@ -231,6 +231,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Empty custom graphics controller {index} card.");
                     break;
                 }
+                case LauncherErrorType.EmptyCustomSerialControllerType:
+                {
+                    text.AppendLine($" * Empty custom serial controller {index} type.");
+                    break;
+                }
                 case LauncherErrorType.EmptyCustomAudioControllerCard:
                 {
                     text.AppendLine($" * Empty custom audio controller {index} card.");
@@ -344,6 +349,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidCustomGraphicsControllerCard:
                 {
                     text.AppendLine($" * Custom graphics controller {index} card contains invalid characters.");
+                    break;
+                }
+                case LauncherErrorType.InvalidCustomSerialControllerType:
+                {
+                    text.AppendLine($" * Custom serial controller {index} type contains invalid characters.");
                     break;
                 }
                 case LauncherErrorType.InvalidCustomAudioControllerCard:
@@ -476,6 +486,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * No USB controllers available for network interface \"{index}\".");
                     break;
                 }
+                case LauncherErrorType.NoUsbControllersForSerialType:
+                {
+                    text.AppendLine($" * No USB controllers available for serial controller \"{index}\".");
+                    break;
+                }
                 case LauncherErrorType.NoUsbControllersForSoundCard:
                 {
                     text.AppendLine($" * No USB controllers available for audio controller \"{index}\".");
@@ -499,6 +514,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.InvalidUsbControllerForNetworkCard:
                 {
                     text.AppendLine($" * Invalid USB controller for network interface \"{index}\".");
+                    break;
+                }
+                case LauncherErrorType.InvalidUsbControllerForSerialType:
+                {
+                    text.AppendLine($" * Invalid USB controller for serial controller \"{index}\".");
                     break;
                 }
                 case LauncherErrorType.InvalidUsbControllerForSoundCard:

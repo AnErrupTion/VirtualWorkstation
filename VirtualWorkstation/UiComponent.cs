@@ -12,6 +12,7 @@ public enum UiComponent
     UsbController,
     NetworkInterface,
     GraphicsController,
+    SerialController,
     AudioController,
     DiskController,
     Disk,

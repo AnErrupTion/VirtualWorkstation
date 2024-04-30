@@ -75,6 +75,21 @@ public partial class VirtualMachineAddComponent : Window
                     _parent.ComponentIndices[i]++;
                 break;
             }
+            case UiComponent.SerialController:
+            {
+                var index = _vm.SerialControllers.Count;
+
+                _vm.SerialControllers.Add(new SerialController());
+                _parent.ComponentList.Items.Insert(listIndex, new ListBoxItem
+                {
+                    Content = $"{UiComponent.SerialController.ToUiString()} {index}",
+                    Tag = new SerialControllerSettingsPage(ref _vm, index)
+                });
+
+                for (var i = ComponentList.SelectedIndex; i < _parent.ComponentIndices.Count; i++)
+                    _parent.ComponentIndices[i]++;
+                break;
+            }
             case UiComponent.AudioController:
             {
                 var index = _vm.AudioControllers.Count;

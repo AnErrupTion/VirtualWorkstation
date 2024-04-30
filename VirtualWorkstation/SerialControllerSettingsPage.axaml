@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:virtualWorkstation="clr-namespace:VirtualWorkstation"
+             x:Class="VirtualWorkstation.SerialControllerSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Type:</Label>
+            <ComboBox Grid.Column="1" Name="Type" SelectionChanged="Type_OnSelectionChanged">
+                <ComboBoxItem>ISA</ComboBoxItem>
+                <ComboBoxItem>PCI</ComboBoxItem>
+                <ComboBoxItem>USB</ComboBoxItem>
+                <ComboBoxItem>VirtIO</ComboBoxItem>
+                <ComboBoxItem>Custom</ComboBoxItem>
+            </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeGrid">
+            <Label Grid.Column="0">Custom type:</Label>
+            <TextBox Grid.Column="1" Name="CustomType" TextChanged="CustomType_OnTextChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *, Auto" Name="CustomTypeBusGrid">
+            <Label Grid.Column="0">Custom type bus:</Label>
+            <virtualWorkstation:DeviceBusControl Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged" TextChanged="CustomTypeBus_OnTextChanged"></virtualWorkstation:DeviceBusControl>
+        </Grid>
+        <Grid ColumnDefinitions="*, *" Name="UsbControllerGrid">
+            <Label Grid.Column="0">USB controller:</Label>
+            <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
+        </Grid>
+    </StackPanel>
+</UserControl>
