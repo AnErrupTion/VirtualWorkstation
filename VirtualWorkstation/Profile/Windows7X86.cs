@@ -15,7 +15,7 @@ public static partial class Profiles
             Model = ChipsetModel.X86Q35,
             Q35Options = new Q35Options { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On }
         },
-        Ram = 1024,
+        Memory = new Memory { Size = 1024, UseBallooning = false },
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },

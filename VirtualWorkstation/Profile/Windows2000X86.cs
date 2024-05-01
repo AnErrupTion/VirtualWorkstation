@@ -15,7 +15,7 @@ public static partial class Profiles
             Model = ChipsetModel.X86I440Fx,
             I440FxOptions = new I440FxOptions { EnablePs2Emulation = true, AcpiState = AcpiChipsetState.On, SouthbridgeType = I440FxSouthbridgeType.Piix4Isa }
         },
-        Ram = 32,
+        Memory = new Memory { Size = 32, UseBallooning = false },
         Display = new Display { Type = DisplayType.Auto },
         AudioHostDevice = new AudioHostDevice { Type = AudioHostType.Auto },
         Processor = new Processor { Model = ProcessorModel.X86Host, Sockets = 1, Cores = 1, Threads = 1 },

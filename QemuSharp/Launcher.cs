@@ -214,7 +214,13 @@ public static class Launcher
         }
 
         arguments.Add("-m");
-        arguments.Add($"{vm.Ram}M");
+        arguments.Add($"{vm.Memory.Size}M");
+
+        if (vm.Memory.UseBallooning)
+        {
+            arguments.Add("-device");
+            arguments.Add("virtio-balloon-pci");
+        }
 
         // FIXME: Should we add the option to configure display graphics acceleration?
         // Generally, it shouldn't cause any problems (and should even be faster), but

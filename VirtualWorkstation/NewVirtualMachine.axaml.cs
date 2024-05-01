@@ -249,7 +249,7 @@ public partial class NewVirtualMachine : Window
         _currentProfile.Processor.Sockets = (ulong)Sockets.Value!.Value;
         _currentProfile.Processor.Cores = (ulong)Cores.Value!.Value;
         _currentProfile.Processor.Threads = (ulong)Threads.Value!.Value;
-        _currentProfile.Ram = (ulong)Ram.Value!.Value;
+        _currentProfile.Memory.Size = (ulong)Ram.Value!.Value;
 
         if (!string.IsNullOrEmpty(BootImage.Text))
         {
@@ -424,14 +424,14 @@ public partial class NewVirtualMachine : Window
             Threads.Foreground = Brushes.Red;
         } else Threads.Value = _currentProfile.Processor.Threads;
 
-        if (Ram.Maximum < _currentProfile.Ram)
+        if (Ram.Maximum < _currentProfile.Memory.Size)
         {
             status += notEnoughResources ? ", RAM" : " RAM";
             notEnoughResources = true;
 
             RamLabel.Foreground = Brushes.Red;
             Ram.Foreground = Brushes.Red;
-        } else Ram.Value = _currentProfile.Ram;
+        } else Ram.Value = _currentProfile.Memory.Size;
 
         if (notEnoughResources) Status.Content = $"{status} for this profile.";
     }

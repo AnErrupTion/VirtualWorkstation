@@ -9,7 +9,7 @@ public class VirtualMachine
     public bool UseHardwareAcceleration { get; set; }
     public Firmware Firmware { get; set; }
     public Chipset Chipset { get; set; }
-    public ulong Ram { get; set; }
+    public Memory Memory { get; set; }
     public Display Display { get; set; }
     public AudioHostDevice AudioHostDevice { get; set; }
     public Processor Processor { get; set; }
@@ -35,7 +35,7 @@ public class VirtualMachine
         UseHardwareAcceleration = other.UseHardwareAcceleration;
         Firmware = new Firmware(other.Firmware);
         Chipset = new Chipset(other.Chipset);
-        Ram = other.Ram;
+        Memory = new Memory(other.Memory);
         Display = new Display(other.Display);
         AudioHostDevice = new AudioHostDevice(other.AudioHostDevice);
         Processor = new Processor(other.Processor);

@@ -29,7 +29,8 @@ public partial class SystemSettingsPage : UserControl, ITabPage
         Name.Text = vm.Name;
         Architecture.SelectedIndex = (int)vm.Architecture;
         UseHardwareAcceleration.IsChecked = vm.UseHardwareAcceleration;
-        Ram.Value = vm.Ram;
+        Ram.Value = vm.Memory.Size;
+        UseMemoryBallooning.IsChecked = vm.Memory.UseBallooning;
     }
 
     private void Name_OnTextChanged(object? _, TextChangedEventArgs e)
@@ -42,5 +43,8 @@ public partial class SystemSettingsPage : UserControl, ITabPage
         => _vm.UseHardwareAcceleration = UseHardwareAcceleration.IsChecked!.Value;
 
     private void Ram_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
-        => _vm.Ram = (ulong)e.NewValue!.Value;
+        => _vm.Memory.Size = (ulong)e.NewValue!.Value;
+
+    private void UseMemoryBallooning_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+        => _vm.Memory.UseBallooning = UseMemoryBallooning.IsChecked!.Value;
 }
