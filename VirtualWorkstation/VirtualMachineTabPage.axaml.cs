@@ -38,13 +38,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private async void Run_OnClick(object? _, RoutedEventArgs e)
     {
-        var customPaths = new Dictionary<ExecutableType, string>
-        {
-            { ExecutableType.Qemu, GlobalSettings.CustomQemuPath },
-            { ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath }
-        };
-        var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm, customPaths, false);
+        var customPaths = new Dictionary<ExecutableType, string>();
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomQemuPath)) customPaths.Add(ExecutableType.Qemu, GlobalSettings.CustomQemuPath);
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomSwtpmPath)) customPaths.Add(ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath);
 
+        var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm, customPaths, false);
         if (errors.Count != 0)
         {
             var text = GetErrorsText(ref errors);
@@ -115,11 +113,10 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private void RefreshArguments_OnClick(object? _, RoutedEventArgs e)
     {
-        var customPaths = new Dictionary<ExecutableType, string>
-        {
-            { ExecutableType.Qemu, GlobalSettings.CustomQemuPath },
-            { ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath }
-        };
+        var customPaths = new Dictionary<ExecutableType, string>();
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomQemuPath)) customPaths.Add(ExecutableType.Qemu, GlobalSettings.CustomQemuPath);
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomSwtpmPath)) customPaths.Add(ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath);
+
         var (_, _, programs) = Launcher.GetArguments(Vm, customPaths, true);
         var sb = new StringBuilder();
 
