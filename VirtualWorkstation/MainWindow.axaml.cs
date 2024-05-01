@@ -25,7 +25,8 @@ public partial class MainWindow : Window
             // VM_FOLDER/MyVM => MyVM
             var lastFolderName = Path.GetFileName(vmFolder) ?? throw new UnreachableException();
             // MyVM => MyVM.toml
-            var vmConfigFileName = Path.ChangeExtension(lastFolderName, "toml");
+            // Using Path.ChangeExtension may not work in certain cases (e.g. if lastFolderName is "Windows 8.1 Enterprise")
+            var vmConfigFileName = $"{lastFolderName}.toml";
             // MyVM.toml => VM_FOLDER/MyVM/MyVM.toml
             var vmConfigPath = Path.Combine(vmFolder, vmConfigFileName);
             if (!File.Exists(vmConfigPath)) continue;

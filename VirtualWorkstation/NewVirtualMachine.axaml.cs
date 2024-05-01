@@ -293,7 +293,7 @@ public partial class NewVirtualMachine : Window
             }
 
             var vmDiskPath = string.IsNullOrEmpty(NewDiskCustomPath.Text)
-                ? Path.Combine(Folder.Text!, Name.Text!, Path.ChangeExtension(Name.Text!, vmDiskFormatString))
+                ? Path.Combine(Folder.Text!, Name.Text!, $"{Name.Text!}.{vmDiskFormatString}")
                 : NewDiskCustomPath.Text!;
 
             var vmDiskFolder = Path.GetDirectoryName(vmDiskPath);
@@ -373,8 +373,7 @@ public partial class NewVirtualMachine : Window
             if (!string.IsNullOrEmpty(diskInfo.CustomFormat)) _currentProfile.Disks[0].CustomFormat = diskInfo.CustomFormat;
         }
 
-        var vmConfigFile = Path.ChangeExtension(Name.Text!, "toml");
-        var vmConfigPath = Path.Combine(Folder.Text!, Name.Text!, vmConfigFile);
+        var vmConfigPath = Path.Combine(Folder.Text!, Name.Text!, $"{Name.Text!}.toml");
         var vmConfigToml = Toml.FromModel(_currentProfile);
 
         Directory.CreateDirectory(Path.GetDirectoryName(vmConfigPath)!);
