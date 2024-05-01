@@ -1274,6 +1274,8 @@ public static class Launcher
                 CustomQemuArgumentType.Device => "-device",
                 CustomQemuArgumentType.TpmDevice => "-tpmdev",
                 CustomQemuArgumentType.CharacterDevice => "-chardev",
+                CustomQemuArgumentType.Object => "-object",
+                CustomQemuArgumentType.Numa => "-numa",
                 CustomQemuArgumentType.Monitor => "-monitor",
                 CustomQemuArgumentType.Serial => "-serial",
                 CustomQemuArgumentType.Parallel => "-parallel",
