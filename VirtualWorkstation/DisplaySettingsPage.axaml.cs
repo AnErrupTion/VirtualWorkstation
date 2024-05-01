@@ -22,7 +22,7 @@ public partial class DisplaySettingsPage : UserControl, ITabPage
         InitializeComponent();
 
         _vm = vm;
-        
+
         CheckForUnsupportedOptions();
 
         Type.SelectedIndex = (int)vm.Display.Type;

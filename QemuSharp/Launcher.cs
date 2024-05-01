@@ -7,7 +7,7 @@ namespace QemuSharp;
 
 public static class Launcher
 {
-    public static LauncherResult GetArguments(VirtualMachine vm, string customQemuPath, string customSwtpmPath, bool addQuotes)
+    public static LauncherResult GetArguments(VirtualMachine vm, Dictionary<ExecutableType, string> customPaths, bool addQuotes)
     {
         var name = SanitizeName(vm.Name);
         var quotedName = addQuotes && name.Contains(' ') ? $"\"{name}\"" : name;
@@ -461,7 +461,8 @@ public static class Launcher
                     // Swtpm doesn't support Windows
                     if (!OperatingSystem.IsWindows())
                     {
-                        var swtpmPath = !string.IsNullOrEmpty(customSwtpmPath) ? customSwtpmPath
+                        var swtpmPath = customPaths.TryGetValue(ExecutableType.Swtpm, out var customSwtpmPath)
+                            ? customSwtpmPath
                             : PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.SwtpmFile);
 
                         if (!string.IsNullOrEmpty(swtpmPath))
@@ -1324,7 +1325,8 @@ public static class Launcher
             arguments.Add(argument.ToString());
         }
 
-        var qemuSystemPath = !string.IsNullOrEmpty(customQemuPath) ? customQemuPath
+        var qemuSystemPath = customPaths.TryGetValue(ExecutableType.Qemu, out var customQemuPath)
+            ? customQemuPath
             : Path.GetDirectoryName(PathLookup.LookupFile(PathLookup.ExecutablePaths, PathLookup.QemuImgFile));
 
         if (!string.IsNullOrEmpty(qemuSystemPath))

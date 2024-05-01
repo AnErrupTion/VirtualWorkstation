@@ -38,8 +38,12 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private async void Run_OnClick(object? _, RoutedEventArgs e)
     {
-        var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm,
-            GlobalSettings.CustomQemuPath, GlobalSettings.CustomSwtpmPath, false);
+        var customPaths = new Dictionary<ExecutableType, string>
+        {
+            { ExecutableType.Qemu, GlobalSettings.CustomQemuPath },
+            { ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath }
+        };
+        var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm, customPaths, false);
 
         if (errors.Count != 0)
         {
@@ -111,8 +115,12 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
 
     private void RefreshArguments_OnClick(object? _, RoutedEventArgs e)
     {
-        var (_, _, programs) = Launcher.GetArguments(Vm, GlobalSettings.CustomQemuPath,
-            GlobalSettings.CustomSwtpmPath, true);
+        var customPaths = new Dictionary<ExecutableType, string>
+        {
+            { ExecutableType.Qemu, GlobalSettings.CustomQemuPath },
+            { ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath }
+        };
+        var (_, _, programs) = Launcher.GetArguments(Vm, customPaths, true);
         var sb = new StringBuilder();
 
         for (var i = 0; i < programs.Count; i++)
