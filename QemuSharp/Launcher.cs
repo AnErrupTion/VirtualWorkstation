@@ -1414,7 +1414,7 @@ public static class Launcher
         var newName = new StringBuilder();
 
         foreach (var c in name)
-            if (char.IsAsciiLetterOrDigit(c) || c is ' ' or '.')
+            if (char.IsAsciiLetterOrDigit(c) || c is ' ' or '.' or '(' or ')')
                 newName.Append(c);
 
         return newName.ToString();
