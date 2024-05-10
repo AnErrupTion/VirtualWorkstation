@@ -62,6 +62,7 @@ public enum LauncherErrorType
 
     HardwareAccelerationUnavailable,
     AudioUnavailable,
+    MemorySharingUnavailable,
 
     InvalidFirmwareTypeForArchitecture,
     InvalidChipsetModelForArchitecture,

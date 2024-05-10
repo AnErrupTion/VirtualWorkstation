@@ -19,5 +19,6 @@
             <NumericUpDown Grid.Column="1" Name="Ram" Minimum="1" FormatString="0" ValueChanged="Ram_OnValueChanged"/>
         </Grid>
         <CheckBox Name="UseMemoryBallooning" IsCheckedChanged="UseMemoryBallooning_OnIsCheckedChanged">Memory ballooning</CheckBox>
+        <CheckBox Name="MemorySharing" IsCheckedChanged="MemorySharing_OnIsCheckedChanged">Memory sharing</CheckBox>
     </StackPanel>
 </UserControl>

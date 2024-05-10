@@ -222,6 +222,17 @@ public static class Launcher
             arguments.Add("virtio-balloon-pci");
         }
 
+        if (vm.Memory.MemorySharing)
+        {
+            if (!OperatingSystem.IsLinux()) errors.Add(new LauncherError(LauncherErrorType.MemorySharingUnavailable));
+
+            arguments.Add("-object");
+            arguments.Add($"memory-backend-file,id=memory,size={vm.Memory.Size}M,mem-path=/dev/shm,share=on");
+
+            arguments.Add("-numa");
+            arguments.Add("node,memdev=memory");
+        }
+
         // FIXME: Should we add the option to configure display graphics acceleration?
         // Generally, it shouldn't cause any problems (and should even be faster), but
         // apparently this could cause issues with some virtual graphics cards and their

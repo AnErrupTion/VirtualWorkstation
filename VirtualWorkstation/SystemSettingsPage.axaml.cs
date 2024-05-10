@@ -47,4 +47,7 @@ public partial class SystemSettingsPage : UserControl, ITabPage
 
     private void UseMemoryBallooning_OnIsCheckedChanged(object? _, RoutedEventArgs e)
         => _vm.Memory.UseBallooning = UseMemoryBallooning.IsChecked!.Value;
+
+    private void MemorySharing_OnIsCheckedChanged(object? _, RoutedEventArgs e)
+        => _vm.Memory.MemorySharing = MemorySharing.IsChecked!.Value;
 }

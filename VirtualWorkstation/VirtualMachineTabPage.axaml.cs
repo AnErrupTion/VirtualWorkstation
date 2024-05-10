@@ -441,6 +441,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * No audio host device available for host OS.");
                     break;
                 }
+                case LauncherErrorType.MemorySharingUnavailable:
+                {
+                    text.AppendLine(" * Memory sharing unavailable for host OS.");
+                    break;
+                }
                 case LauncherErrorType.InvalidFirmwareTypeForArchitecture:
                 {
                     text.AppendLine($" * Invalid firmware type \"{Vm.Firmware.Type}\" for architecture \"{Vm.Architecture}\".");
