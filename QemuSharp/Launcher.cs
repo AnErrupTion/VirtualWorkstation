@@ -1304,8 +1304,10 @@ public static class Launcher
             arguments.Add("-chardev");
             arguments.Add($"socket,id=sharedfolder{i},path={quotedSocketPath}");
 
+            var quotedShareName = addQuotes && sharedFolder.Name.Contains(' ') ? $"\"{sharedFolder.Name}\"" : sharedFolder.Name;
+
             arguments.Add("-device");
-            arguments.Add($"vhost-user-fs-pci,queue-size=1024,chardev=sharedfolder{i},tag=sharedfolder{i}");
+            arguments.Add($"vhost-user-fs-pci,queue-size=1024,chardev=sharedfolder{i},tag={quotedShareName}");
         }
 
         for (var i = 0; i < vm.CustomQemuArguments.Count; i++)

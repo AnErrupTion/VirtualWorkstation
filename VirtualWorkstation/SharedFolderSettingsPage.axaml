@@ -3,6 +3,10 @@
              x:Class="VirtualWorkstation.SharedFolderSettingsPage">
     <StackPanel>
         <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Name:</Label>
+            <TextBox Grid.Column="1" Name="Name" TextChanged="Name_OnTextChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *">
             <Label Grid.Column="0">Path:</Label>
             <Grid Grid.Column="1" ColumnDefinitions="*, Auto">
                 <TextBox Grid.Column="0" Name="Path" TextChanged="Path_OnTextChanged"/>

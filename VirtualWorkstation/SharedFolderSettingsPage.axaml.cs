@@ -22,8 +22,12 @@ public partial class SharedFolderSettingsPage : UserControl, ITabPage
         _vm = vm;
         Index = index;
 
+        Name.Text = vm.SharedFolders[index].Name;
         Path.Text = vm.SharedFolders[index].Path;
     }
+
+    private void Name_OnTextChanged(object? _, TextChangedEventArgs e)
+        => _vm.SharedFolders[Index].Name = Name.Text!;
 
     private void Path_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.SharedFolders[Index].Path = Path.Text!;
