@@ -30,6 +30,7 @@ public partial class VirtualMachineSettings : Window
         Title += vm.Name;
 
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.System.ToUiString(), Tag = new SystemSettingsPage(ref vm) });
+        ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Memory.ToUiString(), Tag = new MemorySettingsPage(ref vm) });
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Firmware.ToUiString(), Tag = new FirmwareSettingsPage(ref vm) });
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Chipset.ToUiString(), Tag = new ChipsetSettingsPage(ref vm) });
         ComponentList.Items.Add(new ListBoxItem { Content = UiComponent.Display.ToUiString(), Tag = new DisplaySettingsPage(ref vm) });

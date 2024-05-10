@@ -1,4 +1,3 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using QemuSharp.Structs;
@@ -22,15 +21,9 @@ public partial class SystemSettingsPage : UserControl, ITabPage
 
         _vm = vm;
 
-        var memoryInfo = GC.GetGCMemoryInfo();
-        var ramMiB = memoryInfo.TotalAvailableMemoryBytes / 1024 / 1024;
-        Ram.Maximum = ramMiB;
-
         Name.Text = vm.Name;
         Architecture.SelectedIndex = (int)vm.Architecture;
         UseHardwareAcceleration.IsChecked = vm.UseHardwareAcceleration;
-        Ram.Value = vm.Memory.Size;
-        UseMemoryBallooning.IsChecked = vm.Memory.UseBallooning;
     }
 
     private void Name_OnTextChanged(object? _, TextChangedEventArgs e)
@@ -41,13 +34,4 @@ public partial class SystemSettingsPage : UserControl, ITabPage
     
     private void UseHardwareAcceleration_OnIsCheckedChanged(object? _, RoutedEventArgs e) 
         => _vm.UseHardwareAcceleration = UseHardwareAcceleration.IsChecked!.Value;
-
-    private void Ram_OnValueChanged(object? _, NumericUpDownValueChangedEventArgs e)
-        => _vm.Memory.Size = (ulong)e.NewValue!.Value;
-
-    private void UseMemoryBallooning_OnIsCheckedChanged(object? _, RoutedEventArgs e)
-        => _vm.Memory.UseBallooning = UseMemoryBallooning.IsChecked!.Value;
-
-    private void MemorySharing_OnIsCheckedChanged(object? _, RoutedEventArgs e)
-        => _vm.Memory.MemorySharing = MemorySharing.IsChecked!.Value;
 }

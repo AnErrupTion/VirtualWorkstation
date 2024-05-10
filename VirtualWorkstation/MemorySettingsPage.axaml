@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.MemorySettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">RAM (in MiB):</Label>
+            <NumericUpDown Grid.Column="1" Name="Ram" Minimum="1" FormatString="0" ValueChanged="Ram_OnValueChanged"/>
+        </Grid>
+        <CheckBox Name="UseMemoryBallooning" IsCheckedChanged="UseMemoryBallooning_OnIsCheckedChanged">Memory ballooning</CheckBox>
+        <CheckBox Name="MemorySharing" IsCheckedChanged="MemorySharing_OnIsCheckedChanged">Memory sharing</CheckBox>
+    </StackPanel>
+</UserControl>

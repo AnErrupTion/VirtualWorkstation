@@ -3,6 +3,7 @@ namespace VirtualWorkstation;
 public enum UiComponent
 {
     System,
+    Memory,
     Firmware,
     Chipset,
     Display,

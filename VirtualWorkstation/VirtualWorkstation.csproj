@@ -87,6 +87,10 @@
         <DependentUpon>SerialControllerSettingsPage.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="MemorySettingsPage.axaml.cs">
+        <DependentUpon>MemorySettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

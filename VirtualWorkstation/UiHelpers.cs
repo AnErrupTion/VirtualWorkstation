@@ -35,6 +35,7 @@ public static class UiHelpers
     public static string ToUiString(this UiComponent component) => component switch
     {
         UiComponent.System => "System",
+        UiComponent.Memory => "Memory",
         UiComponent.Firmware => "Firmware",
         UiComponent.Chipset => "Chipset",
         UiComponent.Display => "Display",
