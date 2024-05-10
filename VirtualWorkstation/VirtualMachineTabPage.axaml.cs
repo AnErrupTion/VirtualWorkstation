@@ -41,6 +41,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
         var customPaths = new Dictionary<ExecutableType, string>();
         if (!string.IsNullOrEmpty(GlobalSettings.CustomQemuPath)) customPaths.Add(ExecutableType.Qemu, GlobalSettings.CustomQemuPath);
         if (!string.IsNullOrEmpty(GlobalSettings.CustomSwtpmPath)) customPaths.Add(ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath);
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomVirtioFsDPath)) customPaths.Add(ExecutableType.VirtioFsD, GlobalSettings.CustomVirtioFsDPath);
 
         var (errors, nvRamPath, programs) = Launcher.GetArguments(Vm, customPaths, false);
         if (errors.Count != 0)
@@ -116,6 +117,7 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
         var customPaths = new Dictionary<ExecutableType, string>();
         if (!string.IsNullOrEmpty(GlobalSettings.CustomQemuPath)) customPaths.Add(ExecutableType.Qemu, GlobalSettings.CustomQemuPath);
         if (!string.IsNullOrEmpty(GlobalSettings.CustomSwtpmPath)) customPaths.Add(ExecutableType.Swtpm, GlobalSettings.CustomSwtpmPath);
+        if (!string.IsNullOrEmpty(GlobalSettings.CustomVirtioFsDPath)) customPaths.Add(ExecutableType.Swtpm, GlobalSettings.CustomVirtioFsDPath);
 
         var (_, _, programs) = Launcher.GetArguments(Vm, customPaths, true);
         var sb = new StringBuilder();
@@ -286,6 +288,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Empty Swtpm path.");
                     break;
                 }
+                case LauncherErrorType.EmptyVirtioFsDPath:
+                {
+                    text.AppendLine(" * Empty VirtIOFSD path.");
+                    break;
+                }
                 case LauncherErrorType.EmptyCustomQemuArgumentValue:
                 {
                     text.AppendLine($" * Empty custom QEMU argument {index} value.");
@@ -431,6 +438,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine(" * Swtpm executable file does not exist.");
                     break;
                 }
+                case LauncherErrorType.VirtioFsDDoesNotExist:
+                {
+                    text.AppendLine(" * VirtIOFSD executable file does not exist.");
+                    break;
+                }
                 case LauncherErrorType.HardwareAccelerationUnavailable:
                 {
                     text.AppendLine(" * Unavailable hardware acceleration on host OS.");
@@ -444,6 +456,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                 case LauncherErrorType.MemorySharingUnavailable:
                 {
                     text.AppendLine(" * Memory sharing unavailable for host OS.");
+                    break;
+                }
+                case LauncherErrorType.SharedFoldersRequireMemorySharing:
+                {
+                    text.AppendLine(" * Shared folders require memory sharing to be enabled.");
                     break;
                 }
                 case LauncherErrorType.InvalidFirmwareTypeForArchitecture:

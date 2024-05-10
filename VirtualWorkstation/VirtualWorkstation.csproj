@@ -91,6 +91,10 @@
         <DependentUpon>MemorySettingsPage.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="SharedFolderSettingsPage.axaml.cs">
+        <DependentUpon>SharedFolderSettingsPage.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

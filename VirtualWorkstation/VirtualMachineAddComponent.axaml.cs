@@ -167,6 +167,21 @@ public partial class VirtualMachineAddComponent : Window
                     _parent.ComponentIndices[i]++;
                 break;
             }
+            case UiComponent.SharedFolder:
+            {
+                var index = _vm.SharedFolders.Count;
+
+                _vm.SharedFolders.Add(new SharedFolder());
+                _parent.ComponentList.Items.Insert(listIndex, new ListBoxItem
+                {
+                    Content = $"{UiComponent.SharedFolder.ToUiString()} {index}",
+                    Tag = new SharedFolderSettingsPage(ref _vm, index)
+                });
+
+                for (var i = ComponentList.SelectedIndex; i < _parent.ComponentIndices.Count; i++)
+                    _parent.ComponentIndices[i]++;
+                break;
+            }
             case UiComponent.CustomQemuArgument:
             {
                 var index = _vm.CustomQemuArguments.Count;

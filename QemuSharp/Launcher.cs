@@ -482,7 +482,7 @@ public static class Launcher
 
                             var swtpmArguments = new List<string>
                             {
-                                "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={socketPath}"
+                                "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={quotedSocketPath}"
                             };
                             if (vm.TrustedPlatformModule.Version == TpmVersion.V20) swtpmArguments.Add("--tpm2");
 
@@ -1276,6 +1276,38 @@ public static class Launcher
             }
         }
 
+        if (vm.SharedFolders.Count > 0 && !vm.Memory.MemorySharing)
+            errors.Add(new LauncherError(LauncherErrorType.SharedFoldersRequireMemorySharing));
+
+        for (var i = 0; i < vm.SharedFolders.Count; i++)
+        {
+            var sharedFolder = vm.SharedFolders[i];
+            var socketPath = $"vhost-socket-{vm.Name}-{i}";
+            var quotedSocketPath = addQuotes && socketPath.Contains(' ') ? $"\"{socketPath}\"" : socketPath;
+            var virtioFsDPath = customPaths.TryGetValue(ExecutableType.VirtioFsD, out var customVirtioFsDPath)
+                ? customVirtioFsDPath
+                : PathLookup.LookupFile(PathLookup.DaemonPaths, PathLookup.VirtioFsDFile);
+
+            if (!string.IsNullOrEmpty(virtioFsDPath))
+            {
+                if (!File.Exists(virtioFsDPath)) errors.Add(new LauncherError(LauncherErrorType.VirtioFsDDoesNotExist));
+
+                var virtioFsDArguments = new List<string>
+                {
+                    $"--socket-path={quotedSocketPath}", $"--shared-dir={sharedFolder.Path}", "--cache", "always"
+                };
+
+                var quotedVirtioFsDPath = addQuotes && virtioFsDPath.Contains(' ') ? $"\"{virtioFsDPath}\"" : virtioFsDPath;
+                programs.Add(new Program(quotedVirtioFsDPath, virtioFsDArguments, false));
+            } else errors.Add(new LauncherError(LauncherErrorType.EmptyVirtioFsDPath));
+
+            arguments.Add("-chardev");
+            arguments.Add($"socket,id=sharedfolder{i},path={quotedSocketPath}");
+
+            arguments.Add("-device");
+            arguments.Add($"vhost-user-fs-pci,queue-size=1024,chardev=sharedfolder{i},tag=sharedfolder{i}");
+        }
+
         for (var i = 0; i < vm.CustomQemuArguments.Count; i++)
         {
             var customQemuArgument = vm.CustomQemuArguments[i];
@@ -1359,7 +1391,7 @@ public static class Launcher
 
         return new LauncherResult(errors, nvRamPath, programs);
 
-        // These methods feels illegal for some reason
+        // These methods feel illegal for some reason
         void AddHdaDevices(AudioController audioController, int i)
         {
             arguments.Add("-device");

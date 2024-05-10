@@ -7,7 +7,7 @@ namespace VirtualWorkstation;
 // Future: PCI & USB pass through
 // Future: Bundled OVMF
 // Future: Bundled Windows VirtIO drivers
-// Future: Shared folders
+// Future: Snapshot manager
 public static class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any

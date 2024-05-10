@@ -51,6 +51,7 @@ public static class UiHelpers
         UiComponent.Disk => "Disk",
         UiComponent.Keyboard => "Keyboard",
         UiComponent.Mouse => "Mouse",
+        UiComponent.SharedFolder => "Shared Folder",
         UiComponent.CustomQemuArgument => "Custom QEMU Argument",
         _ => throw new UnreachableException()
     };

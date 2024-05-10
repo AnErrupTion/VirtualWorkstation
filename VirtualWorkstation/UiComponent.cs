@@ -19,5 +19,6 @@ public enum UiComponent
     Disk,
     Keyboard,
     Mouse,
+    SharedFolder,
     CustomQemuArgument
 }

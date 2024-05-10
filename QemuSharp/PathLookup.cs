@@ -61,8 +61,14 @@ public static class PathLookup
         QemuWindowsPath
     ];
 
+    public static readonly string[] DaemonPaths =
+    [
+        "/usr/libexec"
+    ];
+
     public static readonly string QemuImgFile = OperatingSystem.IsWindows() ? "qemu-img.exe" : "qemu-img";
     public const string SwtpmFile = "swtpm";
+    public const string VirtioFsDFile = "virtiofsd";
 
     public static string LookupFile(string[] paths, string file)
     {

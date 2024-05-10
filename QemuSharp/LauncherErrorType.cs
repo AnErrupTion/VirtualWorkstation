@@ -29,6 +29,7 @@ public enum LauncherErrorType
     EmptyDiskPath,
     EmptyQemuPath,
     EmptySwtpmPath,
+    EmptyVirtioFsDPath,
     EmptyCustomQemuArgumentValue,
     EmptyCustomQemuArgumentParameterKey,
     EmptyCustomQemuArgumentParameterValue,
@@ -59,10 +60,13 @@ public enum LauncherErrorType
     DiskDoesNotExist,
     QemuSystemDoesNotExist,
     SwtpmDoesNotExist,
+    VirtioFsDDoesNotExist,
 
     HardwareAccelerationUnavailable,
     AudioUnavailable,
     MemorySharingUnavailable,
+
+    SharedFoldersRequireMemorySharing,
 
     InvalidFirmwareTypeForArchitecture,
     InvalidChipsetModelForArchitecture,

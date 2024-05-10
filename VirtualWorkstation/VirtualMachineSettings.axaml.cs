@@ -74,6 +74,10 @@ public partial class VirtualMachineSettings : Window
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.Mouse.ToUiString()} {i}", Tag = new MouseSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
 
+        for (var i = 0; i < vm.SharedFolders.Count; i++)
+            ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.SharedFolder.ToUiString()} {i}", Tag = new SharedFolderSettingsPage(ref vm, i) });
+        ComponentIndices.Add(ComponentList.Items.Count);
+
         for (var i = 0; i < vm.CustomQemuArguments.Count; i++)
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.CustomQemuArgument.ToUiString()} {i}", Tag = new CustomQemuArgumentSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
@@ -220,6 +224,17 @@ public partial class VirtualMachineSettings : Window
                 _vm.Mice.RemoveAt(index);
 
                 for (var i = UiComponent.Mouse - UiComponent.UsbController; i < ComponentIndices.Count; i++)
+                    ComponentIndices[i]--;
+                break;
+            }
+            case SharedFolderSettingsPage sharedFolderSettingsPage:
+            {
+                var index = sharedFolderSettingsPage.Index;
+                UiHelpers.RemoveCurrentListItem<SharedFolderSettingsPage>(ref ComponentList);
+
+                _vm.SharedFolders.RemoveAt(index);
+
+                for (var i = UiComponent.SharedFolder - UiComponent.UsbController; i < ComponentIndices.Count; i++)
                     ComponentIndices[i]--;
                 break;
             }

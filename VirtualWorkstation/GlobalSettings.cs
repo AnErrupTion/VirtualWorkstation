@@ -26,6 +26,12 @@ public static class GlobalSettings
         set => SetValue("custom_swtpm_path", value);
     }
 
+    public static string CustomVirtioFsDPath
+    {
+        get => GetValue("custom_virtiofsd_path");
+        set => SetValue("custom_virtiofsd_path", value);
+    }
+
     private static readonly string ConfigDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "VirtualWorkstation");
     private static readonly string ConfigPath = Path.Combine(ConfigDirectory, "VirtualWorkstation.toml");
 
@@ -40,6 +46,7 @@ public static class GlobalSettings
             Directory.CreateDirectory(VmFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VirtualWorkstation"));
             CustomQemuPath = string.Empty;
             CustomSwtpmPath = string.Empty;
+            CustomVirtioFsDPath = string.Empty;
             return;
         }
 

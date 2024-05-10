@@ -12,6 +12,7 @@ public partial class Settings : Window
         VmFolder.Text = GlobalSettings.VmFolder;
         CustomQemuPath.Text = GlobalSettings.CustomQemuPath;
         CustomSwtpmPath.Text = GlobalSettings.CustomSwtpmPath;
+        CustomVirtioFsDPath.Text = GlobalSettings.CustomVirtioFsDPath;
     }
 
     private async void BrowseVmFolder_OnClick(object? _, RoutedEventArgs e)
@@ -38,11 +39,20 @@ public partial class Settings : Window
         CustomSwtpmPath.Text = storageFolders[0].Path.LocalPath;
     }
 
+    private async void BrowseVirtioFsD_OnClick(object? _, RoutedEventArgs e)
+    {
+        var storageFolders = await StorageProvider.OpenFolderPickerAsync(UiHelpers.DefaultFolderPickerOpenOptions);
+        if (storageFolders.Count != 1) return;
+
+        CustomVirtioFsDPath.Text = storageFolders[0].Path.LocalPath;
+    }
+
     private void Save_OnClick(object? _, RoutedEventArgs e)
     {
         GlobalSettings.VmFolder = VmFolder.Text!;
         GlobalSettings.CustomQemuPath = CustomQemuPath.Text!;
         GlobalSettings.CustomSwtpmPath = CustomSwtpmPath.Text!;
+        GlobalSettings.CustomVirtioFsDPath = CustomVirtioFsDPath.Text!;
         GlobalSettings.Save();
 
         Close();
