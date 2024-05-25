@@ -26,6 +26,7 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
         CustomType.Text = vm.TrustedPlatformModule.CustomType;
         CustomTypeBus.SelectedIndex = (int)vm.TrustedPlatformModule.CustomTypeBus.Type;
         CustomTypeBus.Text = vm.TrustedPlatformModule.CustomTypeBus.CustomType;
+        Version.SelectedIndex = (int)vm.TrustedPlatformModule.Version;
     }
 
     private void DeviceType_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
@@ -44,6 +45,8 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
             CustomTypeBusGrid.IsVisible = false;
             return;
         }
+
+        Version.IsVisible = deviceType == TpmDeviceType.Emulated;
 
         if (Type.SelectedIndex != -1) Type_OnSelectionChanged(null, null!);
     }
@@ -69,4 +72,7 @@ public partial class TrustedPlatformModuleSettingsPage : UserControl, ITabPage
 
     private void CustomTypeBus_OnTextChanged(object? _, TextChangedEventArgs e)
         => _vm.TrustedPlatformModule.CustomTypeBus.CustomType = CustomTypeBus.Text!;
+
+    private void Version_OnSelectionChanged(object? _, SelectionChangedEventArgs e)
+        => _vm.TrustedPlatformModule.Version = (TpmVersion)Version.SelectedIndex;
 }

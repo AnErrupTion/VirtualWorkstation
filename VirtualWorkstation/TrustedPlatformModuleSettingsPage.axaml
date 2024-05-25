@@ -31,5 +31,12 @@
             <Label Grid.Column="0">Custom type bus:</Label>
             <virtualWorkstation:DeviceBusControl Grid.Column="1" Name="CustomTypeBus" SelectionChanged="CustomTypeBus_OnSelectionChanged" TextChanged="CustomTypeBus_OnTextChanged"></virtualWorkstation:DeviceBusControl>
         </Grid>
+        <Grid ColumnDefinitions="*, *">
+            <Label Grid.Column="0">Version:</Label>
+            <ComboBox Grid.Column="1" Name="Version" SelectionChanged="Version_OnSelectionChanged">
+                <ComboBoxItem>1.2</ComboBoxItem>
+                <ComboBoxItem>2.0</ComboBoxItem>
+            </ComboBox>
+        </Grid>
     </StackPanel>
 </UserControl>

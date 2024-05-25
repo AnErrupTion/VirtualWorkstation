@@ -462,12 +462,8 @@ public static class Launcher
                 case TpmDeviceType.Emulated:
                 {
                     arguments.Add("emulator,chardev=chartpm,id=tpmdev");
-
-                    var socketPath = $"swtpm-socket-{vm.Name}";
-                    var quotedSocketPath = addQuotes && socketPath.Contains(' ') ? $"\"{socketPath}\"" : socketPath;
-
                     arguments.Add("-chardev");
-                    arguments.Add($"socket,id=chartpm,path={quotedSocketPath}");
+                    arguments.Add("socket,id=chartpm,path=swtpm-socket");
 
                     // Swtpm doesn't support Windows
                     if (!OperatingSystem.IsWindows())
@@ -482,7 +478,7 @@ public static class Launcher
 
                             var swtpmArguments = new List<string>
                             {
-                                "socket", "--tpmstate", "dir=.", "--ctrl", $"type=unixio,path={quotedSocketPath}"
+                                "socket", "--tpmstate", "dir=.", "--ctrl", "type=unixio,path=swtpm-socket"
                             };
                             if (vm.TrustedPlatformModule.Version == TpmVersion.V20) swtpmArguments.Add("--tpm2");
 
