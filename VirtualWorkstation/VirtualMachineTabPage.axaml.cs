@@ -508,6 +508,11 @@ public partial class VirtualMachineTabPage : UserControl, ITabPage
                     text.AppendLine($" * Unsupported audio host device \"{Vm.AudioHostDevice.Type}\" for host OS.");
                     break;
                 }
+                case LauncherErrorType.UnsupportedUsbHostDeviceFunctionnality:
+                {
+                    text.AppendLine($" * Unsupported USB host device functionnality for host OS.");
+                    break;
+                }
                 case LauncherErrorType.NoUsbControllersForNetworkCard:
                 {
                     text.AppendLine($" * No USB controllers available for network interface \"{index}\".");

@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 using QemuSharp.Structs;
 
 namespace VirtualWorkstation;
@@ -20,7 +22,7 @@ public partial class VirtualMachineAddComponent : Window
         _parent = parent;
     }
 
-    private void Add_OnClick(object? _, RoutedEventArgs e)
+    private async void Add_OnClick(object? _, RoutedEventArgs e)
     {
         var listIndex = _parent.ComponentIndices[ComponentList.SelectedIndex];
 
@@ -176,6 +178,29 @@ public partial class VirtualMachineAddComponent : Window
                 {
                     Content = $"{UiComponent.SharedFolder.ToUiString()} {index}",
                     Tag = new SharedFolderSettingsPage(ref _vm, index)
+                });
+
+                for (var i = ComponentList.SelectedIndex; i < _parent.ComponentIndices.Count; i++)
+                    _parent.ComponentIndices[i]++;
+                break;
+            }
+            case UiComponent.UsbHostDevice:
+            {
+                if (_vm.UsbControllers.Count == 0)
+                {
+                    var box = MessageBoxManager.GetMessageBoxStandard("No USB Controllers Found",
+                        "This component requires at least 1 USB controller but none were found attached to the VM.");
+                    await box.ShowAsync();
+                    return;
+                }
+
+                var index = _vm.UsbHostDevices.Count;
+
+                _vm.UsbHostDevices.Add(new UsbHostDevice());
+                _parent.ComponentList.Items.Insert(listIndex, new ListBoxItem
+                {
+                    Content = $"{UiComponent.UsbHostDevice.ToUiString()} {index}",
+                    Tag = new UsbHostDeviceSettingsPage(ref _vm, index)
                 });
 
                 for (var i = ComponentList.SelectedIndex; i < _parent.ComponentIndices.Count; i++)

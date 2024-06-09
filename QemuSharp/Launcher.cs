@@ -1306,6 +1306,19 @@ public static class Launcher
             arguments.Add($"vhost-user-fs-pci,queue-size=1024,chardev=sharedfolder{i},tag={quotedShareName}");
         }
 
+        if (vm.UsbHostDevices.Count > 0 && !OperatingSystem.IsLinux())
+            errors.Add(new LauncherError(LauncherErrorType.UnsupportedUsbHostDeviceFunctionnality));
+
+        for (var i = 0; i < vm.UsbHostDevices.Count; i++)
+        {
+            var usbHostDevice = vm.UsbHostDevices[i];
+            var vendorId = usbHostDevice.VendorId.ToString("X4");
+            var productId = usbHostDevice.ProductId.ToString("X4");
+
+            arguments.Add("-device");
+            arguments.Add($"usb-host,vendorid=0x{vendorId},productid=0x{productId},bus=usb{usbHostDevice.UsbController}.0");
+        }
+
         for (var i = 0; i < vm.CustomQemuArguments.Count; i++)
         {
             var customQemuArgument = vm.CustomQemuArguments[i];

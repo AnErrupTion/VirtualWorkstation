@@ -80,6 +80,7 @@ public enum LauncherErrorType
 
     UnsupportedDisplay,
     UnsupportedAudioHostDevice,
+    UnsupportedUsbHostDeviceFunctionnality,
 
     NoUsbControllersForNetworkCard,
     NoUsbControllersForSerialType,

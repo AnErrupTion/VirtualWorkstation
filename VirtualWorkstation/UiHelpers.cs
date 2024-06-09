@@ -52,6 +52,7 @@ public static class UiHelpers
         UiComponent.Keyboard => "Keyboard",
         UiComponent.Mouse => "Mouse",
         UiComponent.SharedFolder => "Shared Folder",
+        UiComponent.UsbHostDevice => "USB Host Device",
         UiComponent.CustomQemuArgument => "Custom QEMU Argument",
         _ => throw new UnreachableException()
     };
@@ -113,6 +114,8 @@ public static class UiHelpers
             componentIndices[UiComponent.Keyboard - UiComponent.UsbController] - vm.Keyboards.Count, startIndex);
         RefreshUsbControllerList<MouseSettingsPage>(ref componentList,
             componentIndices[UiComponent.Mouse - UiComponent.UsbController] - vm.Mice.Count, startIndex);
+        RefreshUsbControllerList<UsbHostDeviceSettingsPage>(ref componentList,
+            componentIndices[UiComponent.UsbHostDevice - UiComponent.UsbController] - vm.UsbHostDevices.Count, startIndex);
     }
 
     public static void TriggerUsbControllerEvents(ref ListBox componentList, List<int> componentIndices, ref VirtualMachine vm)
@@ -129,6 +132,8 @@ public static class UiHelpers
             componentIndices[UiComponent.Keyboard - UiComponent.UsbController] - vm.Keyboards.Count);
         TriggerUsbControllerEvent<MouseSettingsPage>(ref componentList,
             componentIndices[UiComponent.Mouse - UiComponent.UsbController] - vm.Mice.Count);
+        TriggerUsbControllerEvent<UsbHostDeviceSettingsPage>(ref componentList,
+            componentIndices[UiComponent.UsbHostDevice - UiComponent.UsbController] - vm.UsbHostDevices.Count);
     }
 
     public static void RefreshDiskControllerLists(ref ListBox componentList, List<int> componentIndices, ref VirtualMachine vm, int startIndex)

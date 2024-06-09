@@ -78,6 +78,10 @@ public partial class VirtualMachineSettings : Window
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.SharedFolder.ToUiString()} {i}", Tag = new SharedFolderSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
 
+        for (var i = 0; i < vm.UsbHostDevices.Count; i++)
+            ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.UsbHostDevice.ToUiString()} {i}", Tag = new UsbHostDeviceSettingsPage(ref vm, i) });
+        ComponentIndices.Add(ComponentList.Items.Count);
+
         for (var i = 0; i < vm.CustomQemuArguments.Count; i++)
             ComponentList.Items.Add(new ListBoxItem { Content = $"{UiComponent.CustomQemuArgument.ToUiString()} {i}", Tag = new CustomQemuArgumentSettingsPage(ref vm, i) });
         ComponentIndices.Add(ComponentList.Items.Count);
@@ -238,6 +242,17 @@ public partial class VirtualMachineSettings : Window
                     ComponentIndices[i]--;
                 break;
             }
+            case UsbHostDeviceSettingsPage usbHostDeviceSettingsPage:
+            {
+                var index = usbHostDeviceSettingsPage.Index;
+                UiHelpers.RemoveCurrentListItem<UsbHostDeviceSettingsPage>(ref ComponentList);
+
+                _vm.UsbHostDevices.RemoveAt(index);
+
+                for (var i = UiComponent.UsbHostDevice - UiComponent.UsbController; i < ComponentIndices.Count; i++)
+                    ComponentIndices[i]--;
+                break;
+            }
             case CustomQemuArgumentSettingsPage customQemuArgumentSettingsPage:
             {
                 var index = customQemuArgumentSettingsPage.Index;
@@ -327,6 +342,15 @@ public partial class VirtualMachineSettings : Window
             if (mouse.Model != MouseModel.Usb || mouse.UsbController != usbController) continue;
 
             text.AppendLine($" * Mouse {i}");
+            usedCount++;
+        }
+
+        for (var i = 0; i < _vm.UsbHostDevices.Count; i++)
+        {
+            var usbHostDevice = _vm.UsbHostDevices[i];
+            if (usbHostDevice.UsbController != usbController) continue;
+
+            text.AppendLine($" * USB Host Device {i}");
             usedCount++;
         }
 

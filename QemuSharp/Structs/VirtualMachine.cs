@@ -25,6 +25,7 @@ public class VirtualMachine
     public List<Keyboard> Keyboards { get; set; } = [];
     public List<Mouse> Mice { get; set; } = [];
     public List<SharedFolder> SharedFolders { get; set; } = [];
+    public List<UsbHostDevice> UsbHostDevices { get; set; } = [];
     public List<CustomQemuArgument> CustomQemuArguments { get; set; } = [];
 
     public VirtualMachine() {}
@@ -52,6 +53,7 @@ public class VirtualMachine
         foreach (var keyboard in other.Keyboards) Keyboards.Add(new Keyboard(keyboard));
         foreach (var mouse in other.Mice) Mice.Add(new Mouse(mouse));
         foreach (var sharedFolder in other.SharedFolders) SharedFolders.Add(new SharedFolder(sharedFolder));
+        foreach (var usbHostDevice in other.UsbHostDevices) UsbHostDevices.Add(new UsbHostDevice(usbHostDevice));
         foreach (var customQemuArgument in other.CustomQemuArguments) CustomQemuArguments.Add(new CustomQemuArgument(customQemuArgument));
     }
 }

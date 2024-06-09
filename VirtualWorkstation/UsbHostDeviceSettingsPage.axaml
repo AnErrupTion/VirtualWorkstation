@@ -1,0 +1,14 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualWorkstation.UsbHostDeviceSettingsPage">
+    <StackPanel>
+        <Grid ColumnDefinitions="*, *" Name="UsbDeviceGrid">
+            <Label Grid.Column="0">USB device:</Label>
+            <ListBox Grid.Column="1" Name="UsbDevice" SelectionChanged="UsbDevice_OnSelectionChanged"/>
+        </Grid>
+        <Grid ColumnDefinitions="*, *" Name="UsbControllerGrid">
+            <Label Grid.Column="0">USB controller:</Label>
+            <ComboBox Grid.Column="1" Name="UsbController" SelectionChanged="UsbController_OnSelectionChanged"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

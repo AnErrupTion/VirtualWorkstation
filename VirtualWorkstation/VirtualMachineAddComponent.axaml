@@ -16,6 +16,7 @@
             <ListBoxItem>Keyboard</ListBoxItem>
             <ListBoxItem>Mouse</ListBoxItem>
             <ListBoxItem>Shared Folder</ListBoxItem>
+            <ListBoxItem>USB Host Device</ListBoxItem>
             <ListBoxItem>Custom QEMU Argument</ListBoxItem>
         </ListBox>
         <Button Grid.Row="1" Name="Add" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Click="Add_OnClick">Add</Button>
