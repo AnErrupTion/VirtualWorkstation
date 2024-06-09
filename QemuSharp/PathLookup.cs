@@ -50,8 +50,9 @@ public static class PathLookup
 
     public static readonly string[] EfiSecureBootNvramFiles =
     [
-        "edk2-i386-vars.fd", // This one doesn't have a special name
-        "OVMF_VARS.secboot.fd"
+        "edk2-i386-vars.fd",
+        "OVMF_VARS.secboot.fd",
+        "OVMF_VARS.fd"
     ];
 
     public static readonly string[] ExecutablePaths =
@@ -63,7 +64,8 @@ public static class PathLookup
 
     public static readonly string[] DaemonPaths =
     [
-        "/usr/libexec"
+        "/usr/libexec",
+        "/usr/lib"
     ];
 
     public static readonly string QemuImgFile = OperatingSystem.IsWindows() ? "qemu-img.exe" : "qemu-img";
